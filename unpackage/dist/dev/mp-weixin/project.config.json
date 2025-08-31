@@ -9,12 +9,11 @@
     "postcss": false,
     "minified": false,
     "newFeature": true,
-    "bigPackageSizeSupport": true,
-    "minifyWXML": true
+    "bigPackageSizeSupport": true
   },
   "compileType": "miniprogram",
   "libVersion": "",
-  "appid": "wx5d46da2f4a58a168",
+  "appid": "touristappid",
   "projectname": "liuliuzhua",
   "condition": {
     "search": {
