@@ -1,1 +1,1 @@
-<view>我是首页</view>
+<view>我是首页</view><up-button wx:if="{{a}}" u-i="c43cabf4-0" bind:__l="__l" u-p="{{a}}"></up-button>

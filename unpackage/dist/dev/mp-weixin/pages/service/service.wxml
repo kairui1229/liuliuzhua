@@ -1,1 +1,1 @@
-<view> 我是详情页 </view>
+<view class="{{[virtualHostClass]}}" style="{{virtualHostStyle}}" hidden="{{virtualHostHidden || false}}" id="{{a}}"> 我是详情页 </view>
