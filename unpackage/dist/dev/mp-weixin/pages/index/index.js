@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const utils_geocode = require("../../utils/geocode.js");
 if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   const _easycom_uni_search_bar2 = common_vendor.resolveComponent("uni-search-bar");
@@ -48,9 +49,13 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         type: "wgs84",
         geocode: true,
         success: (res) => {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:96", "经度", res.longitude);
-          common_vendor.index.__f__("log", "at pages/index/index.vue:97", "纬度", res.latitude);
-          common_vendor.index.__f__("log", "at pages/index/index.vue:98", "地址", res.address);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:97", "经度", res.longitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:98", "纬度", res.latitude);
+          utils_geocode.reverseCode(res.longitude, res.latitude).then((res2) => {
+            cityName.value = res2;
+          }).catch((err) => {
+            cityName.value = "无法定位";
+          });
         },
         fail: (err) => {
           cityName.value = "无法获取位置";
@@ -79,16 +84,17 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           size: "28",
           color: "#fff"
         }),
-        b: common_vendor.o(startLocation),
-        c: common_vendor.p({
+        b: common_vendor.t(cityName.value),
+        c: common_vendor.o(startLocation),
+        d: common_vendor.p({
           radius: "100",
           placeholder: "搜索宠物服务",
           clearButton: "none",
           cancelButton: "none"
         }),
-        d: common_vendor.s(navStyle.value),
-        e: common_vendor.s(headerStyle.value),
-        f: common_vendor.gei(_ctx, "")
+        e: common_vendor.s(navStyle.value),
+        f: common_vendor.s(headerStyle.value),
+        g: common_vendor.gei(_ctx, "")
       };
     };
   }

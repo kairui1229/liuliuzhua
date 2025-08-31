@@ -5,7 +5,7 @@
 			<view class="nav-content" :style="navStyle">
 				<view class="location" @click="startLocation">
 					<uni-icons type="location" size="28" color="#fff"></uni-icons>
-					<text class="city">郑州市</text>
+					<text class="city">{{ cityName }}</text>
 				</view>
 				<view class="search-box">
 					<uni-search-bar 
@@ -25,6 +25,7 @@
 <script lang="ts" setup>
 import {onLoad} from "@dcloudio/uni-app"
 import {ref,computed} from "vue"
+import {reverseCode} from "@/utils/geocode"
 
 const menuButtonInfo  = ref(null)
 
@@ -95,7 +96,11 @@ const startLocation = () =>{
 		success: (res) => {
 			console.log("经度", res.longitude);
 			console.log("纬度", res.latitude);
-			console.log("地址", res.address);	
+			reverseCode(res.longitude,res.latitude).then((res) => {
+				cityName.value = res
+            }).catch((err) => {
+				cityName.value = "无法定位"
+            })
 		},
 		fail: (err) => {
 			cityName.value = "无法获取位置"
