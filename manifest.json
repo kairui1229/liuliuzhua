@@ -52,6 +52,12 @@
     "mp-weixin" : {
         "appid" : "wx5d46da2f4a58a168",
         "mergeVirtualHostAttributes" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "你的位置信息将用于展示附近服务"
+            }
+        },
+        "requiredPrivateInfos":["getLocation"],
         "setting" : {
             "urlCheck" : false
         },

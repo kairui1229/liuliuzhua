@@ -3,17 +3,17 @@
 		<view class="header" :style="headerStyle">
 			<view class="status-bar"></view>
 			<view class="nav-content" :style="navStyle">
-				<view class="location">
+				<view class="location" @click="startLocation">
 					<uni-icons type="location" size="28" color="#fff"></uni-icons>
 					<text class="city">郑州市</text>
 				</view>
 				<view class="search-box">
 					<uni-search-bar 
-					radius="100" 
-					placeholder="搜索宠物服务" 
-					clearButton="none" 
-					cancelButton="none"
-					style="width: 100%"
+					 radius="100" 
+					 placeholder="搜索宠物服务" 
+					 clearButton="none" 
+					 cancelButton="none"
+					 style="width: 100%"
 					>
 					</uni-search-bar>
 				</view>
@@ -39,6 +39,8 @@ onLoad(() =>{
 		height:44
 	}
 	// #endif
+
+	startLocation()
 })
 
 //自适应高度
@@ -84,6 +86,58 @@ const navStyle = computed(() => {
 	return style
 })
 
+//地理信息定位
+const cityName = ref('')
+const startLocation = () =>{
+	uni.getLocation({
+		type:"wgs84",
+		geocode:true,
+		success: (res) => {
+			console.log("经度", res.longitude);
+			console.log("纬度", res.latitude);
+			console.log("地址", res.address);	
+		},
+		fail: (err) => {
+			cityName.value = "无法获取位置"
+			uni.showModal({
+			    title:"提示",
+				content:"需要获取您的位置信息，是否去设置开启定位权限？",
+                success:(res)=>{
+					if(res.confirm){
+
+						//#ifdef MP-WEIXIN
+						uni.openSetting({
+							success:(res)=>{
+								if(res.authSetting["scope.userLocation"]){
+									startLocation()
+								}
+							}
+					    })
+					    //#endif
+
+						//#ifdef APP-PLUS
+						uni.showModal({
+						    title:"提示",
+							content:"请在系统设置中开启定位权限并重新定位",
+							showCancel:false
+						})
+						//#endif
+
+						//#ifdef WEB
+						setTimeout(()=>{
+						    uni.showModal({
+						    title:"提示",
+							content:"请在浏览器中开启定位权限并重新定位",
+							showCancel:false
+						 })
+						},300)
+						//#endif				
+				   }
+			    }
+			})
+		}
+	})
+}
 </script>
 
 <style lang="scss" scoped>
