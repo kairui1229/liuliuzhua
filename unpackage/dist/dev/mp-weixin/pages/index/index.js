@@ -2,21 +2,31 @@
 const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {};
 if (!Array) {
-  const _easycom_up_button2 = common_vendor.resolveComponent("up-button");
-  _easycom_up_button2();
+  const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
+  const _easycom_uni_search_bar2 = common_vendor.resolveComponent("uni-search-bar");
+  (_easycom_uni_icons2 + _easycom_uni_search_bar2)();
 }
-const _easycom_up_button = () => "../../uni_modules/uview-plus/components/u-button/u-button.js";
+const _easycom_uni_icons = () => "../../uni_modules/uni-icons/components/uni-icons/uni-icons.js";
+const _easycom_uni_search_bar = () => "../../uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.js";
 if (!Math) {
-  _easycom_up_button();
+  (_easycom_uni_icons + _easycom_uni_search_bar)();
 }
 function _sfc_render(_ctx, _cache) {
   return {
     a: common_vendor.p({
-      type: "primary",
-      text: "确定"
-    })
+      type: "location",
+      size: "28",
+      color: "#fff"
+    }),
+    b: common_vendor.p({
+      radius: "100",
+      placeholder: "搜索宠物服务",
+      clearButton: "none",
+      cancelButton: "none"
+    }),
+    c: common_vendor.gei(_ctx, "")
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-1cf27b2a"]]);
 wx.createPage(MiniProgramPage);
 //# sourceMappingURL=../../../.sourcemap/mp-weixin/pages/index/index.js.map

@@ -23,34 +23,54 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.container.data-v-1cf27b2a {
-  background-color: #f7f7f7;
-}
-.container .header.data-v-1cf27b2a {
-  background-color: #ffce2c;
-}
-.container .header .status-bar.data-v-1cf27b2a {
-  width: 100%;
-  height: var(--status-bar-height);
-}
-.container .header .nav-content.data-v-1cf27b2a {
+.uni-searchbar {
   display: flex;
-  align-items: center;
-  padding: 0 30rpx;
+  flex-direction: row;
+  position: relative;
+  padding: 10px;
 }
-.container .header .nav-content .location.data-v-1cf27b2a {
+.uni-searchbar__box {
   display: flex;
-  align-items: center;
-  margin-right: 10rpx;
-}
-.container .header .nav-content .location .city.data-v-1cf27b2a {
-  color: #fff;
-  font-size: 28rpx;
-  width: 120rpx;
-  white-space: normal;
+  box-sizing: border-box;
+  justify-content: left;
   overflow: hidden;
-  text-overflow: ellipsis;
+  position: relative;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  height: 36px;
+  padding: 5px 8px 5px 0px;
 }
-.container .header .nav-content .search-box.data-v-1cf27b2a {
-  width: 360rpx;
+.uni-searchbar__box-icon-search {
+  display: flex;
+  flex-direction: row;
+  padding: 0 8px;
+  justify-content: center;
+  align-items: center;
+  color: #B3B3B3;
+}
+.uni-searchbar__box-search-input {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+  margin-left: 5px;
+  margin-top: 1px;
+  background-color: inherit;
+}
+.uni-searchbar__box-icon-clear {
+  align-items: center;
+  line-height: 24px;
+  padding-left: 8px;
+}
+.uni-searchbar__text-placeholder {
+  font-size: 14px;
+  color: #B3B3B3;
+  margin-left: 5px;
+  text-align: left;
+}
+.uni-searchbar__cancel {
+  padding-left: 10px;
+  line-height: 36px;
+  font-size: 14px;
+  color: #333333;
 }
