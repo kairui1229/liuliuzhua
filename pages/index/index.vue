@@ -1,8 +1,8 @@
 <template>
 	<view class="container">
-		<view class="header">
+		<view class="header" :style="headerStyle">
 			<view class="status-bar"></view>
-			<view class="nav-content">
+			<view class="nav-content" :style="navStyle">
 				<view class="location">
 					<uni-icons type="location" size="28" color="#fff"></uni-icons>
 					<text class="city">郑州市</text>
@@ -13,7 +13,7 @@
 					placeholder="搜索宠物服务" 
 					clearButton="none" 
 					cancelButton="none"
-					style="width=100%"
+					style="width: 100%"
 					>
 					</uni-search-bar>
 				</view>
@@ -22,7 +22,67 @@
 	</view>
 </template>
 
-<script>
+<script lang="ts" setup>
+import {onLoad} from "@dcloudio/uni-app"
+import {ref,computed} from "vue"
+
+const menuButtonInfo  = ref(null)
+
+onLoad(() =>{
+	// #ifdef MP-WEIXIN
+	menuButtonInfo.value = uni.getMenuButtonBoundingClientRect()	
+	// #endif
+	
+	// #ifdef 	WEB || APP-PLUS
+	menuButtonInfo.value= {
+		top:0,
+		height:44
+	}
+	// #endif
+})
+
+//自适应高度
+const headerStyle = computed(() => {
+	let style = {
+		height:"200px"
+	}
+	// #ifdef MP-WEIXIN
+	if(menuButtonInfo.value){
+		style={
+			height:`${menuButtonInfo.value.top+menuButtonInfo.value.height+20}px`,
+		}
+	}
+	// #endif
+
+	// #ifdef 	WEB || APP-PLUS
+	style = {
+		height:"90px"
+	}
+	// #endif
+	return style
+})
+const navStyle = computed(() => {
+	let style = {
+		top:"0px",
+		height:"44px"
+	}
+	// #ifdef MP-WEIXIN
+	if(menuButtonInfo.value){
+		style={
+			top:`${menuButtonInfo.value.top}px`,
+			height:`${menuButtonInfo.value.height}px`,
+		}
+	}
+	// #endif
+
+	// #ifdef 	WEB || APP-PLUS
+	style = {
+		top:"20px",
+		height:"50px"
+	}
+	// #endif
+	return style
+})
 
 </script>
 
@@ -39,6 +99,9 @@
 			display: flex;
 			align-items: center;
 			padding: 0 30rpx;
+			position: fixed;
+			left:0;
+			right:0;
 			.location{
 				display: flex;
 				align-items: center;
