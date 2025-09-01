@@ -57,3 +57,20 @@
 .container .header .nav-content .search-box.data-v-1cf27b2a {
   width: 360rpx;
 }
+.container .content.data-v-1cf27b2a {
+  padding: 0 20rpx;
+}
+.container .content .banner-swiper.data-v-1cf27b2a {
+  width: 100%;
+  height: 350rpx;
+  margin-top: 20rpx;
+}
+.container .content .banner-swiper .swiper-item-content.data-v-1cf27b2a {
+  width: 100%;
+  height: 100%;
+}
+.container .content .banner-swiper .swiper-item-content image.data-v-1cf27b2a {
+  width: 100%;
+  height: 100%;
+  border-radius: 16rpx;
+}

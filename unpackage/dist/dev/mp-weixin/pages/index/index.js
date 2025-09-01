@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const utils_geocode = require("../../utils/geocode.js");
+const utils_http_index = require("../../utils/http/index.js");
 if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   const _easycom_uni_search_bar2 = common_vendor.resolveComponent("uni-search-bar");
@@ -18,6 +19,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     common_vendor.onLoad(() => {
       menuButtonInfo.value = common_vendor.index.getMenuButtonBoundingClientRect();
       startLocation();
+      getBannerList();
     });
     const headerStyle = common_vendor.computed(() => {
       let style = {
@@ -49,8 +51,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         type: "wgs84",
         geocode: true,
         success: (res) => {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:97", "经度", res.longitude);
-          common_vendor.index.__f__("log", "at pages/index/index.vue:98", "纬度", res.latitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:115", "经度", res.longitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:116", "纬度", res.latitude);
           utils_geocode.reverseCode(res.longitude, res.latitude).then((res2) => {
             cityName.value = res2;
           }).catch((err) => {
@@ -77,6 +79,12 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         }
       });
     };
+    const bannerList = common_vendor.ref([]);
+    const getBannerList = async () => {
+      const data = await utils_http_index.get("/home/banner");
+      bannerList.value = data.banner;
+      common_vendor.index.__f__("log", "at pages/index/index.vue:170", "bannerList", bannerList);
+    };
     return (_ctx, _cache) => {
       return {
         a: common_vendor.p({
@@ -94,7 +102,13 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         }),
         e: common_vendor.s(navStyle.value),
         f: common_vendor.s(headerStyle.value),
-        g: common_vendor.gei(_ctx, "")
+        g: common_vendor.f(bannerList.value, (item, k0, i0) => {
+          return {
+            a: item.url,
+            b: item.title
+          };
+        }),
+        h: common_vendor.gei(_ctx, "")
       };
     };
   }

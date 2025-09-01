@@ -19,6 +19,22 @@
 				</view>
 			</view>
 		</view>
+		<view class="content">
+			<swiper 
+			 class="banner-swiper"
+			 indicator-dots
+			 autoplay
+			 circular
+			 indicator-color="rgb(255,255,255,0.6)"
+			 indicator-active-color="#fff"
+			>
+			 <swiper-item v-for="item in bannerList" :key="item.title">
+				<view class="swiper-item-content">
+					<image :src="item.url" mode="aspectFill"></image>
+				</view>
+			 </swiper-item>
+			</swiper>
+		</view>
 	</view>
 </template>
 
@@ -26,6 +42,7 @@
 import {onLoad} from "@dcloudio/uni-app"
 import {ref,computed} from "vue"
 import {reverseCode} from "@/utils/geocode"
+import {get} from "@/utils/http"
 
 const menuButtonInfo  = ref(null)
 
@@ -42,6 +59,7 @@ onLoad(() =>{
 	// #endif
 
 	startLocation()
+	getBannerList()
 })
 
 //自适应高度
@@ -143,6 +161,15 @@ const startLocation = () =>{
 		}
 	})
 }
+
+//banner获取
+const bannerList = ref([])
+const getBannerList= async ()=>{ 
+	const data:any = await get("/home/banner")
+	bannerList.value = data.banner
+	console.log("bannerList",bannerList);
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -177,6 +204,23 @@ const startLocation = () =>{
 			.search-box{
 				width:360rpx;
 			}
+		}
+	}
+	.content{
+		padding:0 20rpx;
+		.banner-swiper{
+          width: 100%;
+		  height: 350rpx;
+		  margin-top: 20rpx;
+		  .swiper-item-content{
+			width: 100%;
+			height: 100%;
+			image{
+				width: 100%;
+				height: 100%;
+                border-radius: 16rpx;
+			}
+		  }
 		}
 	}
 }
