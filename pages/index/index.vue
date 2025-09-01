@@ -34,6 +34,15 @@
 				</view>
 			 </swiper-item>
 			</swiper>
+			
+			<view class="part">
+				<up-scroll-list indicatorColor="#fff0f0" indicatorActiveColor="#ffce2c">
+					<view class="scroll-item" v-for="item in partList" :key="item.title">
+						<image class="scroll-image" :src="item.url"></image>
+						<text class="item-title">{{item.title}}</text>
+					</view>
+				</up-scroll-list>
+			</view>
 		</view>
 	</view>
 </template>
@@ -60,6 +69,7 @@ onLoad(() =>{
 
 	startLocation()
 	getBannerList()
+	getPartList()
 })
 
 //自适应高度
@@ -165,11 +175,26 @@ const startLocation = () =>{
 //banner获取
 const bannerList = ref([])
 const getBannerList= async ()=>{ 
-	const data:any = await get("/home/banner")
-	bannerList.value = data.banner
-	console.log("bannerList",bannerList);
+	try{
+		const data:any = await get("/home/banner")
+		bannerList.value = data.banner
+		console.log("bannerList",bannerList);
+	}catch(err){
+		console.error(err)
+	}
 }
 
+//功能列表获取
+const partList = ref([])
+const getPartList = async ()=>{
+    try{
+    	const data:any = await get("/home/part")
+    	partList.value = data.part
+    	console.log("partList",partList);
+    }catch(err){
+    	console.error(err)
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -221,6 +246,29 @@ const getBannerList= async ()=>{
                 border-radius: 16rpx;
 			}
 		  }
+		}
+		.part{
+		   background-color: #fff;
+		   margin-top: 20rpx;
+		   margin-bottom: 24rpx;
+		   border-radius: 16rpx;
+		   padding: 30rpx;
+		   .scroll-item{
+			   text-align: center;
+			   .scroll-image{
+				   width: 90rpx;
+				   height: 90rpx;
+				   box-sizing: border-box;
+				   margin: 0 20rpx;
+			   }
+			   .item-title{
+				   font-size: 24rpx;
+				   color: #333;
+				   white-space: nowrap;
+				   overflow: hidden;
+				   text-overflow: ellipsis;
+			   }
+		   }
 		}
 	}
 }

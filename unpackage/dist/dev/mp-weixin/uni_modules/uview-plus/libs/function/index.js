@@ -574,9 +574,13 @@ const index = {
   genLightColor
 };
 exports.$parent = $parent;
+exports.addStyle = addStyle;
+exports.addUnit = addUnit;
 exports.deepMerge = deepMerge;
+exports.getPx = getPx;
 exports.index = index;
 exports.page = page;
 exports.queryParams = queryParams;
 exports.shallowMerge = shallowMerge;
+exports.sleep = sleep;
 //# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/uview-plus/libs/function/index.js.map

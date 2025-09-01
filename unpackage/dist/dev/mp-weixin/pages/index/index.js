@@ -5,12 +5,14 @@ const utils_http_index = require("../../utils/http/index.js");
 if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   const _easycom_uni_search_bar2 = common_vendor.resolveComponent("uni-search-bar");
-  (_easycom_uni_icons2 + _easycom_uni_search_bar2)();
+  const _easycom_up_scroll_list2 = common_vendor.resolveComponent("up-scroll-list");
+  (_easycom_uni_icons2 + _easycom_uni_search_bar2 + _easycom_up_scroll_list2)();
 }
 const _easycom_uni_icons = () => "../../uni_modules/uni-icons/components/uni-icons/uni-icons.js";
 const _easycom_uni_search_bar = () => "../../uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.js";
+const _easycom_up_scroll_list = () => "../../uni_modules/uview-plus/components/u-scroll-list/u-scroll-list.js";
 if (!Math) {
-  (_easycom_uni_icons + _easycom_uni_search_bar)();
+  (_easycom_uni_icons + _easycom_uni_search_bar + _easycom_up_scroll_list)();
 }
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
@@ -20,6 +22,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       menuButtonInfo.value = common_vendor.index.getMenuButtonBoundingClientRect();
       startLocation();
       getBannerList();
+      getPartList();
     });
     const headerStyle = common_vendor.computed(() => {
       let style = {
@@ -51,8 +54,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         type: "wgs84",
         geocode: true,
         success: (res) => {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:115", "经度", res.longitude);
-          common_vendor.index.__f__("log", "at pages/index/index.vue:116", "纬度", res.latitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:125", "经度", res.longitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:126", "纬度", res.latitude);
           utils_geocode.reverseCode(res.longitude, res.latitude).then((res2) => {
             cityName.value = res2;
           }).catch((err) => {
@@ -81,9 +84,23 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
     const bannerList = common_vendor.ref([]);
     const getBannerList = async () => {
-      const data = await utils_http_index.get("/home/banner");
-      bannerList.value = data.banner;
-      common_vendor.index.__f__("log", "at pages/index/index.vue:170", "bannerList", bannerList);
+      try {
+        const data = await utils_http_index.get("/home/banner");
+        bannerList.value = data.banner;
+        common_vendor.index.__f__("log", "at pages/index/index.vue:181", "bannerList", bannerList);
+      } catch (err) {
+        common_vendor.index.__f__("error", "at pages/index/index.vue:183", err);
+      }
+    };
+    const partList = common_vendor.ref([]);
+    const getPartList = async () => {
+      try {
+        const data = await utils_http_index.get("/home/part");
+        partList.value = data.part;
+        common_vendor.index.__f__("log", "at pages/index/index.vue:193", "partList", partList);
+      } catch (err) {
+        common_vendor.index.__f__("error", "at pages/index/index.vue:195", err);
+      }
     };
     return (_ctx, _cache) => {
       return {
@@ -108,7 +125,18 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             b: item.title
           };
         }),
-        h: common_vendor.gei(_ctx, "")
+        h: common_vendor.f(partList.value, (item, k0, i0) => {
+          return {
+            a: item.url,
+            b: common_vendor.t(item.title),
+            c: item.title
+          };
+        }),
+        i: common_vendor.p({
+          indicatorColor: "#fff0f0",
+          indicatorActiveColor: "#ffce2c"
+        }),
+        j: common_vendor.gei(_ctx, "")
       };
     };
   }
