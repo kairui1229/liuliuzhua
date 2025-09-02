@@ -174,7 +174,7 @@
   display: flex;
   background-color: #fff;
   border-radius: 16rpx;
-  margin: 24rpx 0;
+  margin: 10rpx 0 10rpx 0;
   padding: 20rpx;
 }
 .container .content .service-card .service-img.data-v-1cf27b2a {

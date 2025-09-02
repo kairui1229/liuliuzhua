@@ -28,6 +28,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       startLocation();
       getBannerList();
       getPartList();
+      getMarchanList(1);
     });
     const headerStyle = common_vendor.computed(() => {
       let style = {
@@ -59,8 +60,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         type: "wgs84",
         geocode: true,
         success: (res) => {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:181", "经度", res.longitude);
-          common_vendor.index.__f__("log", "at pages/index/index.vue:182", "纬度", res.latitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:188", "经度", res.longitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:189", "纬度", res.latitude);
           utils_geocode.reverseCode(res.longitude, res.latitude).then((res2) => {
             cityName.value = res2;
           }).catch((err) => {
@@ -92,9 +93,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       try {
         const data = await utils_http_index.get("/home/banner");
         bannerList.value = data.banner;
-        common_vendor.index.__f__("log", "at pages/index/index.vue:237", "bannerList", bannerList);
       } catch (err) {
-        common_vendor.index.__f__("error", "at pages/index/index.vue:239", err);
+        common_vendor.index.__f__("error", "at pages/index/index.vue:246", err);
       }
     };
     const partList = common_vendor.ref([]);
@@ -102,9 +102,26 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       try {
         const data = await utils_http_index.get("/home/part");
         partList.value = data.part;
-        common_vendor.index.__f__("log", "at pages/index/index.vue:249", "partList", partList);
       } catch (err) {
-        common_vendor.index.__f__("error", "at pages/index/index.vue:251", err);
+        common_vendor.index.__f__("error", "at pages/index/index.vue:258", err);
+      }
+    };
+    const merchanList = common_vendor.ref([]);
+    const currentPage = common_vendor.ref(1);
+    const totalPages = common_vendor.ref(0);
+    const getMarchanList = async (page) => {
+      try {
+        const data = await utils_http_index.get("/home/merchants", page);
+        common_vendor.index.__f__("log", "at pages/index/index.vue:269", "商家数据", data);
+        if (page === 1) {
+          merchanList.value = data.list;
+        } else {
+          merchanList.value = [...merchanList.value, ...data.list];
+        }
+        totalPages.value = data.pagination.totalPages;
+        currentPage.value = data.pagination.current;
+      } catch (err) {
+        common_vendor.index.__f__("error", "at pages/index/index.vue:278", err);
       }
     };
     return (_ctx, _cache) => {
@@ -150,10 +167,28 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         }),
         n: common_assets._imports_3,
         o: common_assets._imports_4,
-        p: common_vendor.p({
-          readonly: true,
-          inactiveColor: "#b2b2b2",
-          activeColor: "#ffce2c"
+        p: common_vendor.f(merchanList.value, (item, k0, i0) => {
+          return {
+            a: item.pic,
+            b: common_vendor.t(item.merchant_name),
+            c: "1cf27b2a-4-" + i0,
+            d: common_vendor.o(($event) => item.rating = $event, item.merchant_id),
+            e: common_vendor.p({
+              readonly: true,
+              inactiveColor: "#b2b2b2",
+              activeColor: "#ffce2c",
+              allowHalf: true,
+              modelValue: item.rating
+            }),
+            f: common_vendor.t(item.rating),
+            g: common_vendor.t(item.address),
+            h: common_vendor.f(item.service.split(","), (tag, k1, i1) => {
+              return {
+                a: common_vendor.t(tag)
+              };
+            }),
+            i: item.merchant_id
+          };
         }),
         q: common_vendor.gei(_ctx, "")
       };

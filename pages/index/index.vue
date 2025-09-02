@@ -81,18 +81,24 @@
 					</view>
 				</view>
 			</view>
-			<view class="service-card">
-				<image class="service-img" mode="aspectFill"></image>
+			<view class="service-card" v-for="item in merchanList" :key="item.merchant_id">
+				<image class="service-img" :src="item.pic" mode="aspectFill"></image>
 				<view class="service-info">
-					<text class="service-name">宠爱一生宠物美容</text>
+					<text class="service-name">{{item.merchant_name}}</text>
 					<view class="rate-area">
-						<up-rate readonly inactiveColor="#b2b2b2" activeColor="#ffce2c"></up-rate>
-						<text class="rate-text">4.8</text>
+						<up-rate 
+						v-model="item.rating" 
+						readonly 
+						inactiveColor="#b2b2b2" 
+						activeColor="#ffce2c" 
+						allowHalf
+						>
+						</up-rate>
+						<text class="rate-text">{{item.rating}}</text>
 					</view>
-					<text class="service-detail">这是地址</text>
+					<text class="service-detail">{{item.address}}</text>
 					<view class="tag-area">
-						<view class="tag-item">洗澡</view>
-						<view class="tag-item">寄养</view>
+						<view class="tag-item" v-for="tag in item.service.split(',')">{{tag}}</view>
 					</view>
 					<view class="price-area">
 						<view>惠</view>【新客福利】<text>¥19.9</text>代金券可领
@@ -126,6 +132,7 @@ onLoad(() =>{
 	startLocation()
 	getBannerList()
 	getPartList()
+	getMarchanList(1)
 })
 
 //自适应高度
@@ -234,7 +241,7 @@ const getBannerList= async ()=>{
 	try{
 		const data:any = await get("/home/banner")
 		bannerList.value = data.banner
-		console.log("bannerList",bannerList);
+		//console.log("bannerList",bannerList);
 	}catch(err){
 		console.error(err)
 	}
@@ -246,11 +253,32 @@ const getPartList = async ()=>{
     try{
     	const data:any = await get("/home/part")
     	partList.value = data.part
-    	console.log("partList",partList);
+    	//console.log("partList",partList);
     }catch(err){
     	console.error(err)
     }
-  }
+}
+
+//商家列表
+const merchanList = ref([])
+const currentPage = ref(1)
+const totalPages = ref(0)
+const getMarchanList = async(page:number) =>{
+	try{
+		const data:any = await get("/home/merchants",page)
+		console.log("商家数据",data)
+		if(page === 1){
+			merchanList.value = data.list
+		}else{
+			merchanList.value = [...merchanList.value,...data.list]
+		}
+		totalPages.value = data.pagination.totalPages
+		currentPage.value = data.pagination.current
+	}catch(err){
+		console.error(err)
+	}
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -403,7 +431,7 @@ const getPartList = async ()=>{
 			display: flex;
 			background-color: #fff;
 			border-radius: 16rpx;
-			margin: 24rpx 0;
+			margin: 10rpx 0 10rpx 0;
 			padding: 20rpx;
 			.service-img{
 				width: 160rpx;
