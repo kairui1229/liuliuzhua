@@ -9,15 +9,17 @@ if (!Array) {
   const _easycom_up_scroll_list2 = common_vendor.resolveComponent("up-scroll-list");
   const _easycom_up_box2 = common_vendor.resolveComponent("up-box");
   const _easycom_up_rate2 = common_vendor.resolveComponent("up-rate");
-  (_easycom_uni_icons2 + _easycom_uni_search_bar2 + _easycom_up_scroll_list2 + _easycom_up_box2 + _easycom_up_rate2)();
+  const _easycom_up_divider2 = common_vendor.resolveComponent("up-divider");
+  (_easycom_uni_icons2 + _easycom_uni_search_bar2 + _easycom_up_scroll_list2 + _easycom_up_box2 + _easycom_up_rate2 + _easycom_up_divider2)();
 }
 const _easycom_uni_icons = () => "../../uni_modules/uni-icons/components/uni-icons/uni-icons.js";
 const _easycom_uni_search_bar = () => "../../uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.js";
 const _easycom_up_scroll_list = () => "../../uni_modules/uview-plus/components/u-scroll-list/u-scroll-list.js";
 const _easycom_up_box = () => "../../uni_modules/uview-plus/components/u-box/u-box.js";
 const _easycom_up_rate = () => "../../uni_modules/uview-plus/components/u-rate/u-rate.js";
+const _easycom_up_divider = () => "../../uni_modules/uview-plus/components/u-divider/u-divider.js";
 if (!Math) {
-  (_easycom_uni_icons + _easycom_uni_search_bar + _easycom_up_scroll_list + _easycom_up_box + _easycom_up_rate)();
+  (_easycom_uni_icons + _easycom_uni_search_bar + _easycom_up_scroll_list + _easycom_up_box + _easycom_up_rate + _easycom_up_divider)();
 }
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
@@ -60,8 +62,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         type: "wgs84",
         geocode: true,
         success: (res) => {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:188", "经度", res.longitude);
-          common_vendor.index.__f__("log", "at pages/index/index.vue:189", "纬度", res.latitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:189", "经度", res.longitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:190", "纬度", res.latitude);
           utils_geocode.reverseCode(res.longitude, res.latitude).then((res2) => {
             cityName.value = res2;
           }).catch((err) => {
@@ -94,7 +96,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         const data = await utils_http_index.get("/home/banner");
         bannerList.value = data.banner;
       } catch (err) {
-        common_vendor.index.__f__("error", "at pages/index/index.vue:246", err);
+        common_vendor.index.__f__("error", "at pages/index/index.vue:247", err);
       }
     };
     const partList = common_vendor.ref([]);
@@ -103,7 +105,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         const data = await utils_http_index.get("/home/part");
         partList.value = data.part;
       } catch (err) {
-        common_vendor.index.__f__("error", "at pages/index/index.vue:258", err);
+        common_vendor.index.__f__("error", "at pages/index/index.vue:259", err);
       }
     };
     const merchanList = common_vendor.ref([]);
@@ -111,8 +113,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const totalPages = common_vendor.ref(0);
     const getMarchanList = async (page) => {
       try {
-        const data = await utils_http_index.get("/home/merchants", page);
-        common_vendor.index.__f__("log", "at pages/index/index.vue:269", "商家数据", data);
+        const data = await utils_http_index.get("/home/merchants", { page });
+        common_vendor.index.__f__("log", "at pages/index/index.vue:270", "商家数据", data);
         if (page === 1) {
           merchanList.value = data.list;
         } else {
@@ -121,9 +123,14 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         totalPages.value = data.pagination.totalPages;
         currentPage.value = data.pagination.current;
       } catch (err) {
-        common_vendor.index.__f__("error", "at pages/index/index.vue:278", err);
+        common_vendor.index.__f__("error", "at pages/index/index.vue:279", err);
       }
     };
+    common_vendor.onReachBottom(() => {
+      if (currentPage.value < totalPages.value) {
+        getMarchanList(currentPage.value + 1);
+      }
+    });
     return (_ctx, _cache) => {
       return {
         a: common_vendor.p({
@@ -190,7 +197,10 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             i: item.merchant_id
           };
         }),
-        q: common_vendor.gei(_ctx, "")
+        q: common_vendor.p({
+          text: "我是有底线的"
+        }),
+        r: common_vendor.gei(_ctx, "")
       };
     };
   }

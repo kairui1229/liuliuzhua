@@ -105,12 +105,13 @@
 					</view>
 				</view>
 			</view>
+			<up-divider text="我是有底线的"></up-divider>
 		</view>
 	</view>
 </template>
 
 <script lang="ts" setup>
-import {onLoad} from "@dcloudio/uni-app"
+import {onLoad,onReachBottom} from "@dcloudio/uni-app"
 import {ref,computed} from "vue"
 import {reverseCode} from "@/utils/geocode"
 import {get} from "@/utils/http"
@@ -263,9 +264,9 @@ const getPartList = async ()=>{
 const merchanList = ref([])
 const currentPage = ref(1)
 const totalPages = ref(0)
-const getMarchanList = async(page:number) =>{
+const getMarchanList = async (page:number) =>{
 	try{
-		const data:any = await get("/home/merchants",page)
+		const data:any = await get("/home/merchants", {page})
 		console.log("商家数据",data)
 		if(page === 1){
 			merchanList.value = data.list
@@ -278,6 +279,11 @@ const getMarchanList = async(page:number) =>{
 		console.error(err)
 	}
 }
+onReachBottom(() => {
+	if(currentPage.value < totalPages.value){
+		getMarchanList(currentPage.value+1)
+	}
+})
 
 </script>
 

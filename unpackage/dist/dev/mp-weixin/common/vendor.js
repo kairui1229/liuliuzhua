@@ -8267,6 +8267,11 @@ const onLoad = /* @__PURE__ */ createLifeCycleHook(
   2
   /* HookFlags.PAGE */
 );
+const onReachBottom = /* @__PURE__ */ createLifeCycleHook(
+  ON_REACH_BOTTOM,
+  2
+  /* HookFlags.PAGE */
+);
 exports._export_sfc = _export_sfc;
 exports.computed = computed;
 exports.createSSRApp = createSSRApp;
@@ -8279,6 +8284,7 @@ exports.initVueI18n = initVueI18n;
 exports.n = n;
 exports.o = o;
 exports.onLoad = onLoad;
+exports.onReachBottom = onReachBottom;
 exports.p = p;
 exports.ref = ref;
 exports.resolveComponent = resolveComponent;
