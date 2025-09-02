@@ -49,7 +49,7 @@
 		</view>
 	</view>
 	
-	<view class="float-cart">
+	<view class="float-cart" @click=goCart>
 		<up-icon name="shopping-cart" color="#ffce2c" size="80rpx"></up-icon>
 		<view class="cart-badge" v-if="cartCount > 0">
 			{{cartCount}}
@@ -106,7 +106,21 @@ onReachBottom(() => {
 })
 
 //购物车
-const cartCount = ref(0)
+const cartCount = ref(2)
+const goCart = () =>{
+	//先判断用户是否登录，如果没有登录就要先跳到登录页面
+	const token = uni.getStorageSync("token")
+	if(!token){
+		uni.navigateTo({
+			url:"/pages/login/login"
+		})
+		return
+	}
+	uni.navigateTo({
+		url:"/pages/cart/cart"
+	})
+}
+
 </script>
 
 <style lang="scss" scoped>

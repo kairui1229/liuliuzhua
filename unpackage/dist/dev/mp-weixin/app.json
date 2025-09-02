@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/selected/selected",
     "pages/service/service",
-    "pages/me/me"
+    "pages/me/me",
+    "pages/cart/cart",
+    "pages/login/login"
   ],
   "window": {
     "navigationBarTextStyle": "black",

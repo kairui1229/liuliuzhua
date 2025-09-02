@@ -48,7 +48,19 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         getProducts(currentPage.value + 1, categories.value[currentCategory.value].id);
       }
     });
-    const cartCount = common_vendor.ref(0);
+    const cartCount = common_vendor.ref(2);
+    const goCart = () => {
+      const token = common_vendor.index.getStorageSync("token");
+      if (!token) {
+        common_vendor.index.navigateTo({
+          url: "/pages/login/login"
+        });
+        return;
+      }
+      common_vendor.index.navigateTo({
+        url: "/pages/cart/cart"
+      });
+    };
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.p({
@@ -88,7 +100,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         g: cartCount.value > 0
       }, cartCount.value > 0 ? {
         h: common_vendor.t(cartCount.value)
-      } : {});
+      } : {}, {
+        i: common_vendor.o(goCart)
+      });
     };
   }
 });
