@@ -81,6 +81,24 @@
 					</view>
 				</view>
 			</view>
+			<view class="service-card">
+				<image class="service-img" mode="aspectFill"></image>
+				<view class="service-info">
+					<text class="service-name">宠爱一生宠物美容</text>
+					<view class="rate-area">
+						<up-rate readonly inactiveColor="#b2b2b2" activeColor="#ffce2c"></up-rate>
+						<text class="rate-text">4.8</text>
+					</view>
+					<text class="service-detail">这是地址</text>
+					<view class="tag-area">
+						<view class="tag-item">洗澡</view>
+						<view class="tag-item">寄养</view>
+					</view>
+					<view class="price-area">
+						<view>惠</view>【新客福利】<text>¥19.9</text>代金券可领
+					</view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -377,6 +395,104 @@ const getPartList = async ()=>{
 						font-size: 20rpx;
 						color: #fff;
 						padding: 2rpx 16rpx;
+					}
+				}
+			}
+		}
+		.service-card{
+			display: flex;
+			background-color: #fff;
+			border-radius: 16rpx;
+			margin: 24rpx 0;
+			padding: 20rpx;
+			.service-img{
+				width: 160rpx;
+				height: 160rpx;
+				background-color: #ddd;
+				border-radius: 8rpx;
+				margin-right: 20rpx;
+				margin-top: 8rpx;
+			}
+			.service-info{
+				flex:1;
+				.service-name{
+					font-size: 32rpx;
+					font-weight: bold;
+					color: #000;
+					line-height: 44rpx;
+					display: block;
+					margin-bottom: 8rpx;
+				}
+				.rate-area{
+					display: flex;
+					align-items: center;
+					margin-bottom: 8rpx;
+					.rate-text{
+						color: $uni-color-primary;
+						font-size: 28rpx;
+						margin-left: 10rpx;
+					}
+				}
+				.service-detail{
+					font-size: 24rpx;
+					color: #999;
+					line-height: 34rpx;
+					display: block;
+					margin-bottom: 20rpx;
+				}
+				.tag-area{
+					display: flex;
+					align-items: center;
+					margin: 12rpx 0;
+					.tag-item{
+						font-size: 18rpx;
+						padding: 4rpx 14rpx;
+						border-radius: 20rpx;
+						margin-right: 16rpx;
+						border: 1px solid;
+						&:nth-child(1){
+							color:#ff6b81;
+							border-color: #ff6b81;
+							background-color: rgba(255, 107, 129, 0.1);
+						}
+						&:nth-child(2){
+							color:#ffce2c;
+							border-color: #ffce2c;
+							background-color: rgba(255, 206, 44, 0.1);
+						}
+						&:nth-child(3){
+							color:#19be6b;
+							border-color: #19be6b;
+							background-color: rgba(25, 190, 107, 0.1);
+						}
+						&:nth-child(4){
+							color:#ff9900;
+							border-color: #ff9900;
+							background-color: rgba(255, 153, 0, 0.1);
+						}
+						&:nth-child(5){
+							margin-right: 0;
+						}
+					}
+				}
+				.price-area{
+					display: flex;
+					align-items: center;
+					margin-top: 16rpx;
+					font-size: 24rpx;
+					color:#666;
+					view{
+						background-color: $uni-color-primary;
+						color: #fff;
+						font-size: 20rpx;
+						padding: 2rpx 8rpx;
+						border-radius: 4rpx;
+						margin-right: 8rpx;
+					}
+					text{
+						color: #ff6b81;
+						font-size: 24rpx;
+						margin: 0 4rpx;
 					}
 				}
 			}

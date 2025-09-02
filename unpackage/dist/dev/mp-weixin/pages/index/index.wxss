@@ -170,3 +170,101 @@
   color: #fff;
   padding: 2rpx 16rpx;
 }
+.container .content .service-card.data-v-1cf27b2a {
+  display: flex;
+  background-color: #fff;
+  border-radius: 16rpx;
+  margin: 24rpx 0;
+  padding: 20rpx;
+}
+.container .content .service-card .service-img.data-v-1cf27b2a {
+  width: 160rpx;
+  height: 160rpx;
+  background-color: #ddd;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+  margin-top: 8rpx;
+}
+.container .content .service-card .service-info.data-v-1cf27b2a {
+  flex: 1;
+}
+.container .content .service-card .service-info .service-name.data-v-1cf27b2a {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #000;
+  line-height: 44rpx;
+  display: block;
+  margin-bottom: 8rpx;
+}
+.container .content .service-card .service-info .rate-area.data-v-1cf27b2a {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+.container .content .service-card .service-info .rate-area .rate-text.data-v-1cf27b2a {
+  color: #ffce2c;
+  font-size: 28rpx;
+  margin-left: 10rpx;
+}
+.container .content .service-card .service-info .service-detail.data-v-1cf27b2a {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 34rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+.container .content .service-card .service-info .tag-area.data-v-1cf27b2a {
+  display: flex;
+  align-items: center;
+  margin: 12rpx 0;
+}
+.container .content .service-card .service-info .tag-area .tag-item.data-v-1cf27b2a {
+  font-size: 18rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 20rpx;
+  margin-right: 16rpx;
+  border: 1px solid;
+}
+.container .content .service-card .service-info .tag-area .tag-item.data-v-1cf27b2a:nth-child(1) {
+  color: #ff6b81;
+  border-color: #ff6b81;
+  background-color: rgba(255, 107, 129, 0.1);
+}
+.container .content .service-card .service-info .tag-area .tag-item.data-v-1cf27b2a:nth-child(2) {
+  color: #ffce2c;
+  border-color: #ffce2c;
+  background-color: rgba(255, 206, 44, 0.1);
+}
+.container .content .service-card .service-info .tag-area .tag-item.data-v-1cf27b2a:nth-child(3) {
+  color: #19be6b;
+  border-color: #19be6b;
+  background-color: rgba(25, 190, 107, 0.1);
+}
+.container .content .service-card .service-info .tag-area .tag-item.data-v-1cf27b2a:nth-child(4) {
+  color: #ff9900;
+  border-color: #ff9900;
+  background-color: rgba(255, 153, 0, 0.1);
+}
+.container .content .service-card .service-info .tag-area .tag-item.data-v-1cf27b2a:nth-child(5) {
+  margin-right: 0;
+}
+.container .content .service-card .service-info .price-area.data-v-1cf27b2a {
+  display: flex;
+  align-items: center;
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+.container .content .service-card .service-info .price-area view.data-v-1cf27b2a {
+  background-color: #ffce2c;
+  color: #fff;
+  font-size: 20rpx;
+  padding: 2rpx 8rpx;
+  border-radius: 4rpx;
+  margin-right: 8rpx;
+}
+.container .content .service-card .service-info .price-area text.data-v-1cf27b2a {
+  color: #ff6b81;
+  font-size: 24rpx;
+  margin: 0 4rpx;
+}
