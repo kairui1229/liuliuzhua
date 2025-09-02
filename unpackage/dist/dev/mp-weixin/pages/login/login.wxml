@@ -1,1 +1,1 @@
-<view class="{{[virtualHostClass]}}" style="{{virtualHostStyle}}" hidden="{{virtualHostHidden || false}}" id="{{a}}"> login </view>
+<view class="{{['login-container', 'data-v-e4e4508d', virtualHostClass]}}" style="{{virtualHostStyle}}" hidden="{{virtualHostHidden || false}}" id="{{b}}"><view class="login-header data-v-e4e4508d"><view class="header-content data-v-e4e4508d"><image class="logo data-v-e4e4508d" src="{{a}}" mode=""></image><text class="app-name data-v-e4e4508d">溜溜爪宠物服务</text><text class="app-slogan data-v-e4e4508d">让爱宠生活更美好</text></view></view></view>
