@@ -1,1 +1,1 @@
-<view class="{{[virtualHostClass]}}" style="{{virtualHostStyle}}" hidden="{{virtualHostHidden || false}}" id="{{a}}"></view>
+<view class="{{['container', 'data-v-6737212f', virtualHostClass]}}" style="{{virtualHostStyle}}" hidden="{{virtualHostHidden || false}}" id="{{b}}"><view class="header data-v-6737212f"><view class="nav-content data-v-6737212f"><uni-search-bar wx:if="{{a}}" class="data-v-6737212f" virtualHostClass="data-v-6737212f" style="width:100%" virtualHostStyle="width:100%" u-i="6737212f-0" bind:__l="__l" u-p="{{a}}"></uni-search-bar></view></view></view>
