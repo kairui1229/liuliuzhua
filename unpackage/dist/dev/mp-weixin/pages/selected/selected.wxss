@@ -133,3 +133,31 @@
   align-items: center;
   justify-content: center;
 }
+.float-cart.data-v-6737212f {
+  position: fixed;
+  right: 30rpx;
+  bottom: 100rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+.float-cart .cart-badge.data-v-6737212f {
+  position: absolute;
+  top: -6rpx;
+  right: -6rpx;
+  background-color: #ff4d4f;
+  color: #fff;
+  font-size: 24rpx;
+  width: 36rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  border-radius: 50%;
+  text-align: center;
+  padding: 6rpx;
+}

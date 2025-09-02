@@ -34,7 +34,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const totalPages = common_vendor.ref(0);
     const getProducts = async (page, category_id) => {
       const data = await utils_http_index.get("/sel/products", { page, category_id });
-      common_vendor.index.__f__("log", "at pages/selected/selected.vue:85", "商品数据", data);
+      common_vendor.index.__f__("log", "at pages/selected/selected.vue:92", "商品数据", data);
       if (page === 1) {
         products.value = data.list;
       } else {
@@ -48,8 +48,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         getProducts(currentPage.value + 1, categories.value[currentCategory.value].id);
       }
     });
+    const cartCount = common_vendor.ref(0);
     return (_ctx, _cache) => {
-      return {
+      return common_vendor.e({
         a: common_vendor.p({
           radius: "100",
           placeholder: "猫粮狗粮、宠物零食",
@@ -79,8 +80,15 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           color: "#fff",
           size: "18"
         }),
-        f: common_vendor.gei(_ctx, "")
-      };
+        f: common_vendor.p({
+          name: "shopping-cart",
+          color: "#ffce2c",
+          size: "80rpx"
+        }),
+        g: cartCount.value > 0
+      }, cartCount.value > 0 ? {
+        h: common_vendor.t(cartCount.value)
+      } : {});
     };
   }
 });

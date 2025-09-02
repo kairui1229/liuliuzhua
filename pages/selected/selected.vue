@@ -48,6 +48,13 @@
 			</view>
 		</view>
 	</view>
+	
+	<view class="float-cart">
+		<up-icon name="shopping-cart" color="#ffce2c" size="80rpx"></up-icon>
+		<view class="cart-badge" v-if="cartCount > 0">
+			{{cartCount}}
+		</view>
+	</view>
 </template>
 
 <script setup lang="ts">
@@ -97,6 +104,9 @@ onReachBottom(() => {
 		getProducts(currentPage.value+1,categories.value[currentCategory.value].id)
 	}
 })
+
+//购物车
+const cartCount = ref(0)
 </script>
 
 <style lang="scss" scoped>
@@ -210,6 +220,34 @@ onReachBottom(() => {
 				}
 			}
 		}
+	}
+}
+.float-cart{
+	position: fixed;
+	right:30rpx;
+	bottom: 100rpx;
+	width: 100rpx;
+	height: 100rpx;
+	border-radius: 50%;
+	background-color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0,0.2);
+	z-index: 999;
+	.cart-badge{
+		position: absolute;
+		top:-6rpx;
+		right: -6rpx;
+		background-color: #ff4d4f;
+		color: #fff;
+		font-size: 24rpx;
+		width: 36rpx;
+		height: 36rpx;
+		line-height: 36rpx;
+		border-radius: 50%;
+		text-align: center;
+		padding: 6rpx;
 	}
 }
 </style>
