@@ -21,10 +21,29 @@
 				  :key="item.id" 
 				  class="category-item"
 				  :class="{active:currentCategory === index}"
-				  @click="switchCategory(index)"
+				  @click="switchCategory(index,item.id)"
 				  >
 				  {{item.category_name}}
 				  </view>
+				</scroll-view>
+				
+				<!-- 右侧商品 -->
+				<scroll-view class="category-right" scroll-y>
+					<view class="category-title">{{categories[currentCategory].category_name}}</view>
+					<view class="product-list">
+						<view class="product-item" v-for="item in products" :key="item.id">
+							<image :src="item.main_pic" mode="aspectFill" class="product-image"></image>
+							<view class="product-info">
+								<text class="product-name">{{item.name}}</text>
+								<view class="product-row">
+									<text class="product-price">¥{{item.price}}</text>
+									<view class="add-cart">
+										<up-icon name="shopping-cart" color="#fff" size="18"></up-icon>
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
 				</scroll-view>
 			</view>
 		</view>
@@ -52,8 +71,10 @@ const getCategories = async () =>{
 
 //设置高亮效果
 const currentCategory = ref(0)
-const switchCategory = (index:number) =>{
+const switchCategory = (index:number,category_id:number) =>{
 	currentCategory.value = index
+	products.value = []
+	getProducts(1,category_id)
 }
 
 //获取右侧商品菜单
@@ -93,6 +114,7 @@ onReachBottom(() => {
 	}
 	.content{
 		.category-section{
+			display: flex;
 			background-color: #fff;
 			border-radius: 16rpx;
 			height: calc(100vh - 150rpx);
@@ -122,6 +144,67 @@ onReachBottom(() => {
 							transform: translateY(-50%);
 							background-color: $uni-color-primary;
 							border-radius: 0 4rpx 4rpx 0;
+						}
+					}
+				}
+			}
+			.category-right{
+				flex:1;
+				height: 100%;
+				padding: 20rpx;
+				.category-title{
+					font-size: 32rpx;
+					font-weight: bold;
+					margin-bottom: 20rpx;
+					padding:0 10rpx;
+				}
+				.product-list{
+					display: flex;
+					flex-wrap: wrap;
+					.product-item{
+						width: calc(50% - 20rpx);
+						margin: 10rpx;
+						padding: 10rpx;
+						box-sizing: border-box;
+						border-radius: 12rpx;
+						overflow: hidden;
+						box-shadow: 0 2rpx 12rpx rgba(0, 0, 0,0.2);
+						.product-image{
+							width: 100%;
+							height: 200rpx;
+						}
+						.product-info{
+							padding: 16rpx;
+							.product-name{
+								font-size: 24rpx;
+								color: #333;
+								display: block;
+								margin-bottom: 8rpx;
+								white-space: nowrap;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								width: 100%;
+								line-height: 1.4;
+							}
+							.product-row{
+								display: flex;
+								justify-content: space-between;
+								align-items: center;
+								.product-price{
+									font-size: 26rpx;
+									color:$uni-color-primary;
+									font-weight: bold;
+								}
+								.add-cart{
+									width: 48rpx;
+									height: 48rpx;
+									background-color: $uni-color-primary;
+									border-radius: 50%;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+								}
+							}
 						}
 					}
 				}
