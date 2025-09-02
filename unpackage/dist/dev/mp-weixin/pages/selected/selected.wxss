@@ -36,3 +36,21 @@
   align-items: center;
   padding: 20rpx 50rpx;
 }
+.container .content .category-section.data-v-6737212f {
+  background-color: #fff;
+  border-radius: 16rpx;
+  height: calc(100vh - 150rpx);
+}
+.container .content .category-section .category-left.data-v-6737212f {
+  width: 180rpx;
+  height: 100%;
+  background-color: #f7f7f7;
+}
+.container .content .category-section .category-left .category-item.data-v-6737212f {
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
