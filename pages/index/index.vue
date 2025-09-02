@@ -43,6 +43,22 @@
 					</view>
 				</up-scroll-list>
 			</view>
+			
+			<view class="part">
+				<view class="p-4 bg-white">
+				    <up-box height="160px" gap="12px">
+				        <template #left>
+				            <image class="box-image" src="/static/modules/home/pic1.png" mode="aspectFill"></image>
+				        </template>
+				        <template #rightTop>
+				            <image class="box-image" src="/static/modules/home/pic2.png" mode="aspectFill"></image>
+				        </template>
+				        <template #rightBottom>
+				            <image class="box-image" src="/static/modules/home/pic3.png" mode="aspectFill"></image>
+				        </template>
+				     </up-box>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -268,6 +284,11 @@ const getPartList = async ()=>{
 				   overflow: hidden;
 				   text-overflow: ellipsis;
 			   }
+		   }
+		   .box-image{
+			   width: 100%;
+			   height: 100%;
+			   border-radius: 16rpx;
 		   }
 		}
 	}

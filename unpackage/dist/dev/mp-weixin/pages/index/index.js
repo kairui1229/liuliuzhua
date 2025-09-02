@@ -1,18 +1,21 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const common_assets = require("../../common/assets.js");
 const utils_geocode = require("../../utils/geocode.js");
 const utils_http_index = require("../../utils/http/index.js");
 if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   const _easycom_uni_search_bar2 = common_vendor.resolveComponent("uni-search-bar");
   const _easycom_up_scroll_list2 = common_vendor.resolveComponent("up-scroll-list");
-  (_easycom_uni_icons2 + _easycom_uni_search_bar2 + _easycom_up_scroll_list2)();
+  const _easycom_up_box2 = common_vendor.resolveComponent("up-box");
+  (_easycom_uni_icons2 + _easycom_uni_search_bar2 + _easycom_up_scroll_list2 + _easycom_up_box2)();
 }
 const _easycom_uni_icons = () => "../../uni_modules/uni-icons/components/uni-icons/uni-icons.js";
 const _easycom_uni_search_bar = () => "../../uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.js";
 const _easycom_up_scroll_list = () => "../../uni_modules/uview-plus/components/u-scroll-list/u-scroll-list.js";
+const _easycom_up_box = () => "../../uni_modules/uview-plus/components/u-box/u-box.js";
 if (!Math) {
-  (_easycom_uni_icons + _easycom_uni_search_bar + _easycom_up_scroll_list)();
+  (_easycom_uni_icons + _easycom_uni_search_bar + _easycom_up_scroll_list + _easycom_up_box)();
 }
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
@@ -54,8 +57,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         type: "wgs84",
         geocode: true,
         success: (res) => {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:125", "经度", res.longitude);
-          common_vendor.index.__f__("log", "at pages/index/index.vue:126", "纬度", res.latitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:141", "经度", res.longitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:142", "纬度", res.latitude);
           utils_geocode.reverseCode(res.longitude, res.latitude).then((res2) => {
             cityName.value = res2;
           }).catch((err) => {
@@ -87,9 +90,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       try {
         const data = await utils_http_index.get("/home/banner");
         bannerList.value = data.banner;
-        common_vendor.index.__f__("log", "at pages/index/index.vue:181", "bannerList", bannerList);
+        common_vendor.index.__f__("log", "at pages/index/index.vue:197", "bannerList", bannerList);
       } catch (err) {
-        common_vendor.index.__f__("error", "at pages/index/index.vue:183", err);
+        common_vendor.index.__f__("error", "at pages/index/index.vue:199", err);
       }
     };
     const partList = common_vendor.ref([]);
@@ -97,9 +100,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       try {
         const data = await utils_http_index.get("/home/part");
         partList.value = data.part;
-        common_vendor.index.__f__("log", "at pages/index/index.vue:193", "partList", partList);
+        common_vendor.index.__f__("log", "at pages/index/index.vue:209", "partList", partList);
       } catch (err) {
-        common_vendor.index.__f__("error", "at pages/index/index.vue:195", err);
+        common_vendor.index.__f__("error", "at pages/index/index.vue:211", err);
       }
     };
     return (_ctx, _cache) => {
@@ -136,7 +139,14 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           indicatorColor: "#fff0f0",
           indicatorActiveColor: "#ffce2c"
         }),
-        j: common_vendor.gei(_ctx, "")
+        j: common_assets._imports_0,
+        k: common_assets._imports_1,
+        l: common_assets._imports_2,
+        m: common_vendor.p({
+          height: "160px",
+          gap: "12px"
+        }),
+        n: common_vendor.gei(_ctx, "")
       };
     };
   }
