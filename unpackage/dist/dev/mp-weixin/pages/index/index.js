@@ -57,8 +57,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         type: "wgs84",
         geocode: true,
         success: (res) => {
-          common_vendor.index.__f__("log", "at pages/index/index.vue:141", "经度", res.longitude);
-          common_vendor.index.__f__("log", "at pages/index/index.vue:142", "纬度", res.latitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:163", "经度", res.longitude);
+          common_vendor.index.__f__("log", "at pages/index/index.vue:164", "纬度", res.latitude);
           utils_geocode.reverseCode(res.longitude, res.latitude).then((res2) => {
             cityName.value = res2;
           }).catch((err) => {
@@ -90,9 +90,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       try {
         const data = await utils_http_index.get("/home/banner");
         bannerList.value = data.banner;
-        common_vendor.index.__f__("log", "at pages/index/index.vue:197", "bannerList", bannerList);
+        common_vendor.index.__f__("log", "at pages/index/index.vue:219", "bannerList", bannerList);
       } catch (err) {
-        common_vendor.index.__f__("error", "at pages/index/index.vue:199", err);
+        common_vendor.index.__f__("error", "at pages/index/index.vue:221", err);
       }
     };
     const partList = common_vendor.ref([]);
@@ -100,9 +100,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       try {
         const data = await utils_http_index.get("/home/part");
         partList.value = data.part;
-        common_vendor.index.__f__("log", "at pages/index/index.vue:209", "partList", partList);
+        common_vendor.index.__f__("log", "at pages/index/index.vue:231", "partList", partList);
       } catch (err) {
-        common_vendor.index.__f__("error", "at pages/index/index.vue:211", err);
+        common_vendor.index.__f__("error", "at pages/index/index.vue:233", err);
       }
     };
     return (_ctx, _cache) => {
@@ -146,7 +146,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           height: "160px",
           gap: "12px"
         }),
-        n: common_vendor.gei(_ctx, "")
+        n: common_assets._imports_3,
+        o: common_assets._imports_4,
+        p: common_vendor.gei(_ctx, "")
       };
     };
   }
