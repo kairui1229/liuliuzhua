@@ -41,11 +41,12 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         products.value = [...products.value, ...data.list];
       }
       totalPages.value = data.pagination.totalPages;
-      currentPage.value = data.pagination.current;
+      currentPage.value = page;
     };
     common_vendor.onReachBottom(() => {
-      if (currentPage.value < totalPages.value)
-        ;
+      if (currentPage.value < totalPages.value) {
+        getProducts(currentPage.value + 1, categories.value[currentCategory.value].id);
+      }
     });
     return (_ctx, _cache) => {
       return {

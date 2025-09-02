@@ -77,7 +77,7 @@ const switchCategory = (index:number,category_id:number) =>{
 	getProducts(1,category_id)
 }
 
-//获取右侧商品菜单
+//获取右侧商品列表
 const products = ref([])
 const totalPages = ref(0)
 const getProducts = async (page:number,category_id:number) =>{
@@ -89,12 +89,12 @@ const getProducts = async (page:number,category_id:number) =>{
 		products.value = [...products.value,...data.list]
 	}
 	totalPages.value = data.pagination.totalPages
-	currentPage.value = data.pagination.current
+	currentPage.value = page
 }
 
 onReachBottom(() => {
 	if(currentPage.value < totalPages.value){
-		//getProducts(currentPage.value+1,category_id)
+		getProducts(currentPage.value+1,categories.value[currentCategory.value].id)
 	}
 })
 </script>
