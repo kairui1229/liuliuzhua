@@ -19,7 +19,11 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const getCategories = async () => {
       const data = await utils_http_index.get("/sel/tag");
       categories.value = data.tag;
-      common_vendor.index.__f__("log", "at pages/selected/selected.vue:40", categories.value, 123);
+      common_vendor.index.__f__("log", "at pages/selected/selected.vue:48", categories.value, 123);
+    };
+    const currentCategory = common_vendor.ref(0);
+    const switchCategory = (index) => {
+      currentCategory.value = index;
     };
     return (_ctx, _cache) => {
       return {
@@ -29,10 +33,12 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           clearButton: "none",
           cancelButton: "none"
         }),
-        b: common_vendor.f(categories.value, (item, k0, i0) => {
+        b: common_vendor.f(categories.value, (item, index, i0) => {
           return {
             a: common_vendor.t(item.category_name),
-            b: item.id
+            b: item.id,
+            c: currentCategory.value === index ? 1 : "",
+            d: common_vendor.o(($event) => switchCategory(index), item.id)
           };
         }),
         c: common_vendor.gei(_ctx, "")

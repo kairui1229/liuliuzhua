@@ -47,10 +47,27 @@
   background-color: #f7f7f7;
 }
 .container .content .category-section .category-left .category-item.data-v-6737212f {
+  position: relative;
   height: 100rpx;
   line-height: 100rpx;
   text-align: center;
   font-size: 28rpx;
   color: #333;
   border-bottom: 1px solid #eee;
+}
+.container .content .category-section .category-left .category-item.active.data-v-6737212f {
+  background-color: #fff;
+  color: #ffce2c;
+  font-weight: bold;
+}
+.container .content .category-section .category-left .category-item.active.data-v-6737212f::before {
+  content: "";
+  position: absolute;
+  width: 6rpx;
+  height: 30rpx;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #ffce2c;
+  border-radius: 0 4rpx 4rpx 0;
 }
