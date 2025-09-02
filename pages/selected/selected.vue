@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import {onLoad} from "@dcloudio/uni-app"
+import {onLoad,onReachBottom} from "@dcloudio/uni-app"
 import {ref,computed} from "vue"
 import {get} from "@/utils/http"
 
@@ -42,10 +42,12 @@ onLoad(() =>{
 
 //获取左侧菜单分类
 const categories:any = ref([])
+const currentPage= ref(1)
 const getCategories = async () =>{
 	const data:any = await get("/sel/tag")
 	categories.value = data.tag
-	console.log(categories.value,123)
+	getProducts(currentPage.value,categories.value[0].id)
+	//console.log(categories.value,123)
 }
 
 //设置高亮效果
@@ -53,6 +55,27 @@ const currentCategory = ref(0)
 const switchCategory = (index:number) =>{
 	currentCategory.value = index
 }
+
+//获取右侧商品菜单
+const products = ref([])
+const totalPages = ref(0)
+const getProducts = async (page:number,category_id:number) =>{
+	const data:any = await get("/sel/products",{page,category_id})
+	console.log("商品数据",data)
+	if(page === 1){
+		products.value = data.list
+	}else{
+		products.value = [...products.value,...data.list]
+	}
+	totalPages.value = data.pagination.totalPages
+	currentPage.value = data.pagination.current
+}
+
+onReachBottom(() => {
+	if(currentPage.value < totalPages.value){
+		//getProducts(currentPage.value+1,category_id)
+	}
+})
 </script>
 
 <style lang="scss" scoped>

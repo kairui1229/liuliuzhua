@@ -16,15 +16,33 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       getCategories();
     });
     const categories = common_vendor.ref([]);
+    const currentPage = common_vendor.ref(1);
     const getCategories = async () => {
       const data = await utils_http_index.get("/sel/tag");
       categories.value = data.tag;
-      common_vendor.index.__f__("log", "at pages/selected/selected.vue:48", categories.value, 123);
+      getProducts(currentPage.value, categories.value[0].id);
     };
     const currentCategory = common_vendor.ref(0);
     const switchCategory = (index) => {
       currentCategory.value = index;
     };
+    const products = common_vendor.ref([]);
+    const totalPages = common_vendor.ref(0);
+    const getProducts = async (page, category_id) => {
+      const data = await utils_http_index.get("/sel/products", { page, category_id });
+      common_vendor.index.__f__("log", "at pages/selected/selected.vue:64", "商品数据", data);
+      if (page === 1) {
+        products.value = data.list;
+      } else {
+        products.value = [...products.value, ...data.list];
+      }
+      totalPages.value = data.pagination.totalPages;
+      currentPage.value = data.pagination.current;
+    };
+    common_vendor.onReachBottom(() => {
+      if (currentPage.value < totalPages.value)
+        ;
+    });
     return (_ctx, _cache) => {
       return {
         a: common_vendor.p({
