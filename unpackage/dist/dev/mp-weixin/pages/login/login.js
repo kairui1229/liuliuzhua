@@ -21,8 +21,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       platform.value = "mp-weixin";
     });
     const fn = () => {
-      common_vendor.index.setStorageSync("token", "ouyangkairui");
-      common_vendor.index.setStorageSync("user", { user_id: 1, phone: 18838913429 });
+      common_vendor.index.setStorageSync("token", "xulaoshi666");
+      common_vendor.index.setStorageSync("user", { user_id: 1, phone: 18888888888 });
       common_vendor.index.showToast({
         title: "登录成功",
         icon: "success",

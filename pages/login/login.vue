@@ -99,8 +99,8 @@ onMounted(()=>{
 
 //没有企业身份用这段代码模拟，一样可以登录不影响后面流程！！！！！！！
 const fn=()=>{
-	uni.setStorageSync("token","ouyangkairui")
-	uni.setStorageSync("user",{user_id:1,phone:18838913429})
+	uni.setStorageSync("token","xulaoshi666")
+	uni.setStorageSync("user",{user_id:1,phone:18888888888})
 	uni.showToast({
 		title:"登录成功",
 		icon:"success",
