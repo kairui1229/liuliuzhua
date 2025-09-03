@@ -60,13 +60,16 @@
 </template>
 
 <script setup lang="ts">
-import {onLoad,onReachBottom} from "@dcloudio/uni-app"
+import {onLoad,onReachBottom,onShow} from "@dcloudio/uni-app"
 import {ref,computed} from "vue"
 import {get} from "@/utils/http"
 import ProductsSpecPopup from "../../components/products-spec-popup/products-spec-popup.vue"
 
 onLoad(() =>{
 	getCategories()
+})
+
+onShow(() =>{
 	getCartCount()
 })
 

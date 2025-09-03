@@ -577,6 +577,7 @@ exports.$parent = $parent;
 exports.addStyle = addStyle;
 exports.addUnit = addUnit;
 exports.deepMerge = deepMerge;
+exports.error = error;
 exports.formValidate = formValidate;
 exports.getPx = getPx;
 exports.getWindowInfo = getWindowInfo;
