@@ -42,6 +42,19 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const selectedCount = common_vendor.computed(() => {
       return cartList.value.filter((item) => item.selected).length;
     });
+    const allChecked = common_vendor.ref(false);
+    common_vendor.watch(cartList, () => {
+      if (cartList.value.length === 0) {
+        allChecked.value = false;
+        return;
+      }
+      allChecked.value = cartList.value.length === selectedCount.value;
+    }, { deep: true });
+    const toggleAllChecked = () => {
+      cartList.value.forEach((item) => {
+        item.selected = !allChecked.value;
+      });
+    };
     const deleteItem = (cart_id) => {
       common_vendor.index.showModal({
         title: "提示",
@@ -56,7 +69,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
               });
               getCart();
             } catch (error) {
-              common_vendor.index.__f__("error", "at pages/cart/cart.vue:105", "删除商品失败");
+              common_vendor.index.__f__("error", "at pages/cart/cart.vue:123", "删除商品失败");
             }
           }
         }
@@ -90,17 +103,16 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           color: "#999"
         })
       } : {}, {
-        d: common_vendor.p({
-          usedAlone: true
+        d: common_vendor.o(toggleAllChecked),
+        e: common_vendor.o(($event) => allChecked.value = $event),
+        f: common_vendor.p({
+          usedAlone: true,
+          checked: allChecked.value
         }),
-        e: common_vendor.t(totalPrice.value),
-        f: common_vendor.t(selectedCount.value),
-        g: selectedCount.value > 0 ? 1 : "",
-        h: common_vendor.o(
-          //@ts-ignore
-          (...args) => _ctx.goOrder && _ctx.goOrder(...args)
-        ),
-        i: common_vendor.gei(_ctx, "")
+        g: common_vendor.t(totalPrice.value),
+        h: common_vendor.t(selectedCount.value),
+        i: selectedCount.value > 0 ? 1 : "",
+        j: common_vendor.gei(_ctx, "")
       });
     };
   }

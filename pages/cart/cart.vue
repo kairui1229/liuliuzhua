@@ -32,7 +32,7 @@
 		<!--底部结算栏-->
 		<view class="settlement-bar">
 			<view class="select-all">
-				<up-checkbox usedAlone></up-checkbox>
+				<up-checkbox usedAlone v-model:checked="allChecked" @change="toggleAllChecked"></up-checkbox>
 			</view>
 			<view class="total-info">
 				<view class="total-price">
@@ -41,7 +41,7 @@
 				<view class="total-desc">不含运费</view>
 			</view>
 
-			<view class="settle-btn" :class="{active:selectedCount>0}" @click="goOrder">结算({{selectedCount}})</view>
+			<view class="settle-btn" :class="{active:selectedCount>0}">结算({{selectedCount}})</view>
 		</view>
 	</view>
 </template>
@@ -86,6 +86,24 @@ const totalPrice = computed(()=>{
 const selectedCount = computed(()=>{
 	return cartList.value.filter(item => item.selected).length
 })
+
+//全选功能
+const allChecked = ref(false)
+watch(cartList,()=>{
+	//cartList数组，里面嵌套对象 默认浅层监听
+	//如果购物车数据为空的话，不做判断直接为false
+	if(cartList.value.length===0){
+		allChecked.value=false;
+		return
+	}
+	allChecked.value = cartList.value.length === selectedCount.value
+},{deep:true})
+
+const toggleAllChecked = () =>{
+	cartList.value.forEach(item=>{
+		item.selected = !allChecked.value
+	})
+}
 
 //删除购物车数据
 const deleteItem=(cart_id:number)=>{
