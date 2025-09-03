@@ -32,7 +32,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       try {
         const res = await utils_http_index.get("/cart/getSpec", { id: props.product.id });
         specList.value = res || [];
-        common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:63", "商品规格", specList.value);
+        common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:65", "商品规格", specList.value);
         if (!res) {
           handleClose();
           setTimeout(() => {
@@ -42,8 +42,12 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           }, 500);
         }
       } catch (error) {
-        common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:73", error);
+        common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:75", error);
       }
+    };
+    const selectedSpecs = common_vendor.reactive({});
+    const selectedSpec = (attr_id, value_id) => {
+      selectedSpecs[attr_id] = value_id;
     };
     return (_ctx, _cache) => {
       return {
@@ -52,9 +56,11 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         c: common_vendor.f(specList.value, (group, k0, i0) => {
           return {
             a: common_vendor.t(group.attr_name),
-            b: common_vendor.f(group.values, (item, k1, i1) => {
+            b: common_vendor.f(group.values, (item, index, i1) => {
               return {
-                a: common_vendor.t(item.value)
+                a: common_vendor.t(item.value),
+                b: selectedSpecs[group.attr_id] === item.value_id ? 1 : "",
+                c: common_vendor.o(($event) => selectedSpec(group.attr_id, item.value_id))
               };
             }),
             c: group.attr_id

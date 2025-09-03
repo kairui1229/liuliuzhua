@@ -8288,6 +8288,7 @@ exports.onLoad = onLoad;
 exports.onMounted = onMounted;
 exports.onReachBottom = onReachBottom;
 exports.p = p;
+exports.reactive = reactive;
 exports.ref = ref;
 exports.resolveComponent = resolveComponent;
 exports.s = s;

@@ -14,8 +14,10 @@
 					<view class="spec-items" >
 						<view 
 						class="spec-item" 
-						v-for="item in group.values" 
+						v-for="(item,index) in group.values" 
 						key="item.value_id"
+						:class="{active: selectedSpecs[group.attr_id] === item.value_id}"
+						@click="selectedSpec(group.attr_id,item.value_id)"
 						>
 						{{item.value}}
 						</view>
@@ -72,6 +74,11 @@ const getSpec = async () => {
 		} catch (error) {
 			console.log(error)
 		}
+}
+
+const selectedSpecs= reactive({}) //{"1":3}
+const selectedSpec = (attr_id:number,value_id:number) =>{
+	selectedSpecs[attr_id] = value_id
 }
 </script>
 
