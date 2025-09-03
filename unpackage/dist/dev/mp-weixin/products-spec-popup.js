@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("./common/vendor.js");
+const utils_http_index = require("./utils/http/index.js");
 if (!Array) {
   const _easycom_up_popup2 = common_vendor.resolveComponent("up-popup");
   _easycom_up_popup2();
@@ -16,9 +17,19 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   },
   emits: ["close"],
   setup(__props, { emit: __emit }) {
+    const props = __props;
     const emit = __emit;
     const handleClose = () => {
       emit("close");
+    };
+    common_vendor.watch(() => props.show, (newVal) => {
+      if (newVal) {
+        getSpec();
+      }
+    });
+    const getSpec = async () => {
+      const res = await utils_http_index.get("/cart/getSpec", { id: props.product.id });
+      common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:54", "规格数据", res);
     };
     return (_ctx, _cache) => {
       return {

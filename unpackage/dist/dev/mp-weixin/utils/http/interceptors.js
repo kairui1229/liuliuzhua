@@ -13,10 +13,18 @@ const requestInterceptor = (config) => {
 };
 const responseInterceptor = (res) => {
   if (res.statusCode !== 200) {
-    throw new Error("请求失败", res.data.message);
+    common_vendor.index.showToast({
+      title: res.data.message,
+      icon: "none"
+    });
+    return;
   }
   if (!res.data.success) {
-    throw new Error("数据异常");
+    common_vendor.index.showToast({
+      title: res.data.message,
+      icon: "none"
+    });
+    return;
   }
   return res.data.data;
 };

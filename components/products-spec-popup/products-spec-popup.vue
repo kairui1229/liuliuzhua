@@ -34,10 +34,24 @@
 </template>
 
 <script setup lang="ts">
+import { watch, ref, reactive, computed } from "vue";
+import {get} from "@/utils/http"
+	
 const props = defineProps<{show:boolean, product:any}>()
 const emit = defineEmits(["close"])
 const handleClose = () =>{
 	emit('close')
+}
+
+//获取商品规格
+watch(() => props.show, (newVal) => {
+		if (newVal) {
+			getSpec()
+		}
+	})
+const getSpec = async () =>{
+	const res = await get("/cart/getSpec",{id:props.product.id})
+	console.log("规格数据",res)
 }
 </script>
 
