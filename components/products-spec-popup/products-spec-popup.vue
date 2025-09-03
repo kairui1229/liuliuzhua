@@ -9,11 +9,16 @@
 				</view>
 			</view>
 			<view class="spec-content">
-				<view class="spec-group">
-					<view class="group-title">重量</view>
-					<view class="spec-items">
-						<view class="spec-item">2kg</view>
-						<view class="spec-item">5kg</view>
+				<view class="spec-group" v-for="group in specList" :key="group.attr_id">
+					<view class="group-title">{{group.attr_name}}</view>
+					<view class="spec-items" >
+						<view 
+						class="spec-item" 
+						v-for="item in group.values" 
+						key="item.value_id"
+						>
+						{{item.value}}
+						</view>
 					</view>
 				</view>
 			</view>
@@ -49,9 +54,13 @@ watch(() => props.show, (newVal) => {
 			getSpec()
 		}
 	})
+
+const specList = ref([])
 const getSpec = async () => {
 		try {
 			const res : any = await get("/cart/getSpec", { id: props.product.id })
+			specList.value = res || [] //返回结果一定是数组
+			console.log("商品规格",specList.value)
 			if (!res) {
 				handleClose() //关闭弹窗
 				setTimeout(() => {
