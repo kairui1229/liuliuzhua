@@ -22,15 +22,17 @@
 				</view>
 			</view>
 		</view>
+		
 		<!--空购物车-->
 		<view class="empty-cart" v-else>
 			<view class="empty-text">购物车空空如也~</view>
 			<view class="go-shopping">去逛逛!</view>
 		</view>
+		
 		<!--底部结算栏-->
 		<view class="settlement-bar">
 			<view class="select-all">
-				<up-checkbox usedAlone v-model:checked="allChecked" @change="toggleAllChecked"></up-checkbox>
+				<up-checkbox usedAlone></up-checkbox>
 			</view>
 			<view class="total-info">
 				<view class="total-price">
@@ -68,6 +70,22 @@ const getCart = async () => {
 		console.error("获取失败")
 	}
 }
+
+//计算总价
+const totalPrice = computed(()=>{
+	let total = 0
+	for(const item of cartList.value){
+		if(item.selected){
+			total += Number(item.price)
+		}
+	}
+	return total.toFixed(2)
+})
+
+//计算选中商品数量
+const selectedCount = computed(()=>{
+	return cartList.value.filter(item => item.selected).length
+})
 
 //删除购物车数据
 const deleteItem=(cart_id:number)=>{

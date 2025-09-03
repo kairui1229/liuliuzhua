@@ -21,15 +21,27 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const getCart = async () => {
       try {
         const data = await utils_http_index.get("/cart/list");
-        common_vendor.index.__f__("log", "at pages/cart/cart.vue:61", "购物车数据", data);
+        common_vendor.index.__f__("log", "at pages/cart/cart.vue:63", "购物车数据", data);
         cartList.value = data.map((item) => ({
           ...item,
           selected: false
         }));
       } catch (error) {
-        common_vendor.index.__f__("error", "at pages/cart/cart.vue:68", "获取失败");
+        common_vendor.index.__f__("error", "at pages/cart/cart.vue:70", "获取失败");
       }
     };
+    const totalPrice = common_vendor.computed(() => {
+      let total = 0;
+      for (const item of cartList.value) {
+        if (item.selected) {
+          total += Number(item.price);
+        }
+      }
+      return total.toFixed(2);
+    });
+    const selectedCount = common_vendor.computed(() => {
+      return cartList.value.filter((item) => item.selected).length;
+    });
     const deleteItem = (cart_id) => {
       common_vendor.index.showModal({
         title: "提示",
@@ -44,7 +56,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
               });
               getCart();
             } catch (error) {
-              common_vendor.index.__f__("error", "at pages/cart/cart.vue:87", "删除商品失败");
+              common_vendor.index.__f__("error", "at pages/cart/cart.vue:105", "删除商品失败");
             }
           }
         }
@@ -78,20 +90,17 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           color: "#999"
         })
       } : {}, {
-        d: common_vendor.o(_ctx.toggleAllChecked),
-        e: common_vendor.o(($event) => _ctx.allChecked = $event),
-        f: common_vendor.p({
-          usedAlone: true,
-          checked: _ctx.allChecked
+        d: common_vendor.p({
+          usedAlone: true
         }),
-        g: common_vendor.t(_ctx.totalPrice),
-        h: common_vendor.t(_ctx.selectedCount),
-        i: _ctx.selectedCount > 0 ? 1 : "",
-        j: common_vendor.o(
+        e: common_vendor.t(totalPrice.value),
+        f: common_vendor.t(selectedCount.value),
+        g: selectedCount.value > 0 ? 1 : "",
+        h: common_vendor.o(
           //@ts-ignore
           (...args) => _ctx.goOrder && _ctx.goOrder(...args)
         ),
-        k: common_vendor.gei(_ctx, "")
+        i: common_vendor.gei(_ctx, "")
       });
     };
   }
