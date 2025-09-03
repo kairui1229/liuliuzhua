@@ -4,7 +4,7 @@
 			<view class="popup-header">
 				<image class="product-img" :src="product.main_pic" mode="aspectFill"></image>
 				<view class="product-info">
-					<view class="price">¥{{product.price}}</view>
+					<view class="price">¥{{finalPrice}}</view>
 					<view class="selected">已选：{{selectedSpec || "请选择规格"}}</view>
 				</view>
 			</view>
@@ -100,6 +100,18 @@ const decrease = () => {
 		  quantity.value--
 	}
 }
+
+const finalPrice = computed(() =>{
+	let price : number = Number(props.product.price)
+	specList.value.forEach(group =>{
+	  const selected = group.values.find(item =>selectedSpecs[group.attr_id] === item.value_id)
+	  console.log("选中的数据",selected)
+	  if(selected?.multiple){
+		 price *= Number(selected.multiple)
+	  }
+	})
+	return price*quantity.value
+})
 </script>
 
 <style lang="scss" scoped>
