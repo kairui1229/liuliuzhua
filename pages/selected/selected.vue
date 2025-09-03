@@ -55,12 +55,15 @@
 			{{cartCount}}
 		</view>
 	</view>
+	
+	<ProductsSpecPopup :show="true"></ProductsSpecPopup>
 </template>
 
 <script setup lang="ts">
 import {onLoad,onReachBottom} from "@dcloudio/uni-app"
 import {ref,computed} from "vue"
 import {get} from "@/utils/http"
+import ProductsSpecPopup from "../../components/products-spec-popup/products-spec-popup.vue"
 
 onLoad(() =>{
 	getCategories()

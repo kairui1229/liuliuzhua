@@ -579,6 +579,7 @@ exports.addUnit = addUnit;
 exports.deepMerge = deepMerge;
 exports.formValidate = formValidate;
 exports.getPx = getPx;
+exports.getWindowInfo = getWindowInfo;
 exports.guid = guid;
 exports.index = index;
 exports.os = os;

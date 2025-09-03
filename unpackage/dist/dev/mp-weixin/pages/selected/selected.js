@@ -9,8 +9,9 @@ if (!Array) {
 const _easycom_uni_search_bar = () => "../../uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.js";
 const _easycom_up_icon = () => "../../uni_modules/uview-plus/components/u-icon/u-icon.js";
 if (!Math) {
-  (_easycom_uni_search_bar + _easycom_up_icon)();
+  (_easycom_uni_search_bar + _easycom_up_icon + ProductsSpecPopup)();
 }
+const ProductsSpecPopup = () => "../../components/products-spec-popup/products-spec-popup2.js";
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "selected",
   setup(__props) {
@@ -34,7 +35,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const totalPages = common_vendor.ref(0);
     const getProducts = async (page, category_id) => {
       const data = await utils_http_index.get("/sel/products", { page, category_id });
-      common_vendor.index.__f__("log", "at pages/selected/selected.vue:92", "商品数据", data);
+      common_vendor.index.__f__("log", "at pages/selected/selected.vue:95", "商品数据", data);
       if (page === 1) {
         products.value = data.list;
       } else {
@@ -101,7 +102,10 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       }, cartCount.value > 0 ? {
         h: common_vendor.t(cartCount.value)
       } : {}, {
-        i: common_vendor.o(goCart)
+        i: common_vendor.o(goCart),
+        j: common_vendor.p({
+          show: true
+        })
       });
     };
   }

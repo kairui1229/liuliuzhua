@@ -5,7 +5,8 @@
     "pages/service/service",
     "pages/me/me",
     "pages/cart/cart",
-    "pages/login/login"
+    "pages/login/login",
+    "components/products-spec-popup/products-spec-popup"
   ],
   "window": {
     "navigationBarTextStyle": "black",

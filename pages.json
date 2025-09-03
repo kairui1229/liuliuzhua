@@ -40,6 +40,13 @@
 			{
 				"navigationBarTitleText" : "登录"
 			}
+		},
+		{
+			"path" : "components/products-spec-popup/products-spec-popup",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
 		}
 	],
 
