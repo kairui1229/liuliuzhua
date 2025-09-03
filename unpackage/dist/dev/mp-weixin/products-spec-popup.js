@@ -67,12 +67,15 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
     const finalPrice = common_vendor.computed(() => {
       let price = Number(props.product.price);
-      specList.value.forEach((group) => {
-        const selected = group.values.find((item) => selectedSpecs[group.attr_id] === item.value_id);
-        if (selected == null ? void 0 : selected.multiple) {
-          price *= Number(selected.multiple);
-        }
-      });
+      if (specList.value.length) {
+        specList.value.forEach((group) => {
+          const selected = group.values.find((item) => selectedSpecs[group.attr_id] === item.value_id);
+          common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:109", "选中的数据", selected);
+          if (selected == null ? void 0 : selected.multiple) {
+            price *= Number(selected.multiple);
+          }
+        });
+      }
       return price * quantity.value;
     });
     const confirmSpec = async () => {

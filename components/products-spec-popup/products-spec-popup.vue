@@ -103,13 +103,15 @@ const decrease = () => {
 
 const finalPrice = computed(() =>{
 	let price : number = Number(props.product.price)
-	specList.value.forEach(group =>{
-	  const selected = group.values.find(item =>selectedSpecs[group.attr_id] === item.value_id)
-	  //console.log("选中的数据",selected)
-	  if(selected?.multiple){
-		 price *= Number(selected.multiple)
-	  }
-	})
+	if(specList.value.length){ //数组有数据再循环
+		specList.value.forEach(group => {
+			const selected = group.values.find(item => selectedSpecs[group.attr_id] === item.value_id);
+			console.log("选中的数据", selected)
+			if (selected?.multiple) {
+				price *= Number(selected.multiple)
+			}			
+		})
+	}
 	return price*quantity.value
 })
 
@@ -138,8 +140,6 @@ const confirmSpec = async () =>{
 				title:"加购成功",
 				icon:"success"
 			})
-			// specStore.setSpec("")
-			// specStore.setCount(1)
 			handleClose()
 		} catch (error) {
 			//TODO handle the exception
