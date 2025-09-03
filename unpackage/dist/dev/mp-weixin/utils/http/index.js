@@ -24,5 +24,7 @@ const request = (config) => {
   });
 };
 const get = (url, data) => request({ url, method: "GET", data });
+const post = (url, data) => request({ url, method: "POST", data });
 exports.get = get;
+exports.post = post;
 //# sourceMappingURL=../../../.sourcemap/mp-weixin/utils/http/index.js.map

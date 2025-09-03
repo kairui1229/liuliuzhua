@@ -34,7 +34,7 @@
 					</view>
 				</view>
 				<view class="confirm-ok" @click="">确定</view>
-				<view class="confirm-btn" @click="">加购</view>
+				<view class="confirm-btn" @click="confirmSpec()">加购</view>
 			</view>
 		</view>
 	</up-popup>
@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import { watch, ref, reactive, computed } from "vue";
-import {get} from "@/utils/http"
+import {get,post} from "@/utils/http"
 	
 const props = defineProps<{show:boolean, product:any}>()
 const emit = defineEmits(["close"])
@@ -105,13 +105,47 @@ const finalPrice = computed(() =>{
 	let price : number = Number(props.product.price)
 	specList.value.forEach(group =>{
 	  const selected = group.values.find(item =>selectedSpecs[group.attr_id] === item.value_id)
-	  console.log("选中的数据",selected)
+	  //console.log("选中的数据",selected)
 	  if(selected?.multiple){
 		 price *= Number(selected.multiple)
 	  }
 	})
 	return price*quantity.value
 })
+
+//加入购物车
+const confirmSpec = async () =>{
+	//判断该商品的所有规格是否都有选择
+	//every 用于检测数组中的左右元素是否都符合指定条件
+	const allSelected = specList.value.every(group => selectedSpecs[group.attr_id])
+	if(!allSelected){
+		uni.showToast({
+			title:"请选择完整规格",
+			icon:"error"
+		})
+		return 
+	}
+	try {
+			const res=await post("/cart/addCart",{
+				product_id:props.product.id,
+				name:props.product.name,
+				price:finalPrice.value,
+				count:quantity.value,
+				spec:selectedSpec.value,
+				main_pic:props.product.main_pic
+			})
+			uni.showToast({
+				title:"加购成功",
+				icon:"success"
+			})
+			// specStore.setSpec("")
+			// specStore.setCount(1)
+			handleClose()
+		} catch (error) {
+			//TODO handle the exception
+			console.error(error)
+		}
+}
 </script>
 
 <style lang="scss" scoped>

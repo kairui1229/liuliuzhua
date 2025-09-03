@@ -69,13 +69,39 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       let price = Number(props.product.price);
       specList.value.forEach((group) => {
         const selected = group.values.find((item) => selectedSpecs[group.attr_id] === item.value_id);
-        common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:108", "选中的数据", selected);
         if (selected == null ? void 0 : selected.multiple) {
           price *= Number(selected.multiple);
         }
       });
       return price * quantity.value;
     });
+    const confirmSpec = async () => {
+      const allSelected = specList.value.every((group) => selectedSpecs[group.attr_id]);
+      if (!allSelected) {
+        common_vendor.index.showToast({
+          title: "请选择完整规格",
+          icon: "error"
+        });
+        return;
+      }
+      try {
+        const res = await utils_http_index.post("/cart/addCart", {
+          product_id: props.product.id,
+          name: props.product.name,
+          price: finalPrice.value,
+          count: quantity.value,
+          spec: selectedSpec.value,
+          main_pic: props.product.main_pic
+        });
+        common_vendor.index.showToast({
+          title: "加购成功",
+          icon: "success"
+        });
+        handleClose();
+      } catch (error) {
+        common_vendor.index.__f__("error", "at components/products-spec-popup/products-spec-popup.vue:146", error);
+      }
+    };
     return (_ctx, _cache) => {
       return {
         a: _ctx.product.main_pic,
@@ -99,8 +125,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         g: common_vendor.o(increase),
         h: common_vendor.o(() => {
         }),
-        i: common_vendor.o(() => {
-        }),
+        i: common_vendor.o(($event) => confirmSpec()),
         j: common_vendor.o(handleClose),
         k: common_vendor.p({
           show: _ctx.show,
