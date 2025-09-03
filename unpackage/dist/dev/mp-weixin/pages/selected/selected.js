@@ -17,6 +17,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   setup(__props) {
     common_vendor.onLoad(() => {
       getCategories();
+      getCartCount();
     });
     const categories = common_vendor.ref([]);
     const currentPage = common_vendor.ref(1);
@@ -35,7 +36,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const totalPages = common_vendor.ref(0);
     const getProducts = async (page, category_id) => {
       const data = await utils_http_index.get("/sel/products", { page, category_id });
-      common_vendor.index.__f__("log", "at pages/selected/selected.vue:95", "商品数据", data);
+      common_vendor.index.__f__("log", "at pages/selected/selected.vue:96", "商品数据", data);
       if (page === 1) {
         products.value = data.list;
       } else {
@@ -49,7 +50,12 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         getProducts(currentPage.value + 1, categories.value[currentCategory.value].id);
       }
     });
-    const cartCount = common_vendor.ref(2);
+    const cartCount = common_vendor.ref(0);
+    const getCartCount = async () => {
+      const data = await utils_http_index.get("/cart/list");
+      common_vendor.index.__f__("log", "at pages/selected/selected.vue:116", "购物车数据", data);
+      cartCount.value = data.length;
+    };
     const goCart = () => {
       const token = common_vendor.index.getStorageSync("token");
       if (!token) {
@@ -67,6 +73,10 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const addCart = (product) => {
       show.value = true;
       selProduct.value = product;
+    };
+    const handleClose = () => {
+      show.value = false;
+      getCartCount();
     };
     return (_ctx, _cache) => {
       return common_vendor.e({
@@ -110,7 +120,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         h: common_vendor.t(cartCount.value)
       } : {}, {
         i: common_vendor.o(goCart),
-        j: common_vendor.o(($event) => show.value = false),
+        j: common_vendor.o(handleClose),
         k: common_vendor.p({
           show: show.value,
           product: selProduct.value

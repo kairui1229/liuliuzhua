@@ -56,7 +56,7 @@
 		</view>
 	</view>
 	
-	<ProductsSpecPopup :show="show" :product="selProduct" @close="show=false"></ProductsSpecPopup>
+	<ProductsSpecPopup :show="show" :product="selProduct" @close="handleClose"></ProductsSpecPopup>
 </template>
 
 <script setup lang="ts">
@@ -67,6 +67,7 @@ import ProductsSpecPopup from "../../components/products-spec-popup/products-spe
 
 onLoad(() =>{
 	getCategories()
+	getCartCount()
 })
 
 //获取左侧菜单分类
@@ -109,7 +110,12 @@ onReachBottom(() => {
 })
 
 //购物车
-const cartCount = ref(2)
+const cartCount = ref(0)
+const getCartCount = async () =>{
+	const data:any = await get("/cart/list")
+	console.log("购物车数据",data)
+	cartCount.value = data.length
+}
 const goCart = () =>{
 	//先判断用户是否登录，如果没有登录就要先跳到登录页面
 	const token = uni.getStorageSync("token")
@@ -130,6 +136,11 @@ const selProduct = ref({})
 const addCart = (product:any) => {
 	show.value = true
 	selProduct.value = product
+}
+
+const handleClose = () =>{
+	show.value = false
+	getCartCount()
 }
 </script>
 
