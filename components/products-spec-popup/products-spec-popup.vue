@@ -1,10 +1,10 @@
 <template>
-	<up-popup :show="true" closeable>
+	<up-popup :show="show" closeable @close="handleClose">
 		<view class="spec-popup">
 			<view class="popup-header">
-				<image class="product-img" src="/static/modules/home/dog1.png" mode="aspectFill"></image>
+				<image class="product-img" :src="product.main_pic" mode="aspectFill"></image>
 				<view class="product-info">
-					<view class="price">¥199.00</view>
+					<view class="price">¥{{product.price}}</view>
 					<view class="selected">请选择规格</view>
 				</view>
 			</view>
@@ -34,7 +34,11 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps()
+const props = defineProps<{show:boolean, product:any}>()
+const emit = defineEmits(["close"])
+const handleClose = () =>{
+	emit('close')
+}
 </script>
 
 <style lang="scss" scoped>

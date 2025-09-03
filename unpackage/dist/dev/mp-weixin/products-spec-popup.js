@@ -1,6 +1,5 @@
 "use strict";
 const common_vendor = require("./common/vendor.js");
-const common_assets = require("./common/assets.js");
 if (!Array) {
   const _easycom_up_popup2 = common_vendor.resolveComponent("up-popup");
   _easycom_up_popup2();
@@ -11,23 +10,34 @@ if (!Math) {
 }
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "products-spec-popup",
-  setup(__props) {
+  props: {
+    show: { type: Boolean },
+    product: {}
+  },
+  emits: ["close"],
+  setup(__props, { emit: __emit }) {
+    const emit = __emit;
+    const handleClose = () => {
+      emit("close");
+    };
     return (_ctx, _cache) => {
       return {
-        a: common_assets._imports_0$2,
-        b: common_vendor.o(() => {
-        }),
+        a: _ctx.product.main_pic,
+        b: common_vendor.t(_ctx.product.price),
         c: common_vendor.o(() => {
         }),
         d: common_vendor.o(() => {
         }),
         e: common_vendor.o(() => {
         }),
-        f: common_vendor.p({
-          show: true,
+        f: common_vendor.o(() => {
+        }),
+        g: common_vendor.o(handleClose),
+        h: common_vendor.p({
+          show: _ctx.show,
           closeable: true
         }),
-        g: common_vendor.gei(_ctx, "")
+        i: common_vendor.gei(_ctx, "")
       };
     };
   }

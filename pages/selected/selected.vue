@@ -37,7 +37,7 @@
 								<text class="product-name">{{item.name}}</text>
 								<view class="product-row">
 									<text class="product-price">¥{{item.price}}</text>
-									<view class="add-cart">
+									<view class="add-cart" @click="addCart(item)">
 										<up-icon name="shopping-cart" color="#fff" size="18"></up-icon>
 									</view>
 								</view>
@@ -56,7 +56,7 @@
 		</view>
 	</view>
 	
-	<ProductsSpecPopup :show="true"></ProductsSpecPopup>
+	<ProductsSpecPopup :show="show" :product="selProduct" @close="show=false"></ProductsSpecPopup>
 </template>
 
 <script setup lang="ts">
@@ -124,6 +124,13 @@ const goCart = () =>{
 	})
 }
 
+//规格弹窗
+const show = ref(false)
+const selProduct = ref({})
+const addCart = (product:any) => {
+	show.value = true
+	selProduct.value = product
+}
 </script>
 
 <style lang="scss" scoped>

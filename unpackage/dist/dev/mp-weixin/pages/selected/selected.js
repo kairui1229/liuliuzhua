@@ -62,6 +62,12 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         url: "/pages/cart/cart"
       });
     };
+    const show = common_vendor.ref(false);
+    const selProduct = common_vendor.ref({});
+    const addCart = (product) => {
+      show.value = true;
+      selProduct.value = product;
+    };
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.p({
@@ -85,7 +91,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             b: common_vendor.t(item.name),
             c: common_vendor.t(item.price),
             d: "6737212f-1-" + i0,
-            e: item.id
+            e: common_vendor.o(($event) => addCart(item), item.id),
+            f: item.id
           };
         }),
         e: common_vendor.p({
@@ -103,8 +110,10 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         h: common_vendor.t(cartCount.value)
       } : {}, {
         i: common_vendor.o(goCart),
-        j: common_vendor.p({
-          show: true
+        j: common_vendor.o(($event) => show.value = false),
+        k: common_vendor.p({
+          show: show.value,
+          product: selProduct.value
         })
       });
     };
