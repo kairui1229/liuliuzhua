@@ -5,7 +5,7 @@
 				<image class="product-img" :src="product.main_pic" mode="aspectFill"></image>
 				<view class="product-info">
 					<view class="price">¥{{product.price}}</view>
-					<view class="selected">请选择规格</view>
+					<view class="selected">已选：{{selectedSpec || "请选择规格"}}</view>
 				</view>
 			</view>
 			<view class="spec-content">
@@ -17,7 +17,7 @@
 						v-for="(item,index) in group.values" 
 						key="item.value_id"
 						:class="{active: selectedSpecs[group.attr_id] === item.value_id}"
-						@click="selectedSpec(group.attr_id,item.value_id)"
+						@click="selectSpec(group.attr_id,item.value_id,item.value)"
 						>
 						{{item.value}}
 						</view>
@@ -28,9 +28,9 @@
 				<view class="quantity">
 					<text>数量</text>
 					<view class="quantity-control">
-						<view class="minus" @click="">-</view>
-						<view class="count">1</view>
-						<view class="plus" @click="">+</view>
+						<view class="minus" @click="decrease">-</view>
+						<view class="count">{{quantity}}</view>
+						<view class="plus" @click="increase">+</view>
 					</view>
 				</view>
 				<view class="confirm-ok" @click="">确定</view>
@@ -46,9 +46,6 @@ import {get} from "@/utils/http"
 	
 const props = defineProps<{show:boolean, product:any}>()
 const emit = defineEmits(["close"])
-const handleClose = () =>{
-	emit('close')
-}
 
 //获取商品规格
 watch(() => props.show, (newVal) => {
@@ -76,9 +73,32 @@ const getSpec = async () => {
 		}
 }
 
-const selectedSpecs= reactive({}) //{"1":3}
-const selectedSpec = (attr_id:number,value_id:number) =>{
+const selectedSpecs = reactive<{ [key : string] : number }>({}) //{"1":5,"2":1} 存储选中的规格值id 
+const selectedTexts = reactive<{ [key : string] : string }>({}) //{"1":"5kg","2":"鸡肉味"}
+const selectedSpec = ref<string>("") //已选规格字符串 如 2kg，鸡肉味
+const selectSpec = (attr_id:number,value_id:number,value:string) =>{
 	selectedSpecs[attr_id] = value_id
+	selectedTexts[attr_id] = value
+	selectedSpec.value = Object.values(selectedTexts).join("，")
+}
+
+const handleClose = () => {
+		emit("close");
+		//重置数据
+		Object.keys(selectedSpecs).forEach(key => delete selectedSpecs[key]);
+		Object.keys(selectedTexts).forEach(key => delete selectedTexts[key]);
+		selectedSpec.value = ""
+}
+
+//商品数量
+const quantity = ref(1)
+const increase = () => {
+	  quantity.value++
+	}
+const decrease = () => {
+	  if (quantity.value > 1) {
+		  quantity.value--
+	}
 }
 </script>
 
