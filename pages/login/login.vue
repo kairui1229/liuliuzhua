@@ -16,10 +16,15 @@
 				<view class="quick-login">
 					<text class="login-title">手机号快捷登录</text>
 					<text class="login-desc">使用微信授权快捷登录</text>
-					<button class="wechat-login-btn">
+					<!-- <button class="wechat-login-btn" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">
 						<up-icon name="weixin-fill" color="#fff" size="32" style="margin-right: 10rpx;"></up-icon>
 						微信获取手机号一键登录
-						</button>
+					</button> -->
+					<!--没有企业身份用这段代码登录，不影响后续流程-->
+					<button class="wechat-login-btn"  @click="fn">
+						<up-icon name="weixin-fill" color="#fff" size="32" style="margin-right: 10rpx;"></up-icon>
+						微信获取手机号一键登录
+					</button>
 				</view>
 			</view>
 			
@@ -74,6 +79,7 @@
 
 <script setup lang="ts">
 import { onMounted,ref } from 'vue';
+import {post} from "../../utils/http"
 
 const platform = ref("")
 onMounted(()=>{
@@ -89,6 +95,58 @@ onMounted(()=>{
 		platform.value="app"
 	// #endif
 })
+
+
+//没有企业身份用这段代码模拟，一样可以登录不影响后面流程！！！！！！！
+const fn=()=>{
+	uni.setStorageSync("token","ouyangkairui")
+	uni.setStorageSync("user",{user_id:1,phone:18838913429})
+	uni.showToast({
+		title:"登录成功",
+		icon:"success",
+		duration:1500
+	})
+	setTimeout(()=>{
+		uni.navigateBack();
+	},500)
+}
+
+//微信小程序一键登录
+// const getPhoneNumber=async (e)=>{
+// 	if(e.detail.errMsg==="getPhoneNumber:ok"){
+// 		try {
+// 			const phoneCode=e.detail.code //动态令牌 用来获取手机号 xulaoshi666 {user_id:1,phone:18888888888}
+// 			const res= await uni.login();
+// 			const loginCode=res.code //身份凭证，用来获取openid
+// 			const data:any=await post("/auth/wxLogin",{
+// 				loginCode,
+// 				phoneCode,
+// 				appid:"你的企业appid",//换成你的企业appid,
+// 				secret:"你的企业小程序密钥" ,//换成你的企业小程序密钥，密钥属于隐私数据，泄露会影响账号，所以不展示
+// 											//如果你没有真实企业的id和密钥，可以来找徐老师，实名登记申请，徐老师会把密钥等借给你体验
+// 			});
+// 			uni.setStorageSync("token",data.token)
+// 			uni.setStorageSync("user",data.user)
+// 			uni.showToast({
+// 				title:"登陆成功",
+// 				icon:"success",
+// 				duration:1500
+// 			})
+// 			setTimeout(()=>{
+// 				uni.navigateBack();
+// 			},500)
+			
+			
+// 		} catch (error) {
+// 			//TODO handle the exception
+// 		}		
+// 	}else{
+// 		uni.showToast({
+// 			title:"获取失败",
+// 			icon:"error"
+// 		})
+// 	}
+// }
 </script>
 
 <style lang="scss" scoped>

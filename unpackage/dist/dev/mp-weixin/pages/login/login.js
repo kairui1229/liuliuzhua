@@ -20,6 +20,18 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     common_vendor.onMounted(() => {
       platform.value = "mp-weixin";
     });
+    const fn = () => {
+      common_vendor.index.setStorageSync("token", "ouyangkairui");
+      common_vendor.index.setStorageSync("user", { user_id: 1, phone: 18838913429 });
+      common_vendor.index.showToast({
+        title: "登录成功",
+        icon: "success",
+        duration: 1500
+      });
+      setTimeout(() => {
+        common_vendor.index.navigateBack();
+      }, 500);
+    };
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_assets._imports_0$1,
@@ -29,15 +41,16 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           name: "weixin-fill",
           color: "#fff",
           size: "32"
-        })
+        }),
+        d: common_vendor.o(fn)
       } : {
-        d: common_vendor.p({
+        e: common_vendor.p({
           placeholder: "请输入手机号",
           prefixIcon: "phone",
           border: "none",
           prefixIconStyle: "font-size: 22px;color: #909399"
         }),
-        e: common_vendor.p({
+        f: common_vendor.p({
           placeholder: "请输入验证码",
           type: "number",
           maxlength: "6",
@@ -45,11 +58,11 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           prefixIcon: "lock",
           prefixIconStyle: "font-size: 22px;color: #909399"
         }),
-        f: common_vendor.o(() => {
-        }),
         g: common_vendor.o(() => {
         }),
-        h: common_vendor.p({
+        h: common_vendor.o(() => {
+        }),
+        i: common_vendor.p({
           type: "primary",
           ["custom-style"]: {
             backgroundColor: "#ffce2c",
@@ -59,7 +72,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           }
         })
       }, {
-        i: common_vendor.gei(_ctx, "")
+        j: common_vendor.gei(_ctx, "")
       });
     };
   }
