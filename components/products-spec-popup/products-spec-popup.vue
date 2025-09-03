@@ -49,9 +49,20 @@ watch(() => props.show, (newVal) => {
 			getSpec()
 		}
 	})
-const getSpec = async () =>{
-	const res = await get("/cart/getSpec",{id:props.product.id})
-	console.log("规格数据",res)
+const getSpec = async () => {
+		try {
+			const res : any = await get("/cart/getSpec", { id: props.product.id })
+			if (!res) {
+				handleClose() //关闭弹窗
+				setTimeout(() => {
+					uni.navigateTo({
+						url: "/pages/login/login"
+					})
+				}, 500)
+			}
+		} catch (error) {
+			console.log(error)
+		}
 }
 </script>
 

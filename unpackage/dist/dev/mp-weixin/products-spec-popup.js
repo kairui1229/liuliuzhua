@@ -28,8 +28,19 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       }
     });
     const getSpec = async () => {
-      const res = await utils_http_index.get("/cart/getSpec", { id: props.product.id });
-      common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:54", "规格数据", res);
+      try {
+        const res = await utils_http_index.get("/cart/getSpec", { id: props.product.id });
+        if (!res) {
+          handleClose();
+          setTimeout(() => {
+            common_vendor.index.navigateTo({
+              url: "/pages/login/login"
+            });
+          }, 500);
+        }
+      } catch (error) {
+        common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:64", error);
+      }
     };
     return (_ctx, _cache) => {
       return {
