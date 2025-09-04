@@ -34,7 +34,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
     return (_ctx, _cache) => {
       return common_vendor.e({
-        a: common_assets._imports_0$1,
+        a: common_assets._imports_0$2,
         b: platform.value === "mp-weixin"
       }, platform.value === "mp-weixin" ? {
         c: common_vendor.p({
