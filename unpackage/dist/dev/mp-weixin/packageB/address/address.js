@@ -2,14 +2,14 @@
 const common_vendor = require("../../common/vendor.js");
 const utils_http_index = require("../../utils/http/index.js");
 if (!Array) {
-  const _easycom_u_icon2 = common_vendor.resolveComponent("u-icon");
+  const _easycom_up_icon2 = common_vendor.resolveComponent("up-icon");
   const _easycom_up_popup2 = common_vendor.resolveComponent("up-popup");
-  (_easycom_u_icon2 + _easycom_up_popup2)();
+  (_easycom_up_icon2 + _easycom_up_popup2)();
 }
-const _easycom_u_icon = () => "../../uni_modules/uview-plus/components/u-icon/u-icon.js";
+const _easycom_up_icon = () => "../../uni_modules/uview-plus/components/u-icon/u-icon.js";
 const _easycom_up_popup = () => "../../uni_modules/uview-plus/components/u-popup/u-popup.js";
 if (!Math) {
-  (_easycom_u_icon + _easycom_up_popup)();
+  (_easycom_up_icon + _easycom_up_popup)();
 }
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "address",
@@ -22,10 +22,30 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       try {
         const result = await utils_http_index.get("/cart/address");
         addressList.value = result;
-        common_vendor.index.__f__("log", "at packageB/address/address.vue:97", "地址列表", addressList.value);
+        common_vendor.index.__f__("log", "at packageB/address/address.vue:89", "地址列表", addressList.value);
       } catch (error) {
-        common_vendor.index.__f__("log", "at packageB/address/address.vue:99", error);
+        common_vendor.index.__f__("log", "at packageB/address/address.vue:91", error);
       }
+    };
+    const deleteAddress = (id) => {
+      common_vendor.index.showModal({
+        title: "提示",
+        content: "确认要删除这个地址吗？",
+        success: async (res) => {
+          if (res.confirm) {
+            try {
+              await utils_http_index.post("/cart/deleteAddress", { id });
+              common_vendor.index.showToast({
+                title: "删除成功",
+                icon: "success"
+              });
+              getAddressList();
+            } catch (error) {
+              common_vendor.index.__f__("log", "at packageB/address/address.vue:110", error);
+            }
+          }
+        }
+      });
     };
     return (_ctx, _cache) => {
       return common_vendor.e({
@@ -45,8 +65,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             i: common_vendor.o(() => {
             }, item.id),
             j: "392a643a-1-" + i0,
-            k: common_vendor.o(() => {
-            }, item.id),
+            k: common_vendor.o(($event) => deleteAddress(item.id), item.id),
             l: item.id,
             m: common_vendor.o(() => {
             }, item.id)
@@ -87,11 +106,13 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         }),
         k: common_vendor.o(() => {
         }),
-        l: common_vendor.p({
-          show: true,
+        l: common_vendor.o(() => {
+        }),
+        m: common_vendor.p({
+          show: false,
           closeable: true
         }),
-        m: common_vendor.gei(_ctx, "")
+        n: common_vendor.gei(_ctx, "")
       });
     };
   }

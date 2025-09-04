@@ -14,10 +14,10 @@
 					</view>
 				</view>
 				<view class="address-actions">
-					<view class="action-btn" @click.stop="">
+					<view class="action-btn" @click="">
 						<up-icon name="edit-pen" size="20" color="#666" ></up-icon>
 					</view>
-					<view class="action-btn" @click.stop="">
+					<view class="action-btn" @click="deleteAddress(item.id)">
 						<up-icon name="trash" size="20" color="#666"></up-icon>
 					</view>
 				</view>
@@ -28,12 +28,15 @@
 			<up-icon name="map" size="60" color="#ccc"></up-icon>
 			<text class="empty-text">您还未添加收货地址哦~</text>
 		</view>
+		
+		<!-- 底部新增收货地址 -->
 		<view class="add-btn" @click="">
 			<up-icon name="plus" size="20" color="#fff"></up-icon>
 			<text>新增收货地址</text>
 		</view>
+		
 		<!--地址编辑弹窗-->
-		<up-popup :show="true" closeable class="wrap">
+		<up-popup :show="false" closeable class="wrap">
 			<view class="address-form">
 				<view class="form-title">新增地址</view>
 				<view class="form-item">
@@ -57,7 +60,7 @@
 				</view>
 				<view class="form-item">
 					<text class="def">设为默认地址</text>
-					<switch :checked="" color="#ffce2c" @change=""></switch>
+					<switch color="#ffce2c" @change=""></switch>
 				</view>
 				<view class="form-actions">
 					<view class="cancel-btn" @click="">取消</view>
@@ -89,6 +92,27 @@ const getAddressList=async()=>{
 	}
 }
 
+//删除地址
+const deleteAddress=(id:number)=>{
+	uni.showModal({
+		title:"提示",
+		content:"确认要删除这个地址吗？",
+		success:async(res)=> {
+			if(res.confirm){
+				try {
+					await post("/cart/deleteAddress",{id});
+					uni.showToast({
+						title:"删除成功",
+						icon:"success"
+					})
+					getAddressList()
+				} catch (error) {
+					console.log(error)
+				}
+			}
+		}
+	})
+}
 </script>
 
 <style lang="scss" scoped>
