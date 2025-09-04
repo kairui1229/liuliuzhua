@@ -20,7 +20,7 @@
 		<view class="spec-section" @click="showSpecPopup">
 			<text class="label">规格</text>
 			<view class="selected-spec">
-				<text>{{selectedSpec || "请选择规格"}}</text>
+				<text>请选择规格</text>
 				<up-icon name="arrow-right" size="20" color="#999"></up-icon>
 			</view>
 		</view>
@@ -35,7 +35,6 @@
 					mode="widthFix"
 					class="detail-image"
 					:src="item.img_url"
-					
 				></image>
 			</view>
 		</view>
@@ -45,7 +44,7 @@
 			<view class="left-btns">
 				<view class="icon-btn" @click="">
 					<up-icon name="home" size="40" color="#666"></up-icon>
-					<text >首页</text>
+					<text>首页</text>
 				</view>
 				<view class="icon-btn" @click="">
 					<up-icon name="shopping-cart" size="40" color="#666"></up-icon>
@@ -58,6 +57,7 @@
 			</view>
 		</view>
 		
+		<ProductSpecPopup :show="show" :product="productInfo" @close="handleClose"></ProductSpecPopup>
 	</view>
 </template>
 
@@ -67,7 +67,23 @@ import {onLoad} from "@dcloudio/uni-app"
 import { get,post } from "@/utils/http";
 import ProductSpecPopup from "@/components/products-spec-popup/products-spec-popup.vue";
 
-const productInfo = ref({})
+interface ProductDetail{
+	id:number;
+	name:string;
+	price:string;
+	stock:number;
+	category_id:number;
+	main_pic:string;
+	desc:string;
+	o_price:string;
+}
+interface ProductImage{
+	id:number;
+	product_id:number;
+	img_url:string
+}
+
+const productInfo=ref<ProductDetail>({} as ProductDetail)
 onLoad((options)=>{
 	productInfo.value= JSON.parse(options.product)
 	console.log(productInfo.value,777)
@@ -75,7 +91,7 @@ onLoad((options)=>{
 })
 
 //获取轮播图图片
-const productImages=ref([])
+const productImages=ref<ProductImage[]>([])
 const getImages= async ()=>{
 	try {
 		const res:any=await get("/sel/detail",{id:productInfo.value.id})
@@ -84,6 +100,15 @@ const getImages= async ()=>{
 	} catch (error) {
 		console.error("失败")
 	}
+}
+
+//规格弹窗
+const show = ref(false)
+const showSpecPopup = () =>{
+	show.value = true
+}
+const handleClose = () =>{
+	show.value = false
 }
 </script>
 
