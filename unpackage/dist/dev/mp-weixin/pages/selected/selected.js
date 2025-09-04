@@ -38,7 +38,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const totalPages = common_vendor.ref(0);
     const getProducts = async (page, category_id) => {
       const data = await utils_http_index.get("/sel/products", { page, category_id });
-      common_vendor.index.__f__("log", "at pages/selected/selected.vue:99", "商品数据", data);
+      common_vendor.index.__f__("log", "at pages/selected/selected.vue:105", "商品数据", data);
       if (page === 1) {
         products.value = data.list;
       } else {
@@ -55,7 +55,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const cartCount = common_vendor.ref(0);
     const getCartCount = async () => {
       const data = await utils_http_index.get("/cart/list");
-      common_vendor.index.__f__("log", "at pages/selected/selected.vue:119", "购物车数据", data);
+      common_vendor.index.__f__("log", "at pages/selected/selected.vue:125", "购物车数据", data);
       cartCount.value = data.length;
     };
     const goCart = () => {
@@ -80,6 +80,11 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       show.value = false;
       getCartCount();
     };
+    const goProductDetail = (product) => {
+      common_vendor.index.navigateTo({
+        url: `/pages/packageA/product-detail/product-detail?product=${JSON.stringify(product)}`
+      });
+    };
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.p({
@@ -100,11 +105,12 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         d: common_vendor.f(products.value, (item, k0, i0) => {
           return {
             a: item.main_pic,
-            b: common_vendor.t(item.name),
-            c: common_vendor.t(item.price),
-            d: "6737212f-1-" + i0,
-            e: common_vendor.o(($event) => addCart(item), item.id),
-            f: item.id
+            b: common_vendor.o(($event) => goProductDetail(item), item.id),
+            c: common_vendor.t(item.name),
+            d: common_vendor.t(item.price),
+            e: "6737212f-1-" + i0,
+            f: common_vendor.o(($event) => addCart(item), item.id),
+            g: item.id
           };
         }),
         e: common_vendor.p({

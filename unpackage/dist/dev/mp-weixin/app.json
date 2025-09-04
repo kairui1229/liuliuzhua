@@ -57,7 +57,7 @@
     "pages/selected/selected": {
       "network": "wifi",
       "packages": [
-        "packageA"
+        "pages/packageA"
       ]
     }
   },

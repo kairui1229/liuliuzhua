@@ -59,7 +59,7 @@
 					"style": {
 						"navigationBarTitleText": "商品详情"
 					}
-				},
+				}
 			]
 		}
 	],
@@ -67,7 +67,7 @@
 	"preloadRule":{
 		"pages/selected/selected":{
 			"network": "wifi",
-			"packages":["packageA"]
+			"packages":["pages/packageA"]
 		}
 	},
 

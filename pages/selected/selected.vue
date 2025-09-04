@@ -32,7 +32,13 @@
 					<view class="category-title">{{categories[currentCategory].category_name}}</view>
 					<view class="product-list">
 						<view class="product-item" v-for="item in products" :key="item.id">
-							<image :src="item.main_pic" mode="aspectFill" class="product-image"></image>
+							<image 
+							:src="item.main_pic" 
+							mode="aspectFill" 
+							class="product-image" 
+							@click=goProductDetail(item)
+							>
+							</image>
 							<view class="product-info">
 								<text class="product-name">{{item.name}}</text>
 								<view class="product-row">
@@ -144,6 +150,13 @@ const addCart = (product:any) => {
 const handleClose = () =>{
 	show.value = false
 	getCartCount()
+}
+
+//跳转到详情页
+const goProductDetail = (product:any) =>{
+	uni.navigateTo({
+		url:`/pages/packageA/product-detail/product-detail?product=${JSON.stringify(product)}`
+	})
 }
 </script>
 
