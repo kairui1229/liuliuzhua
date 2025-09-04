@@ -120,6 +120,22 @@ const handleLogout=()=>{
 		}
 	})
 }
+
+//地址管理
+const goAddress=()=>{
+	//判断用户是否登录，如果未登录，应跳转到登录页
+	const token=uni.getStorageSync("token");
+	if(!token){
+		uni.navigateTo({
+			url:"/pages/login/login"
+		})
+		return
+	}
+	uni.navigateTo({
+		url:"/packageB/address/address"
+	})
+}
+
 </script>
 
 <style lang="scss" scoped>

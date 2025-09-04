@@ -10,7 +10,8 @@ if (!Math) {
   "./pages/cart/cart.js";
   "./pages/login/login.js";
   "./components/products-spec-popup/products-spec-popup.js";
-  "./pages/packageA/product-detail/product-detail.js";
+  "./packageA/product-detail/product-detail.js";
+  "./packageB/address/address.js";
 }
 const _sfc_main = {
   onLaunch: function() {

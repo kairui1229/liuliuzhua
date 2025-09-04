@@ -1,16 +1,16 @@
 "use strict";
-const common_vendor = require("../../../common/vendor.js");
-const utils_http_index = require("../../../utils/http/index.js");
-const store_spec = require("../../../store/spec.js");
+const common_vendor = require("../../common/vendor.js");
+const utils_http_index = require("../../utils/http/index.js");
+const store_spec = require("../../store/spec.js");
 if (!Array) {
   const _easycom_up_icon2 = common_vendor.resolveComponent("up-icon");
   _easycom_up_icon2();
 }
-const _easycom_up_icon = () => "../../../uni_modules/uview-plus/components/u-icon/u-icon.js";
+const _easycom_up_icon = () => "../../uni_modules/uview-plus/components/u-icon/u-icon.js";
 if (!Math) {
   (_easycom_up_icon + ProductSpecPopup)();
 }
-const ProductSpecPopup = () => "../../../components/products-spec-popup/products-spec-popup2.js";
+const ProductSpecPopup = () => "../../components/products-spec-popup/products-spec-popup2.js";
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "product-detail",
   setup(__props) {
@@ -18,7 +18,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const productInfo = common_vendor.ref({});
     common_vendor.onLoad((options) => {
       productInfo.value = JSON.parse(options.product);
-      common_vendor.index.__f__("log", "at pages/packageA/product-detail/product-detail.vue:92", productInfo.value, 777);
+      common_vendor.index.__f__("log", "at packageA/product-detail/product-detail.vue:92", productInfo.value, 777);
       getImages();
       specStore.setSpec("");
       specStore.setCount(1);
@@ -29,7 +29,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         const res = await utils_http_index.get("/sel/detail", { id: productInfo.value.id });
         productImages.value = res;
       } catch (error) {
-        common_vendor.index.__f__("error", "at pages/packageA/product-detail/product-detail.vue:106", "失败");
+        common_vendor.index.__f__("error", "at packageA/product-detail/product-detail.vue:106", "失败");
       }
     };
     const show = common_vendor.ref(false);
@@ -64,7 +64,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           specStore.setCount(1);
           handleClose();
         } catch (error) {
-          common_vendor.index.__f__("error", "at pages/packageA/product-detail/product-detail.vue:149", error);
+          common_vendor.index.__f__("error", "at packageA/product-detail/product-detail.vue:149", error);
         }
       } else {
         showSpecPopup();
@@ -139,6 +139,6 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-210c53c6"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-3e220c5d"]]);
 wx.createPage(MiniProgramPage);
-//# sourceMappingURL=../../../../.sourcemap/mp-weixin/pages/packageA/product-detail/product-detail.js.map
+//# sourceMappingURL=../../../.sourcemap/mp-weixin/packageA/product-detail/product-detail.js.map

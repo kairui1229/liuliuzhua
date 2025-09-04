@@ -52,12 +52,23 @@
 	
 	"subPackages": [
 		{
-			"root": "pages/packageA",
+			"root": "packageA",
 			"pages": [
 				{
 					"path": "product-detail/product-detail",
 					"style": {
 						"navigationBarTitleText": "商品详情"
+					}
+				}
+			]
+		},
+		{
+			"root": "packageB",
+			"pages": [
+				{
+					"path": "address/address",
+					"style": {
+						"navigationBarTitleText": "地址管理"
 					}
 				}
 			]
@@ -67,7 +78,7 @@
 	"preloadRule":{
 		"pages/selected/selected":{
 			"network": "wifi",
-			"packages":["pages/packageA"]
+			"packages":["packageA"]
 		}
 	},
 

@@ -10,9 +10,15 @@
   ],
   "subPackages": [
     {
-      "root": "pages/packageA",
+      "root": "packageA",
       "pages": [
         "product-detail/product-detail"
+      ]
+    },
+    {
+      "root": "packageB",
+      "pages": [
+        "address/address"
       ]
     }
   ],
@@ -57,7 +63,7 @@
     "pages/selected/selected": {
       "network": "wifi",
       "packages": [
-        "pages/packageA"
+        "packageA"
       ]
     }
   },

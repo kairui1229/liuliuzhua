@@ -155,7 +155,7 @@ const handleClose = () =>{
 //跳转到详情页
 const goProductDetail = (product:any) =>{
 	uni.navigateTo({
-		url:`/pages/packageA/product-detail/product-detail?product=${JSON.stringify(product)}`
+		url:`/packageA/product-detail/product-detail?product=${JSON.stringify(product)}`
 	})
 }
 </script>

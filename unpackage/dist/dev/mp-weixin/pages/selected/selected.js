@@ -82,7 +82,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
     const goProductDetail = (product) => {
       common_vendor.index.navigateTo({
-        url: `/pages/packageA/product-detail/product-detail?product=${JSON.stringify(product)}`
+        url: `/packageA/product-detail/product-detail?product=${JSON.stringify(product)}`
       });
     };
     return (_ctx, _cache) => {

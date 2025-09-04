@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "商品详情",
-  "usingComponents": {
-    "up-icon": "../../../uni_modules/uview-plus/components/u-icon/u-icon",
-    "product-spec-popup": "../../../components/products-spec-popup/products-spec-popup"
-  }
-}

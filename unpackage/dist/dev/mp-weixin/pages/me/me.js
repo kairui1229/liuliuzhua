@@ -48,6 +48,18 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         }
       });
     };
+    const goAddress = () => {
+      const token = common_vendor.index.getStorageSync("token");
+      if (!token) {
+        common_vendor.index.navigateTo({
+          url: "/pages/login/login"
+        });
+        return;
+      }
+      common_vendor.index.navigateTo({
+        url: "/packageB/address/address"
+      });
+    };
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: avatar.value,
@@ -85,10 +97,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           title: "地址管理",
           showArrow: true
         }),
-        r: common_vendor.o(
-          //@ts-ignore
-          (...args) => _ctx.goAddress && _ctx.goAddress(...args)
-        ),
+        r: common_vendor.o(goAddress),
         s: common_vendor.p({
           title: "联系我们",
           showArrow: true
