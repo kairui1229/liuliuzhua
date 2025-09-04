@@ -21,6 +21,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       common_vendor.index.__f__("log", "at pages/packageA/product-detail/product-detail.vue:92", productInfo.value, 777);
       getImages();
       specStore.setSpec("");
+      specStore.setCount(1);
     });
     const productImages = common_vendor.ref([]);
     const getImages = async () => {
@@ -28,7 +29,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         const res = await utils_http_index.get("/sel/detail", { id: productInfo.value.id });
         productImages.value = res;
       } catch (error) {
-        common_vendor.index.__f__("error", "at pages/packageA/product-detail/product-detail.vue:105", "失败");
+        common_vendor.index.__f__("error", "at pages/packageA/product-detail/product-detail.vue:106", "失败");
       }
     };
     const show = common_vendor.ref(false);
@@ -41,7 +42,52 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const selectedSpec = common_vendor.computed(() => {
       return specStore.specText;
     });
+    const selCount = common_vendor.computed(() => {
+      return specStore.count;
+    });
+    const addCart = async () => {
+      if (selectedSpec.value) {
+        try {
+          const res = await utils_http_index.post("/cart/addCart", {
+            product_id: productInfo.value.id,
+            name: productInfo.value.name,
+            price: productInfo.value.price,
+            count: selCount.value,
+            spec: selectedSpec.value,
+            main_pic: productInfo.value.main_pic
+          });
+          common_vendor.index.showToast({
+            title: "加购成功",
+            icon: "success"
+          });
+          specStore.setSpec("");
+          specStore.setCount(1);
+          handleClose();
+        } catch (error) {
+          common_vendor.index.__f__("error", "at pages/packageA/product-detail/product-detail.vue:149", error);
+        }
+      } else {
+        showSpecPopup();
+      }
+    };
     const buyNow = () => {
+    };
+    const goHome = () => {
+      common_vendor.index.switchTab({
+        url: "/pages/index/index"
+      });
+    };
+    const goCart = () => {
+      const token = common_vendor.index.getStorageSync("token");
+      if (!token) {
+        common_vendor.index.navigateTo({
+          url: "/pages/login/login"
+        });
+        return;
+      }
+      common_vendor.index.navigateTo({
+        url: "/pages/cart/cart"
+      });
     };
     return (_ctx, _cache) => {
       return {
@@ -73,19 +119,14 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           size: "40",
           color: "#666"
         }),
-        k: common_vendor.o(() => {
-        }),
+        k: common_vendor.o(goHome),
         l: common_vendor.p({
           name: "shopping-cart",
           size: "40",
           color: "#666"
         }),
-        m: common_vendor.o(() => {
-        }),
-        n: common_vendor.o(
-          //@ts-ignore
-          (...args) => _ctx.AddCart && _ctx.AddCart(...args)
-        ),
+        m: common_vendor.o(goCart),
+        n: common_vendor.o(addCart),
         o: common_vendor.o(buyNow),
         p: common_vendor.o(handleClose),
         q: common_vendor.p({

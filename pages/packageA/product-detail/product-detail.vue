@@ -42,17 +42,17 @@
 		<!--底部操作区域-->
 		<view class="bottom-bar">
 			<view class="left-btns">
-				<view class="icon-btn" @click="">
+				<view class="icon-btn" @click="goHome">
 					<up-icon name="home" size="40" color="#666"></up-icon>
 					<text>首页</text>
 				</view>
-				<view class="icon-btn" @click="">
+				<view class="icon-btn" @click="goCart">
 					<up-icon name="shopping-cart" size="40" color="#666"></up-icon>
 					<text>购物车</text>
 				</view>
 			</view>
 			<view class="right-btns">
-				<view class="cart-btn" @click="AddCart">加入购物车</view>
+				<view class="cart-btn" @click="addCart">加入购物车</view>
 				<view class="buy-btn" @click="buyNow">立即购买</view>
 			</view>
 		</view>
@@ -92,6 +92,7 @@ onLoad((options)=>{
 	console.log(productInfo.value,777)
 	getImages()
 	specStore.setSpec("")
+	specStore.setCount(1)
 })
 
 //获取轮播图图片
@@ -119,8 +120,13 @@ const handleClose = () =>{
 const selectedSpec = computed (() =>{
 	return specStore.specText
 })
+const selCount=computed(()=>{
+	return specStore.count
+})
 
-const addCart=async ()=>{
+
+//加入购物车
+const addCart = async ()=>{
 	if(selectedSpec.value){
 		try {
 			const res=await post("/cart/addCart",{
@@ -147,8 +153,30 @@ const addCart=async ()=>{
 	}
 }
 
+//立即购买
 const buyNow = ()=>{
 	
+}
+
+//去首页
+const goHome=()=>{
+	uni.switchTab({
+		url:"/pages/index/index"
+	})
+}
+
+//去购物车
+const goCart=()=>{
+	const token=uni.getStorageSync("token");
+	if(!token){
+		uni.navigateTo({
+			url:"/pages/login/login"
+		})
+		return
+	}
+	uni.navigateTo({
+		url:"/pages/cart/cart"
+	})
 }
 </script>
 

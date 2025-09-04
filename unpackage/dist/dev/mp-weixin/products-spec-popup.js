@@ -58,6 +58,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       Object.keys(selectedSpecs).forEach((key) => delete selectedSpecs[key]);
       Object.keys(selectedTexts).forEach((key) => delete selectedTexts[key]);
       selectedSpec.value = "";
+      quantity.value = 1;
     };
     const quantity = common_vendor.ref(1);
     const increase = () => {
@@ -73,7 +74,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       if (specList.value.length) {
         specList.value.forEach((group) => {
           const selected = group.values.find((item) => selectedSpecs[group.attr_id] === item.value_id);
-          common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:111", "选中的数据", selected);
+          common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:112", "选中的数据", selected);
           if (selected == null ? void 0 : selected.multiple) {
             price *= Number(selected.multiple);
           }
@@ -106,7 +107,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         specStore.setSpec("");
         handleClose();
       } catch (error) {
-        common_vendor.index.__f__("error", "at components/products-spec-popup/products-spec-popup.vue:149", error);
+        common_vendor.index.__f__("error", "at components/products-spec-popup/products-spec-popup.vue:150", error);
       }
     };
     const handleOk = () => {
@@ -119,6 +120,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         return;
       }
       specStore.setSpec(selectedSpec.value);
+      specStore.setCount(quantity.value);
+      specStore.setTotal(finalPrice.value);
       handleClose();
     };
     return (_ctx, _cache) => {

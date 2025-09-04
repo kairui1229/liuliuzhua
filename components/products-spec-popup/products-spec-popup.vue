@@ -90,6 +90,7 @@ const handleClose = () => {
 	Object.keys(selectedSpecs).forEach(key => delete selectedSpecs[key]);
 	Object.keys(selectedTexts).forEach(key => delete selectedTexts[key]);
 	selectedSpec.value = ""
+	quantity.value = 1
 }
 
 //商品数量
@@ -162,6 +163,8 @@ const handleOk = () =>{
 		return 
 	}
 	specStore.setSpec(selectedSpec.value)
+	specStore.setCount(quantity.value)
+	specStore.setTotal(finalPrice.value)
 	handleClose()
 }
 </script>
