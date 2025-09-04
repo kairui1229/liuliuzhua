@@ -3,18 +3,21 @@
 		<!--用户信息模块-->
 		<view class="user-info">
 			<view class="avatar-placeholder">
-				<image src="/static/modules/home/dog1.png"></image>
+				<image :src=avatar></image>
 			</view>
 			<view class="user-detail">
-				<text class="username">用户暂未登录</text>
-				<text class="user-level" @click="handleLogin">点击去登录</text>
+				<text class="username">{{userInfo?nickName:"用户暂未登录"}}</text>
+				<text class="user-level" @click="handleLogin" v-if="!userInfo">点击去登录</text>
 			</view>
 		</view>
 		<!--我的订单-->
 		<view class="order-section">
 			<view class="section-header">
 				<text>我的订单</text>
-				<text class="more">查看全部 > </text>
+				<view class="more">
+					<text>查看全部</text>
+					<uni-icons type="arrowright" size="14" color="#999"></uni-icons>
+				</view>
 			</view>
 			<view class="order-types">
 				<view class="order-item">
@@ -80,7 +83,43 @@
 <script setup lang="ts">
 import {onShow} from "@dcloudio/uni-app"
 import {computed, ref} from "vue"
-	
+
+let userInfo=ref(null);
+onShow(()=>{
+	userInfo.value=uni.getStorageSync("user")
+	console.log("用户数据",userInfo.value)
+})
+
+//获取个人信息
+const nickName=computed(()=>{
+	return userInfo.value&&userInfo.value.username?userInfo.value.username:"铲屎官一枚"+userInfo.value.user_id
+})
+const avatar=computed(()=>{
+	return userInfo.value&&userInfo.value.avatar?userInfo.value.avatar:"/static/modules/home/dog1.png"
+})
+const handleLogin=()=>{
+	uni.navigateTo({
+		url:"/pages/login/login"
+	})
+}
+
+//退出登录
+const handleLogout=()=>{
+	uni.showModal({
+		title:"确认退出",
+		content:"确定要退出登录吗?",
+		success(res) {
+			if(res.confirm){
+				uni.clearStorageSync()
+				userInfo.value=null;
+				uni.showToast({
+					title:"退出成功",
+					icon:"success"
+				})
+			}
+		}
+	})
+}
 </script>
 
 <style lang="scss" scoped>
@@ -98,7 +137,13 @@ import {computed, ref} from "vue"
 		.more{
 			font-size: 24rpx;
 			color: #999;
-			
+			display: flex;
+			align-items: center;
+			gap: 4rpx;
+			text{
+				font-size: 24rpx;
+				color: #666;
+			}
 		}
 	}
 	.page{
