@@ -49,6 +49,27 @@
 			}
 		}
 	],
+	
+	"subPackages": [
+		{
+			"root": "pages/packageA",
+			"pages": [
+				{
+					"path": "product-detail/product-detail",
+					"style": {
+						"navigationBarTitleText": "商品详情"
+					}
+				},
+			]
+		}
+	],
+	
+	"preloadRule":{
+		"pages/selected/selected":{
+			"network": "wifi",
+			"packages":["packageA"]
+		}
+	},
 
 	"easycom": {
 		"autoscan": true,

@@ -8,6 +8,14 @@
     "pages/login/login",
     "components/products-spec-popup/products-spec-popup"
   ],
+  "subPackages": [
+    {
+      "root": "pages/packageA",
+      "pages": [
+        "product-detail/product-detail"
+      ]
+    }
+  ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
@@ -44,6 +52,14 @@
         "selectedIconPath": "static/common/images/me-active.png"
       }
     ]
+  },
+  "preloadRule": {
+    "pages/selected/selected": {
+      "network": "wifi",
+      "packages": [
+        "packageA"
+      ]
+    }
   },
   "permission": {
     "scope.userLocation": {
