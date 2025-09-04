@@ -62,7 +62,7 @@
 		</view>
 	</view>
 	
-	<ProductsSpecPopup :show="show" :product="selProduct" @close="handleClose"></ProductsSpecPopup>
+	<ProductsSpecPopup :show="show" :product="selProduct" @close="handleClose" :show-ok="false"></ProductsSpecPopup>
 </template>
 
 <script setup lang="ts">

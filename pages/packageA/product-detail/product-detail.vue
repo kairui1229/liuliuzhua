@@ -20,7 +20,7 @@
 		<view class="spec-section" @click="showSpecPopup">
 			<text class="label">规格</text>
 			<view class="selected-spec">
-				<text>请选择规格</text>
+				<text>{{selectedSpec || "请选择规格"}}</text>
 				<up-icon name="arrow-right" size="20" color="#999"></up-icon>
 			</view>
 		</view>
@@ -52,12 +52,12 @@
 				</view>
 			</view>
 			<view class="right-btns">
-				<view class="cart-btn" @click="">加入购物车</view>
-				<view class="buy-btn" @click="">立即购买</view>
+				<view class="cart-btn" @click="AddCart">加入购物车</view>
+				<view class="buy-btn" @click="buyNow">立即购买</view>
 			</view>
 		</view>
 		
-		<ProductSpecPopup :show="show" :product="productInfo" @close="handleClose"></ProductSpecPopup>
+		<ProductSpecPopup :show="show" :product="productInfo" @close="handleClose" :show-ok="true"></ProductSpecPopup>
 	</view>
 </template>
 
@@ -65,7 +65,10 @@
 import {ref,computed} from "vue"
 import {onLoad} from "@dcloudio/uni-app"
 import { get,post } from "@/utils/http";
+import { useSpecStore } from "@/store/spec";
 import ProductSpecPopup from "@/components/products-spec-popup/products-spec-popup.vue";
+
+const specStore = useSpecStore()
 
 interface ProductDetail{
 	id:number;
@@ -88,6 +91,7 @@ onLoad((options)=>{
 	productInfo.value= JSON.parse(options.product)
 	console.log(productInfo.value,777)
 	getImages()
+	specStore.setSpec("")
 })
 
 //获取轮播图图片
@@ -109,6 +113,42 @@ const showSpecPopup = () =>{
 }
 const handleClose = () =>{
 	show.value = false
+}
+
+//从pinia中取出规格数据
+const selectedSpec = computed (() =>{
+	return specStore.specText
+})
+
+const addCart=async ()=>{
+	if(selectedSpec.value){
+		try {
+			const res=await post("/cart/addCart",{
+				product_id:productInfo.value.id,
+				name:productInfo.value.name,
+				price:productInfo.value.price,
+				count:selCount.value,
+				spec:selectedSpec.value,
+				main_pic:productInfo.value.main_pic
+			})
+			uni.showToast({
+				title:"加购成功",
+				icon:"success"
+			})
+			specStore.setSpec("")
+			specStore.setCount(1)
+			handleClose()
+		} catch (error) {
+			//TODO handle the exception
+			console.error(error)
+		}
+	}else{
+		showSpecPopup()
+	}
+}
+
+const buyNow = ()=>{
+	
 }
 </script>
 

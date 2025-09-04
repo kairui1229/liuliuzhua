@@ -33,7 +33,7 @@
 						<view class="plus" @click="increase">+</view>
 					</view>
 				</view>
-				<view class="confirm-ok" @click="">确定</view>
+				<view class="confirm-ok" @click="handleOk" v-if="showOk">确定</view>
 				<view class="confirm-btn" @click="confirmSpec()">加购</view>
 			</view>
 		</view>
@@ -43,9 +43,11 @@
 <script setup lang="ts">
 import { watch, ref, reactive, computed } from "vue";
 import {get,post} from "@/utils/http"
+import { useSpecStore } from "../../store/spec";
 	
-const props = defineProps<{show:boolean, product:any}>()
+const props = defineProps<{show:boolean , product:any , showOk:boolean}>()
 const emit = defineEmits(["close"])
+const specStore = useSpecStore()
 
 //获取商品规格
 watch(() => props.show, (newVal) => {
@@ -83,11 +85,11 @@ const selectSpec = (attr_id:number,value_id:number,value:string) =>{
 }
 
 const handleClose = () => {
-		emit("close");
-		//重置数据
-		Object.keys(selectedSpecs).forEach(key => delete selectedSpecs[key]);
-		Object.keys(selectedTexts).forEach(key => delete selectedTexts[key]);
-		selectedSpec.value = ""
+	emit("close");
+	//重置数据
+	Object.keys(selectedSpecs).forEach(key => delete selectedSpecs[key]);
+	Object.keys(selectedTexts).forEach(key => delete selectedTexts[key]);
+	selectedSpec.value = ""
 }
 
 //商品数量
@@ -140,11 +142,27 @@ const confirmSpec = async () =>{
 				title:"加购成功",
 				icon:"success"
 			})
+			specStore.setSpec("")
 			handleClose()
 		} catch (error) {
 			//TODO handle the exception
 			console.error(error)
 		}
+}
+
+//点击确定按钮 将数据存在pinia中
+const handleOk = () =>{
+	 //判断商品的所有规格是否都能在已选规格中找到对应的
+	const allSelected=specList.value.every(group=>selectedSpecs[group.attr_id])
+	if(!allSelected){
+		uni.showToast({
+			title:"请选择完整规格",
+			icon:"error"
+		})
+		return 
+	}
+	specStore.setSpec(selectedSpec.value)
+	handleClose()
 }
 </script>
 

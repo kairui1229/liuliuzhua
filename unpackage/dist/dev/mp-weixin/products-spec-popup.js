@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("./common/vendor.js");
 const utils_http_index = require("./utils/http/index.js");
+const store_spec = require("./store/spec.js");
 if (!Array) {
   const _easycom_up_popup2 = common_vendor.resolveComponent("up-popup");
   _easycom_up_popup2();
@@ -13,12 +14,14 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "products-spec-popup",
   props: {
     show: { type: Boolean },
-    product: {}
+    product: {},
+    showOk: { type: Boolean }
   },
   emits: ["close"],
   setup(__props, { emit: __emit }) {
     const props = __props;
     const emit = __emit;
+    const specStore = store_spec.useSpecStore();
     common_vendor.watch(() => props.show, (newVal) => {
       if (newVal) {
         getSpec();
@@ -29,7 +32,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       try {
         const res = await utils_http_index.get("/cart/getSpec", { id: props.product.id });
         specList.value = res || [];
-        common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:62", "商品规格", specList.value);
+        common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:64", "商品规格", specList.value);
         if (!res) {
           handleClose();
           setTimeout(() => {
@@ -39,7 +42,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           }, 500);
         }
       } catch (error) {
-        common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:72", error);
+        common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:74", error);
       }
     };
     const selectedSpecs = common_vendor.reactive({});
@@ -70,7 +73,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       if (specList.value.length) {
         specList.value.forEach((group) => {
           const selected = group.values.find((item) => selectedSpecs[group.attr_id] === item.value_id);
-          common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:109", "选中的数据", selected);
+          common_vendor.index.__f__("log", "at components/products-spec-popup/products-spec-popup.vue:111", "选中的数据", selected);
           if (selected == null ? void 0 : selected.multiple) {
             price *= Number(selected.multiple);
           }
@@ -100,13 +103,26 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           title: "加购成功",
           icon: "success"
         });
+        specStore.setSpec("");
         handleClose();
       } catch (error) {
-        common_vendor.index.__f__("error", "at components/products-spec-popup/products-spec-popup.vue:146", error);
+        common_vendor.index.__f__("error", "at components/products-spec-popup/products-spec-popup.vue:149", error);
       }
     };
+    const handleOk = () => {
+      const allSelected = specList.value.every((group) => selectedSpecs[group.attr_id]);
+      if (!allSelected) {
+        common_vendor.index.showToast({
+          title: "请选择完整规格",
+          icon: "error"
+        });
+        return;
+      }
+      specStore.setSpec(selectedSpec.value);
+      handleClose();
+    };
     return (_ctx, _cache) => {
-      return {
+      return common_vendor.e({
         a: _ctx.product.main_pic,
         b: common_vendor.t(finalPrice.value),
         c: common_vendor.t(selectedSpec.value || "请选择规格"),
@@ -126,16 +142,18 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         e: common_vendor.o(decrease),
         f: common_vendor.t(quantity.value),
         g: common_vendor.o(increase),
-        h: common_vendor.o(() => {
-        }),
-        i: common_vendor.o(($event) => confirmSpec()),
-        j: common_vendor.o(handleClose),
-        k: common_vendor.p({
+        h: _ctx.showOk
+      }, _ctx.showOk ? {
+        i: common_vendor.o(handleOk)
+      } : {}, {
+        j: common_vendor.o(($event) => confirmSpec()),
+        k: common_vendor.o(handleClose),
+        l: common_vendor.p({
           show: _ctx.show,
           closeable: true
         }),
-        l: common_vendor.gei(_ctx, "")
-      };
+        m: common_vendor.gei(_ctx, "")
+      });
     };
   }
 });

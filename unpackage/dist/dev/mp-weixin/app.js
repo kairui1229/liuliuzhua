@@ -23,8 +23,10 @@ const _sfc_main = {
     common_vendor.index.__f__("log", "at App.vue:10", "App Hide");
   }
 };
+const pinia = common_vendor.createPinia();
 function createApp() {
   const app = common_vendor.createSSRApp(_sfc_main);
+  app.use(pinia);
   app.use(uni_modules_uviewPlus_index.uviewPlus);
   return {
     app
