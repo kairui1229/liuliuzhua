@@ -2,7 +2,7 @@
 	<view class="address-page">
 		<!--地址列表-->
 		<view class="address-list" v-if="addressList.length">
-			<view class="address-item" v-for="item in addressList" :key="item.id" @click="">
+			<view class="address-item" v-for="item in addressList" :key="item.id" @click="closePopup">
 				<view class="address-info">
 					<view class="contact-info">
 						<text class="name">{{item.name}}</text>
@@ -14,10 +14,10 @@
 					</view>
 				</view>
 				<view class="address-actions">
-					<view class="action-btn" @click="">
+					<view class="action-btn" @click.stop="editAddress(item)">
 						<up-icon name="edit-pen" size="20" color="#666" ></up-icon>
 					</view>
-					<view class="action-btn" @click="deleteAddress(item.id)">
+					<view class="action-btn" @click.stop="deleteAddress(item.id)">
 						<up-icon name="trash" size="20" color="#666"></up-icon>
 					</view>
 				</view>
@@ -30,41 +30,42 @@
 		</view>
 		
 		<!-- 底部新增收货地址 -->
-		<view class="add-btn" @click="">
+		<view class="add-btn" @click="showAddressPopup">
 			<up-icon name="plus" size="20" color="#fff"></up-icon>
 			<text>新增收货地址</text>
 		</view>
 		
 		<!--地址编辑弹窗-->
-		<up-popup :show="false" closeable class="wrap">
+		<up-popup :show="showPopup" closeable class="wrap" @close="closePopup">
 			<view class="address-form">
-				<view class="form-title">新增地址</view>
+				<view class="form-title">{{isEdit?"编辑地址":"新增地址"}}</view>
 				<view class="form-item">
 					<text class="label">收货人</text>
-					<input placeholder="请输入收货人姓名" class="input"/>
+					<input v-model="addressForm.name" placeholder="请输入收货人姓名" class="input"/>
 				</view>
 				<view class="form-item">
 					<text class="label">手机号</text>
-					<input  placeholder="请输入手机号" type="number" maxlength="11" class="input"/>
+					<input v-model="addressForm.phone" placeholder="请输入手机号" type="number" maxlength="11" class="input"/>
 				</view>
-				<view class="form-item" @click="">
+				<view class="form-item" @click="showRegionPicker">
 					<text class="label">所在地区</text>
 					<view class="region-display">
-						<text >请选择所在地区</text>
+						<text v-if="addressForm.region.length">{{addressForm.region.join(" ")}}</text>
+						<text v-else>请选择所在地区</text>
 						<up-icon name="arrow-right" size="16" color="#999" class="right"></up-icon>
 					</view>
 				</view>
 				<view class="form-item">
 					<text class="label">详细地址</text>
-					<textarea placeholder="请输入详细地址" class="textarea"/>
+					<textarea v-model="addressForm.detail" placeholder="请输入详细地址" class="textarea"/>
 				</view>
 				<view class="form-item">
 					<text class="def">设为默认地址</text>
-					<switch color="#ffce2c" @change=""></switch>
+					<switch :checked="addressForm.is_default" color="#ffce2c" @change="onDefaultChange"></switch>
 				</view>
 				<view class="form-actions">
-					<view class="cancel-btn" @click="">取消</view>
-					<view class="save-btn" @click="">保存</view>
+					<view class="cancel-btn" @click="closePopup">取消</view>
+					<view class="save-btn" @click="saveAddress">保存</view>
 				</view>
 			</view>
 		</up-popup>
@@ -74,7 +75,9 @@
 		 :show="show" 
 		 ref="uPickerRef" 
 		 :columns="columns" 
+		 @confirm="confirm"
 		 @change="changeHandler" 
+		 @cancel="cancel"
 		 >
 		 </up-picker>
 	</view>
@@ -124,7 +127,7 @@ const deleteAddress=(id:number)=>{
 }
 
 //省市区级联选择
-const show = ref(true);
+const show = ref(false);
 const loading = ref(false);
 const columns = reactive([
   ['山东省','北京市', '广东省', '江苏省'],
@@ -190,10 +193,109 @@ const getCityIndex = (provinceIndex:number,cityIndex:number) =>{
 	return total+cityIndex
 }
 
+//选择完地址后点击确定
 const confirm = (e) => {
-  console.log('confirm', e.value);
+  console.log('所选的地址', e.value);
   show.value = false;
+  addressForm.region=e.value
 };
+
+//取消选择地址
+const cancel=()=>{
+	show.value=false
+	addressForm.region=[]
+}
+
+//地址编辑弹窗
+const showPopup = ref(false)
+const isEdit = ref(false)
+
+//打开弹窗
+const showAddressPopup = () =>{
+	isEdit.value = false
+	showPopup.value = true
+}
+
+//地址表单
+const addressForm=reactive({
+	name:"",
+	phone:"",
+	region:[],
+	detail:"",
+	is_default:0
+})
+
+const currentId=ref<number | null>(null)
+
+//是否为默认地址
+const onDefaultChange=(e:any)=>{
+	addressForm.is_default=e.detail.value?1:0
+}
+
+//编辑地址表单
+const editAddress=(item:any)=>{
+	isEdit.value=true
+	
+	currentId.value=item.id
+	addressForm.name=item.name
+	addressForm.phone=item.phone
+	addressForm.region=[item.province,item.city,item.district]
+	addressForm.detail=item.detail
+	addressForm.is_default=item.is_default
+	
+	showPopup.value=true
+}
+
+//重置表单
+const resetForm=()=>{
+	addressForm.name=""
+	addressForm.phone=""
+	addressForm.region=[]
+	addressForm.detail=""
+	addressForm.is_default=0
+}
+
+//关闭弹窗
+const closePopup=()=>{
+	showPopup.value=false
+	resetForm()
+}
+
+//打开地址选择弹窗
+const showRegionPicker=()=>{
+	show.value=true;
+}
+
+//调用接口保存新增或编辑后的地址
+const saveAddress=async ()=>{
+	if(!addressForm.name.trim() || !addressForm.phone.trim() || !addressForm.region.length || !addressForm.detail.trim() ){
+		uni.showToast({
+			title:"地址信息不能为空",
+			icon:"none"
+		})
+		return 
+	}
+	const newAddress = {
+		id:isEdit.value?currentId.value:null,
+		name:addressForm.name,
+		phone:addressForm.phone,
+		province:addressForm.region[0],
+		city:addressForm.region[1],
+		district:addressForm.region[2],
+		detail:addressForm.detail,
+		is_default:addressForm.is_default
+	}
+	try {
+		await post("/cart/addOrUpdate",newAddress);
+		uni.showToast({
+			title:isEdit.value?"编辑成功":"新增成功"
+		})
+	} catch (error) {
+		console.log(error)
+	}
+	closePopup()
+	getAddressList()	
+}
 </script>
 
 <style lang="scss" scoped>

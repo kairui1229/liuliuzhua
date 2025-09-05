@@ -24,9 +24,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       try {
         const result = await utils_http_index.get("/cart/address");
         addressList.value = result;
-        common_vendor.index.__f__("log", "at packageB/address/address.vue:98", "地址列表", addressList.value);
+        common_vendor.index.__f__("log", "at packageB/address/address.vue:101", "地址列表", addressList.value);
       } catch (error) {
-        common_vendor.index.__f__("log", "at packageB/address/address.vue:100", error);
+        common_vendor.index.__f__("log", "at packageB/address/address.vue:103", error);
       }
     };
     const deleteAddress = (id) => {
@@ -43,13 +43,13 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
               });
               getAddressList();
             } catch (error) {
-              common_vendor.index.__f__("log", "at packageB/address/address.vue:119", error);
+              common_vendor.index.__f__("log", "at packageB/address/address.vue:122", error);
             }
           }
         }
       });
     };
-    const show = common_vendor.ref(true);
+    const show = common_vendor.ref(false);
     common_vendor.ref(false);
     const columns = common_vendor.reactive([
       ["山东省", "北京市", "广东省", "江苏省"],
@@ -119,6 +119,85 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       }
       return total + cityIndex;
     };
+    const confirm = (e) => {
+      common_vendor.index.__f__("log", "at packageB/address/address.vue:198", "所选的地址", e.value);
+      show.value = false;
+      addressForm.region = e.value;
+    };
+    const cancel = () => {
+      show.value = false;
+      addressForm.region = [];
+    };
+    const showPopup = common_vendor.ref(false);
+    const isEdit = common_vendor.ref(false);
+    const showAddressPopup = () => {
+      isEdit.value = false;
+      showPopup.value = true;
+    };
+    const addressForm = common_vendor.reactive({
+      name: "",
+      phone: "",
+      region: [],
+      detail: "",
+      is_default: 0
+    });
+    const currentId = common_vendor.ref(null);
+    const onDefaultChange = (e) => {
+      addressForm.is_default = e.detail.value ? 1 : 0;
+    };
+    const editAddress = (item) => {
+      isEdit.value = true;
+      currentId.value = item.id;
+      addressForm.name = item.name;
+      addressForm.phone = item.phone;
+      addressForm.region = [item.province, item.city, item.district];
+      addressForm.detail = item.detail;
+      addressForm.is_default = item.is_default;
+      showPopup.value = true;
+    };
+    const resetForm = () => {
+      addressForm.name = "";
+      addressForm.phone = "";
+      addressForm.region = [];
+      addressForm.detail = "";
+      addressForm.is_default = 0;
+    };
+    const closePopup = () => {
+      showPopup.value = false;
+      resetForm();
+    };
+    const showRegionPicker = () => {
+      show.value = true;
+    };
+    const saveAddress = async () => {
+      if (!addressForm.name.trim() || !addressForm.phone.trim() || !addressForm.region.length || !addressForm.detail.trim()) {
+        common_vendor.index.showToast({
+          title: "地址信息不能为空",
+          icon: "none"
+        });
+        return;
+      }
+      const newAddress = {
+        id: isEdit.value ? currentId.value : null,
+        name: addressForm.name,
+        phone: addressForm.phone,
+        province: addressForm.region[0],
+        city: addressForm.region[1],
+        district: addressForm.region[2],
+        detail: addressForm.detail,
+        is_default: addressForm.is_default
+      };
+      try {
+        await utils_http_index.post("/cart/addOrUpdate", newAddress);
+        common_vendor.index.showToast({
+          title: isEdit.value ? "编辑成功" : "新增成功"
+        });
+      } catch (error) {
+        common_vendor.index.__f__("log", "at packageB/address/address.vue:294", error);
+      }
+      closePopup();
+      getAddressList();
+    };
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: addressList.value.length
@@ -134,13 +213,11 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             f: common_vendor.t(item.district),
             g: common_vendor.t(item.detail),
             h: "392a643a-0-" + i0,
-            i: common_vendor.o(() => {
-            }, item.id),
+            i: common_vendor.o(($event) => editAddress(item), item.id),
             j: "392a643a-1-" + i0,
             k: common_vendor.o(($event) => deleteAddress(item.id), item.id),
             l: item.id,
-            m: common_vendor.o(() => {
-            }, item.id)
+            m: common_vendor.o(closePopup, item.id)
           });
         }),
         c: common_vendor.p({
@@ -165,34 +242,44 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           size: "20",
           color: "#fff"
         }),
-        g: common_vendor.o(() => {
-        }),
-        h: common_vendor.p({
+        g: common_vendor.o(showAddressPopup),
+        h: common_vendor.t(isEdit.value ? "编辑地址" : "新增地址"),
+        i: addressForm.name,
+        j: common_vendor.o(($event) => addressForm.name = $event.detail.value),
+        k: addressForm.phone,
+        l: common_vendor.o(($event) => addressForm.phone = $event.detail.value),
+        m: addressForm.region.length
+      }, addressForm.region.length ? {
+        n: common_vendor.t(addressForm.region.join(" "))
+      } : {}, {
+        o: common_vendor.p({
           name: "arrow-right",
           size: "16",
           color: "#999"
         }),
-        i: common_vendor.o(() => {
-        }),
-        j: common_vendor.o(() => {
-        }),
-        k: common_vendor.o(() => {
-        }),
-        l: common_vendor.o(() => {
-        }),
-        m: common_vendor.p({
-          show: false,
+        p: common_vendor.o(showRegionPicker),
+        q: addressForm.detail,
+        r: common_vendor.o(($event) => addressForm.detail = $event.detail.value),
+        s: addressForm.is_default,
+        t: common_vendor.o(onDefaultChange),
+        v: common_vendor.o(closePopup),
+        w: common_vendor.o(saveAddress),
+        x: common_vendor.o(closePopup),
+        y: common_vendor.p({
+          show: showPopup.value,
           closeable: true
         }),
-        n: common_vendor.sr(uPickerRef, "392a643a-6", {
+        z: common_vendor.sr(uPickerRef, "392a643a-6", {
           "k": "uPickerRef"
         }),
-        o: common_vendor.o(changeHandler),
-        p: common_vendor.p({
+        A: common_vendor.o(confirm),
+        B: common_vendor.o(changeHandler),
+        C: common_vendor.o(cancel),
+        D: common_vendor.p({
           show: show.value,
           columns
         }),
-        q: common_vendor.gei(_ctx, "")
+        E: common_vendor.gei(_ctx, "")
       });
     };
   }
