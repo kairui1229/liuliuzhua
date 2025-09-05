@@ -5566,6 +5566,10 @@ function findScopedSlotInvoker(vueId, instance) {
     parent = parent.parent;
   }
 }
+function setRef(ref2, id, opts = {}) {
+  const { $templateRefs } = getCurrentInstance();
+  $templateRefs.push({ i: id, r: ref2, k: opts.k, f: opts.f });
+}
 function hasIdProp(_ctx) {
   return _ctx.$.propsOptions && _ctx.$.propsOptions[0] && "id" in _ctx.$.propsOptions[0];
 }
@@ -5592,6 +5596,7 @@ const e = (target, ...sources) => extend(target, ...sources);
 const n = (value) => normalizeClass(value);
 const t = (val) => toDisplayString(val);
 const p = (props) => renderProps(props);
+const sr = (ref2, id, opts) => setRef(ref2, id, opts);
 const gei = genUniElementId;
 function createApp$1(rootComponent, rootProps = null) {
   rootComponent && (rootComponent.mpType = "app");
@@ -7414,7 +7419,7 @@ function isConsoleWritable() {
 function initRuntimeSocketService() {
   const hosts = "192.168.0.102,127.0.0.1";
   const port = "8090";
-  const id = "mp-weixin_4hBDVF";
+  const id = "mp-weixin_KkDVjp";
   const lazy = typeof swan !== "undefined";
   let restoreError = lazy ? () => {
   } : initOnError();
@@ -8996,6 +9001,7 @@ exports.reactive = reactive;
 exports.ref = ref;
 exports.resolveComponent = resolveComponent;
 exports.s = s;
+exports.sr = sr;
 exports.t = t;
 exports.unref = unref;
 exports.watch = watch;

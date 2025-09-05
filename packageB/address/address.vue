@@ -68,6 +68,15 @@
 				</view>
 			</view>
 		</up-popup>
+		
+		<!--省市区联动-->
+		 <up-picker 
+		 :show="show" 
+		 ref="uPickerRef" 
+		 :columns="columns" 
+		 @change="changeHandler" 
+		 >
+		 </up-picker>
 	</view>
 </template>
 
@@ -113,6 +122,78 @@ const deleteAddress=(id:number)=>{
 		}
 	})
 }
+
+//省市区级联选择
+const show = ref(true);
+const loading = ref(false);
+const columns = reactive([
+  ['山东省','北京市', '广东省', '江苏省'],
+  ['青岛市', '济南市', '威海市', '烟台市'],
+  ["市南区","市北区","崂山区","李沧区"]
+]);
+const columnData = reactive([
+  ['青岛市', '济南市', '威海市', '烟台市'],
+  ["北京市"],  
+  ['广州市', '深圳市', '珠海市'],   
+  ['南京市', '苏州市', '无锡市'],
+]);
+//区域的数据
+const districtData=reactive([
+	 //山东省	
+	 ["市南区","市北区","崂山区","李沧区"],  // 青岛市
+	 ["历下区","市中区","槐荫区","天桥区"],  // 济南市
+	 ["环翠区","文登区","荣成市","乳山市"],  // 威海市
+	 ["芝罘区","福山区","牟平区","莱山区"],  // 烟台市
+	 //北京市
+	 ["东城区","西城区","朝阳区","海淀区","丰台区"],
+	  // 广东省城市对应的区
+	 ["越秀区","海珠区","荔湾区","天河区"],  // 广州市
+	 ["福田区","罗湖区","南山区","盐田区"],  // 深圳市
+	 ["香洲区","斗门区","金湾区"],           // 珠海市
+	  // 江苏省城市对应的区
+	 ["玄武区","秦淮区","建邺区","鼓楼区"],  // 南京市
+	 ["姑苏区","虎丘区","吴中区","相城区"],  // 苏州市
+	 ["梁溪区","锡山区","惠山区","滨湖区"]   // 无锡市
+])
+
+const uPickerRef = ref(null)
+const changeHandler = (e) => {
+  const {
+    columnIndex, //操作的那一列的序号 第一列是0
+    value,	//每一列所选的数据，结果是个数组
+    values,//所有列数据
+    index, //当前所操作列所选中数据的角标
+  } = e;
+
+  if (columnIndex === 0) {
+      uPickerRef.value.setColumnValues(1, columnData[index])//要修改列的序号，要更新的数据数组
+	  //更新区域数据
+	  const cityIndex = getCityIndex(index,0)
+	  uPickerRef.value.setColumnValues(2,districtData[cityIndex])//要修改列的序号，要更新的数据数组
+  }else if(columnIndex === 1){
+	  const provinceIndex=columns[0].indexOf(value[0])
+	  //更新区域数据
+	  const cityIndex=getCityIndex(provinceIndex,index)
+	  uPickerRef.value.setColumnValues(2,districtData[cityIndex])//要修改列的序号，要更新的数据数组
+  }
+};
+
+// 用来获取城市在对应的区域数组中的角标
+// 所选省份，前面的省份城市总和即我所选的省份的第一个城市的角标
+// 得到省份城市总和 + 所选城市当前的角标 即为当前区域对应的角标  
+const getCityIndex = (provinceIndex:number,cityIndex:number) =>{
+	const cityCountPerProvince=columnData.map(item=>item.length) //[4,1,3,3] 获取每个省份对应的城市数量
+	let total = 0 //用来存前面一共多少城市
+	for(let i=0;i<provinceIndex;i++){
+		 total+=cityCountPerProvince[i]
+	}
+	return total+cityIndex
+}
+
+const confirm = (e) => {
+  console.log('confirm', e.value);
+  show.value = false;
+};
 </script>
 
 <style lang="scss" scoped>
