@@ -42,6 +42,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       //评价的排序方式 由高到低/由低到高
     });
     const handleSelect = (item, index) => {
+      searchWord.value = "";
       params.merchantName = "";
       if (index === 0) {
         params.keyword = "";
@@ -70,7 +71,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         totalPages.value = data.pagination.totalPages;
         currentPage.value = data.pagination.current;
       } catch (error) {
-        common_vendor.index.__f__("error", "at packageB/merchant/merchant.vue:110", "获取失败");
+        common_vendor.index.__f__("error", "at packageB/merchant/merchant.vue:111", "获取失败");
       }
     };
     common_vendor.onReachBottom(() => {
@@ -101,17 +102,22 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       getMerchanList(1);
       close();
     };
+    const searchWord = common_vendor.ref("");
+    const handleSearch = () => {
+      params.merchantName = searchWord.value;
+      params.keyword = "";
+      currentIndex.value = 0;
+      getMerchanList(1);
+    };
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.p({
-          placeholder: "搜索商家"
+        a: common_vendor.o(handleSearch),
+        b: common_vendor.o(($event) => searchWord.value = $event),
+        c: common_vendor.p({
+          placeholder: "搜索商家",
+          clearabled: false,
+          modelValue: searchWord.value
         }),
-        b: common_vendor.p({
-          name: "arrow-down",
-          size: "16",
-          color: "#999"
-        }),
-        c: common_vendor.o(($event) => changeSort()),
         d: common_vendor.p({
           name: "arrow-down",
           size: "16",
@@ -124,13 +130,19 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           color: "#999"
         }),
         g: common_vendor.o(($event) => changeSort()),
-        h: common_vendor.o(handleSelect),
-        i: common_vendor.o(($event) => currentIndex.value = $event),
-        j: common_vendor.p({
+        h: common_vendor.p({
+          name: "arrow-down",
+          size: "16",
+          color: "#999"
+        }),
+        i: common_vendor.o(($event) => changeSort()),
+        j: common_vendor.o(handleSelect),
+        k: common_vendor.o(($event) => currentIndex.value = $event),
+        l: common_vendor.p({
           list: list1,
           current: currentIndex.value
         }),
-        k: common_vendor.f(merchanList.value, (item, k0, i0) => {
+        m: common_vendor.f(merchanList.value, (item, k0, i0) => {
           return {
             a: item.pic,
             b: common_vendor.t(item.merchant_name),
@@ -154,15 +166,15 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             j: common_vendor.o(($event) => _ctx.goDetail(item), item.merchant_id)
           };
         }),
-        l: common_vendor.p({
+        n: common_vendor.p({
           text: "我是有底线的"
         }),
-        m: common_vendor.sr(uPickerRef, "c169926f-7", {
+        o: common_vendor.sr(uPickerRef, "c169926f-7", {
           "k": "uPickerRef"
         }),
-        n: common_vendor.o(close),
-        o: common_vendor.o(confirm),
-        p: common_vendor.p({
+        p: common_vendor.o(close),
+        q: common_vendor.o(confirm),
+        r: common_vendor.p({
           show: show.value,
           columns
         })

@@ -1,7 +1,7 @@
 <template>
 	<view class="merchant-page">
 		<view class="search-header">
-			<up-search placeholder="搜索商家"></up-search>
+			<up-search placeholder="搜索商家" v-model="searchWord" @search="handleSearch" :clearabled="false"></up-search>
 		</view>
 		<view class="merchant">
 			<view class="custom-dropdown">
@@ -74,6 +74,7 @@ const params=reactive({
 
 //页签点击切换
 const handleSelect=(item,index)=>{
+	searchWord.value = ""
 	params.merchantName=""
 	if(index===0){
 		params.keyword=""
@@ -145,6 +146,15 @@ const confirm=(e)=>{
 	}
 	getMerchanList(1)
 	close()
+}
+
+//搜索功能
+const searchWord=ref<string>("")
+const handleSearch=()=>{
+	params.merchantName=searchWord.value;
+	params.keyword=""
+	currentIndex.value=0;
+	getMerchanList(1)
 }
 </script>
 
