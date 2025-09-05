@@ -134,6 +134,29 @@ const getService=async()=>{
 	const data:any=await get("/home/service",{merchant_id:merchant_info.value.merchant_id})
 	serviceList.value=data
 }
+
+//拨打电话
+const call=()=>{
+	uni.makePhoneCall({
+		phoneNumber:merchant_info.value.phone
+	});
+}
+
+//查看地图
+const viewLocation=()=>{
+	uni.openLocation({
+		latitude:34.53455,
+		longitude:113.3608,
+		name:merchant_info.value.merchant_name,
+		address:merchant_info.value.address,
+		success(res) {
+			console.log("打开地图成功",res)
+		},
+		fail(err) {
+			console.log("打开地图失败",err)
+		}
+	})
+}
 </script>
 
 <style lang="scss" scoped>

@@ -27,6 +27,25 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       const data = await utils_http_index.get("/home/service", { merchant_id: merchant_info.value.merchant_id });
       serviceList.value = data;
     };
+    const call = () => {
+      common_vendor.index.makePhoneCall({
+        phoneNumber: merchant_info.value.phone
+      });
+    };
+    const viewLocation = () => {
+      common_vendor.index.openLocation({
+        latitude: 34.53455,
+        longitude: 113.3608,
+        name: merchant_info.value.merchant_name,
+        address: merchant_info.value.address,
+        success(res) {
+          common_vendor.index.__f__("log", "at packageB/merchant-detail/merchant-detail.vue:153", "打开地图成功", res);
+        },
+        fail(err) {
+          common_vendor.index.__f__("log", "at packageB/merchant-detail/merchant-detail.vue:156", "打开地图失败", err);
+        }
+      });
+    };
     return (_ctx, _cache) => {
       var _a;
       return common_vendor.e({
@@ -84,11 +103,11 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           color: "#666"
         }),
         r: common_vendor.t(merchant_info.value.phone),
-        s: common_vendor.o(_ctx.call),
+        s: common_vendor.o(call),
         t: common_vendor.p({
           type: "primary"
         }),
-        v: common_vendor.o(_ctx.viewLocation),
+        v: common_vendor.o(viewLocation),
         w: common_vendor.p({
           type: "info"
         }),
