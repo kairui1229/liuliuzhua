@@ -43,6 +43,7 @@
 		</view>
 		<up-divider text="我是有底线的"></up-divider>
 	</view>
+	<up-picker ref="uPickerRef" :show="show" :columns="columns" @cancel="close" @confirm="confirm"></up-picker>
 </template>
 
 <script lang="ts" setup>
@@ -88,6 +89,37 @@ onReachBottom(()=>{
 		getMerchanList(currentPage.value+1)
 	}
 })
+
+//弹窗相关
+const show = ref(false);
+const uPickerRef=ref(null)
+const columns = reactive([
+  ['默认', '由低到高', '由高到低']
+]);
+
+//选择类型
+const changeSort = (index:number) =>{
+	show.value=true;
+	uPickerRef.value.setIndexs([0])
+}
+
+//关闭弹窗
+const close=()=>{
+	show.value=false
+}
+
+//弹窗确认
+const confirm=(e)=>{
+	if(e.value[0]==="默认"){
+		params.sortBy=""
+	}else if(e.value[0]==="由高到低"){
+		params.sortBy="rating"
+	}else if(e.value[0]==="由低到高"){
+		params.sortBy="rating_asc"
+	}
+	getMerchanList(1)
+	close()
+}
 </script>
 
 <style lang="scss" scoped>

@@ -7,15 +7,17 @@ if (!Array) {
   const _easycom_up_tabs2 = common_vendor.resolveComponent("up-tabs");
   const _easycom_up_rate2 = common_vendor.resolveComponent("up-rate");
   const _easycom_up_divider2 = common_vendor.resolveComponent("up-divider");
-  (_easycom_up_search2 + _easycom_up_icon2 + _easycom_up_tabs2 + _easycom_up_rate2 + _easycom_up_divider2)();
+  const _easycom_up_picker2 = common_vendor.resolveComponent("up-picker");
+  (_easycom_up_search2 + _easycom_up_icon2 + _easycom_up_tabs2 + _easycom_up_rate2 + _easycom_up_divider2 + _easycom_up_picker2)();
 }
 const _easycom_up_search = () => "../../uni_modules/uview-plus/components/u-search/u-search.js";
 const _easycom_up_icon = () => "../../uni_modules/uview-plus/components/u-icon/u-icon.js";
 const _easycom_up_tabs = () => "../../uni_modules/uview-plus/components/u-tabs/u-tabs.js";
 const _easycom_up_rate = () => "../../uni_modules/uview-plus/components/u-rate/u-rate.js";
 const _easycom_up_divider = () => "../../uni_modules/uview-plus/components/u-divider/u-divider.js";
+const _easycom_up_picker = () => "../../uni_modules/uview-plus/components/u-picker/u-picker.js";
 if (!Math) {
-  (_easycom_up_search + _easycom_up_icon + _easycom_up_tabs + _easycom_up_rate + _easycom_up_divider)();
+  (_easycom_up_search + _easycom_up_icon + _easycom_up_tabs + _easycom_up_rate + _easycom_up_divider + _easycom_up_picker)();
 }
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "merchant",
@@ -47,7 +49,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         totalPages.value = data.pagination.totalPages;
         currentPage.value = data.pagination.current;
       } catch (error) {
-        common_vendor.index.__f__("error", "at packageB/merchant/merchant.vue:83", "获取失败");
+        common_vendor.index.__f__("error", "at packageB/merchant/merchant.vue:84", "获取失败");
       }
     };
     common_vendor.onReachBottom(() => {
@@ -55,6 +57,29 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         getMerchanList(currentPage.value + 1);
       }
     });
+    const show = common_vendor.ref(false);
+    const uPickerRef = common_vendor.ref(null);
+    const columns = common_vendor.reactive([
+      ["默认", "由低到高", "由高到低"]
+    ]);
+    const changeSort = (index) => {
+      show.value = true;
+      uPickerRef.value.setIndexs([0]);
+    };
+    const close = () => {
+      show.value = false;
+    };
+    const confirm = (e) => {
+      if (e.value[0] === "默认") {
+        params.sortBy = "";
+      } else if (e.value[0] === "由高到低") {
+        params.sortBy = "rating";
+      } else if (e.value[0] === "由低到高") {
+        params.sortBy = "rating_asc";
+      }
+      getMerchanList(1);
+      close();
+    };
     return (_ctx, _cache) => {
       return {
         a: common_vendor.p({
@@ -65,19 +90,19 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           size: "16",
           color: "#999"
         }),
-        c: common_vendor.o(($event) => _ctx.changeSort(0)),
+        c: common_vendor.o(($event) => changeSort()),
         d: common_vendor.p({
           name: "arrow-down",
           size: "16",
           color: "#999"
         }),
-        e: common_vendor.o(($event) => _ctx.changeSort(1)),
+        e: common_vendor.o(($event) => changeSort()),
         f: common_vendor.p({
           name: "arrow-down",
           size: "16",
           color: "#999"
         }),
-        g: common_vendor.o(($event) => _ctx.changeSort(2)),
+        g: common_vendor.o(($event) => changeSort()),
         h: common_vendor.p({
           list: list1
         }),
@@ -108,7 +133,15 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         j: common_vendor.p({
           text: "我是有底线的"
         }),
-        k: common_vendor.gei(_ctx, "")
+        k: common_vendor.sr(uPickerRef, "c169926f-7", {
+          "k": "uPickerRef"
+        }),
+        l: common_vendor.o(close),
+        m: common_vendor.o(confirm),
+        n: common_vendor.p({
+          show: show.value,
+          columns
+        })
       };
     };
   }
