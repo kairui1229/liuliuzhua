@@ -126,6 +126,11 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         common_vendor.index.__f__("error", "at pages/index/index.vue:279", err);
       }
     };
+    const goMerchant = () => {
+      common_vendor.index.navigateTo({
+        url: "/packageB/merchant/merchant"
+      });
+    };
     common_vendor.onReachBottom(() => {
       if (currentPage.value < totalPages.value) {
         getMarchanList(currentPage.value + 1);
@@ -158,7 +163,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           return {
             a: item.url,
             b: common_vendor.t(item.title),
-            c: item.title
+            c: item.title,
+            d: common_vendor.o(goMerchant, item.title)
           };
         }),
         i: common_vendor.p({

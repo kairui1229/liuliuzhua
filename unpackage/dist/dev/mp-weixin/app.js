@@ -12,6 +12,7 @@ if (!Math) {
   "./components/products-spec-popup/products-spec-popup.js";
   "./packageA/product-detail/product-detail.js";
   "./packageB/address/address.js";
+  "./packageB/merchant/merchant.js";
 }
 const _sfc_main = {
   onLaunch: function() {

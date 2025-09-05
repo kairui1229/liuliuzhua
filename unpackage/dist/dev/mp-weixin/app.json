@@ -18,7 +18,8 @@
     {
       "root": "packageB",
       "pages": [
-        "address/address"
+        "address/address",
+        "merchant/merchant"
       ]
     }
   ],

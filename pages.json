@@ -70,6 +70,12 @@
 					"style": {
 						"navigationBarTitleText": "地址管理"
 					}
+				},
+				{
+					"path": "merchant/merchant",
+					"style": {
+						"navigationBarTitleText": "商家列表"
+					}
 				}
 			]
 		}
