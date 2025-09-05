@@ -156,6 +156,13 @@ const handleSearch=()=>{
 	currentIndex.value=0;
 	getMerchanList(1)
 }
+
+//跳转到商家详情页面
+const goDetail=(item)=>{
+		uni.navigateTo({
+			url:`/packageB/merchant-detail/merchant-detail?info=${JSON.stringify(item)}`
+		})
+}
 </script>
 
 <style lang="scss" scoped>

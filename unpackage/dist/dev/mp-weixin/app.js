@@ -13,6 +13,7 @@ if (!Math) {
   "./packageA/product-detail/product-detail.js";
   "./packageB/address/address.js";
   "./packageB/merchant/merchant.js";
+  "./packageB/merchant-detail/merchant-detail.js";
 }
 const _sfc_main = {
   onLaunch: function() {

@@ -73,8 +73,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           size: "14",
           color: "#999"
         }),
-        f: common_assets._imports_0$2,
-        g: common_assets._imports_1$2,
+        f: common_assets._imports_0$3,
+        g: common_assets._imports_1$1,
         h: common_assets._imports_2$2,
         i: common_assets._imports_3$1,
         j: common_assets._imports_4$1,

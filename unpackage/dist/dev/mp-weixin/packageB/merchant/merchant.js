@@ -109,6 +109,11 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       currentIndex.value = 0;
       getMerchanList(1);
     };
+    const goDetail = (item) => {
+      common_vendor.index.navigateTo({
+        url: `/packageB/merchant-detail/merchant-detail?info=${JSON.stringify(item)}`
+      });
+    };
     return (_ctx, _cache) => {
       return {
         a: common_vendor.o(handleSearch),
@@ -163,7 +168,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
               };
             }),
             i: item.merchant_id,
-            j: common_vendor.o(($event) => _ctx.goDetail(item), item.merchant_id)
+            j: common_vendor.o(($event) => goDetail(item), item.merchant_id)
           };
         }),
         n: common_vendor.p({

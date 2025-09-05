@@ -19,7 +19,8 @@
       "root": "packageB",
       "pages": [
         "address/address",
-        "merchant/merchant"
+        "merchant/merchant",
+        "merchant-detail/merchant-detail"
       ]
     }
   ],
