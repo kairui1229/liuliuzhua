@@ -126,9 +126,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         common_vendor.index.__f__("error", "at pages/index/index.vue:279", err);
       }
     };
-    const goMerchant = () => {
+    const goMerchant = (title) => {
       common_vendor.index.navigateTo({
-        url: "/packageB/merchant/merchant"
+        url: "/packageB/merchant/merchant?keyword=" + title
       });
     };
     common_vendor.onReachBottom(() => {
@@ -164,7 +164,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             a: item.url,
             b: common_vendor.t(item.title),
             c: item.title,
-            d: common_vendor.o(goMerchant, item.title)
+            d: common_vendor.o(($event) => goMerchant(item.title), item.title)
           };
         }),
         i: common_vendor.p({

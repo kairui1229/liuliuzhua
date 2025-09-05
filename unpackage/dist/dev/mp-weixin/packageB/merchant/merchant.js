@@ -32,7 +32,28 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       { name: "疫苗" },
       { name: "训练" }
     ]);
+    const currentIndex = common_vendor.ref(0);
+    const params = common_vendor.reactive({
+      keyword: "",
+      //服务分类选项关键词
+      merchantName: "",
+      //商家名称模糊查询
+      sortBy: ""
+      //评价的排序方式 由高到低/由低到高
+    });
+    const handleSelect = (item, index) => {
+      params.merchantName = "";
+      if (index === 0) {
+        params.keyword = "";
+      } else {
+        params.keyword = item.name;
+      }
+      getMerchanList(1);
+    };
     common_vendor.onLoad((options) => {
+      const index = list1.findIndex((item) => options.keyword.includes(item.name));
+      currentIndex.value = index === -1 ? 0 : index;
+      params.keyword = index === -1 ? "" : list1[index].name;
       getMerchanList(1);
     });
     const merchanList = common_vendor.ref([]);
@@ -40,7 +61,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const totalPages = common_vendor.ref(0);
     const getMerchanList = async (page) => {
       try {
-        const data = await utils_http_index.get("/home/merchants", { page });
+        const data = await utils_http_index.get("/home/merchants", { page, ...params });
         if (page === 1) {
           merchanList.value = data.list;
         } else {
@@ -49,7 +70,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         totalPages.value = data.pagination.totalPages;
         currentPage.value = data.pagination.current;
       } catch (error) {
-        common_vendor.index.__f__("error", "at packageB/merchant/merchant.vue:84", "获取失败");
+        common_vendor.index.__f__("error", "at packageB/merchant/merchant.vue:110", "获取失败");
       }
     };
     common_vendor.onReachBottom(() => {
@@ -103,10 +124,13 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           color: "#999"
         }),
         g: common_vendor.o(($event) => changeSort()),
-        h: common_vendor.p({
-          list: list1
+        h: common_vendor.o(handleSelect),
+        i: common_vendor.o(($event) => currentIndex.value = $event),
+        j: common_vendor.p({
+          list: list1,
+          current: currentIndex.value
         }),
-        i: common_vendor.f(merchanList.value, (item, k0, i0) => {
+        k: common_vendor.f(merchanList.value, (item, k0, i0) => {
           return {
             a: item.pic,
             b: common_vendor.t(item.merchant_name),
@@ -130,15 +154,15 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             j: common_vendor.o(($event) => _ctx.goDetail(item), item.merchant_id)
           };
         }),
-        j: common_vendor.p({
+        l: common_vendor.p({
           text: "我是有底线的"
         }),
-        k: common_vendor.sr(uPickerRef, "c169926f-7", {
+        m: common_vendor.sr(uPickerRef, "c169926f-7", {
           "k": "uPickerRef"
         }),
-        l: common_vendor.o(close),
-        m: common_vendor.o(confirm),
-        n: common_vendor.p({
+        n: common_vendor.o(close),
+        o: common_vendor.o(confirm),
+        p: common_vendor.p({
           show: show.value,
           columns
         })

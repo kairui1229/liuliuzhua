@@ -22,7 +22,7 @@
 			</view>
 		</view>
 		<view class="tabs">
-			<up-tabs :list="list1"></up-tabs>
+			<up-tabs :list="list1" v-model:current="currentIndex" @click="handleSelect"></up-tabs>
 		</view>
 		<view class="service-card" v-for="item in merchanList" :key="item.merchant_id" @click="goDetail(item)">
 			<image class="service-img" mode="aspectFill" :src="item.pic"></image>
@@ -62,28 +62,54 @@ const list1 = reactive([
 	{ name: '训练' }  
 ]); 
 
+//页签切换
+const currentIndex=ref<number>(0)
+
+//筛选参数
+const params=reactive({
+	keyword:"",//服务分类选项关键词
+	merchantName:"",//商家名称模糊查询
+	sortBy:""//评价的排序方式 由高到低/由低到高
+})
+
+//页签点击切换
+const handleSelect=(item,index)=>{
+	params.merchantName=""
+	if(index===0){
+		params.keyword=""
+	}else{
+		params.keyword=item.name
+	}
+	getMerchanList(1)
+}
+
 onLoad((options)=>{
+	//console.log(111,options.keyword)
+	const index:number=list1.findIndex(item=>options.keyword.includes(item.name));
+	//console.log(555,index)
+	currentIndex.value=index===-1?0:index
+	params.keyword=index===-1?"":list1[index].name
 	getMerchanList(1)
 })
 
 //商家列表
 const merchanList=ref([])
-	const currentPage=ref<number>(1)
-	const totalPages=ref<number>(0)
-	const getMerchanList=async (page:number)=>{
-		try {
-			const data:any=await get("/home/merchants",{page});
-			if(page===1){
-				merchanList.value=data.list
-			}else{
-				merchanList.value=[...merchanList.value,...data.list]
-			}
-			totalPages.value=data.pagination.totalPages
-			currentPage.value=data.pagination.current
-		} catch (error) {
-			console.error("获取失败")
-		}	
-	}
+const currentPage=ref<number>(1)
+const totalPages=ref<number>(0)
+const getMerchanList=async (page:number)=>{
+	try {
+		const data:any=await get("/home/merchants",{page,...params});
+		if(page===1){
+			merchanList.value=data.list
+		}else{
+			merchanList.value=[...merchanList.value,...data.list]
+		}
+		totalPages.value=data.pagination.totalPages
+		currentPage.value=data.pagination.current
+	} catch (error) {
+		console.error("获取失败")
+	}	
+}
 onReachBottom(()=>{
 	if(currentPage.value<totalPages.value){
 		getMerchanList(currentPage.value+1)

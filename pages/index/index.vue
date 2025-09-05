@@ -37,7 +37,7 @@
 			
 			<view class="part">
 				<up-scroll-list indicatorColor="#fff0f0" indicatorActiveColor="#ffce2c">
-					<view class="scroll-item" v-for="item in partList" :key="item.title" @click="goMerchant">
+					<view class="scroll-item" v-for="item in partList" :key="item.title" @click="goMerchant(item.title)">
 						<image class="scroll-image" :src="item.url"></image>
 						<text class="item-title">{{item.title}}</text>
 					</view>
@@ -280,9 +280,9 @@ const getMarchanList = async (page:number) =>{
 	}
 }
 
-const goMerchant = () =>{
+const goMerchant = (title:string) =>{
 	uni.navigateTo({
-		url:"/packageB/merchant/merchant"
+		url:"/packageB/merchant/merchant?keyword="+title
 	})
 }
 
