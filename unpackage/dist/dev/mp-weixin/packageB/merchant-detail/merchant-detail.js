@@ -46,6 +46,19 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         }
       });
     };
+    const bookNow = (item) => {
+      let selPro = [{
+        count: 1,
+        main_pic: "/static/modules/service/pet1.png",
+        name: item.service_name,
+        price: item.service_price,
+        product_id: item.merchant_id,
+        spec: ""
+      }];
+      common_vendor.index.navigateTo({
+        url: "/packageB/order/order?selPro=" + JSON.stringify(selPro)
+      });
+    };
     return (_ctx, _cache) => {
       var _a;
       return common_vendor.e({
@@ -75,7 +88,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             a: common_vendor.t(item.service_name),
             b: common_vendor.t(item.service_price),
             c: common_vendor.t(item.service_unit),
-            d: common_vendor.o(($event) => _ctx.bookNow(item), item.id),
+            d: common_vendor.o(($event) => bookNow(item), item.id),
             e: "29046045-1-" + i0,
             f: item.id
           };

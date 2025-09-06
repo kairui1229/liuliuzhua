@@ -157,6 +157,21 @@ const viewLocation=()=>{
 		}
 	})
 }
+
+//立即预约
+const bookNow=(item:any)=>{
+	let selPro=[{
+		count:1,
+		main_pic:"/static/modules/service/pet1.png",
+		name:item.service_name,
+		price:item.service_price,
+		product_id:item.merchant_id,
+		spec:""
+	}]
+	uni.navigateTo({
+		url:"/packageB/order/order?selPro="+JSON.stringify(selPro)
+	})
+}
 </script>
 
 <style lang="scss" scoped>
