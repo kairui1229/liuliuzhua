@@ -1,5 +1,6 @@
 {
   "setting": {
-    "urlCheck": true
+    "urlCheck": true,
+    "compileHotReLoad": true
   }
 }
