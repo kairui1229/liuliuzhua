@@ -121,6 +121,10 @@ onReachBottom(() => {
 //购物车
 const cartCount = ref(0)
 const getCartCount = async () =>{
+	const token = uni.getStorageSync("token")
+	if(!token){
+		cartCount.value = 0
+	}
 	const data:any = await get("/cart/list")
 	console.log("购物车数据",data)
 	cartCount.value = data.length

@@ -54,8 +54,12 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     });
     const cartCount = common_vendor.ref(0);
     const getCartCount = async () => {
+      const token = common_vendor.index.getStorageSync("token");
+      if (!token) {
+        cartCount.value = 0;
+      }
       const data = await utils_http_index.get("/cart/list");
-      common_vendor.index.__f__("log", "at pages/selected/selected.vue:125", "购物车数据", data);
+      common_vendor.index.__f__("log", "at pages/selected/selected.vue:129", "购物车数据", data);
       cartCount.value = data.length;
     };
     const goCart = () => {

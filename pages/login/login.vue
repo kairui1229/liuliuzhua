@@ -100,8 +100,8 @@ onMounted(()=>{
 
 //没有企业身份用这段代码模拟，一样可以登录不影响后面流程！！！！！！！
 const fn=()=>{
-	uni.setStorageSync("token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwicGhvbmUiOiIxODgzODkxMzQyOSIsImlhdCI6MTc1NzEyODQzNSwiZXhwIjoxNzU3MTM1NjM1fQ.4QkIaYV04ZM7pbekxZOLcRPBu6KSdYS0npF7ZVSCIaw")
-	uni.setStorageSync("user",{"type":"object","data":{"user_id":10,"username":null,"avatar":null,"openid":"","phone":"18838913429"}})
+	uni.setStorageSync("token","xulaoshi666")
+	uni.setStorageSync("user",{"user_id":1,"phone":"18888888888"})
 	uni.showToast({
 		title:"登录成功",
 		icon:"success",
