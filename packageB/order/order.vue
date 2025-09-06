@@ -82,7 +82,44 @@
 import { computed, ref } from "vue"
 import { get,post } from "../../utils/http"
 import { onLoad } from "@dcloudio/uni-app"
+
+interface AddressItem {
+	city : string;
+	detail : string;
+	district : string;
+	id : number;
+	is_default : 1 | 0;
+	name : string;
+	phone : string;
+	province : string;
+	user_id : number
+}
 	
+onLoad((options) => {
+	getAddress()
+	uni.$on("addressSelected", (selectedAddress) => {
+		console.log("选中的地址是", selectedAddress)
+		address.value = selectedAddress //更新页面中显示的地址信息
+	})
+})
+
+//地址管理
+const address = ref<AddressItem>({} as AddressItem)
+const getAddress = async () => {
+	try {
+		const result : any = await get("/cart/address");
+		address.value = result.filter(item => item.is_default)[0]
+		console.log(address.value,233)
+	} catch (error) {
+		console.log(error)
+	}
+}
+//选择地址
+const chooseAddress = () => {
+	uni.navigateTo({
+		url: "/packageB/address/address?flag=1"
+	})
+}
 </script>
 
 <style lang="scss" scoped>

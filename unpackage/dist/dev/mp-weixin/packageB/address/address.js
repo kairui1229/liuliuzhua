@@ -18,15 +18,16 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   setup(__props) {
     common_vendor.onLoad((options) => {
       getAddressList();
+      flag.value = options.flag;
     });
     const addressList = common_vendor.ref([]);
     const getAddressList = async () => {
       try {
         const result = await utils_http_index.get("/cart/address");
         addressList.value = result;
-        common_vendor.index.__f__("log", "at packageB/address/address.vue:101", "地址列表", addressList.value);
+        common_vendor.index.__f__("log", "at packageB/address/address.vue:102", "地址列表", addressList.value);
       } catch (error) {
-        common_vendor.index.__f__("log", "at packageB/address/address.vue:103", error);
+        common_vendor.index.__f__("log", "at packageB/address/address.vue:104", error);
       }
     };
     const deleteAddress = (id) => {
@@ -43,7 +44,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
               });
               getAddressList();
             } catch (error) {
-              common_vendor.index.__f__("log", "at packageB/address/address.vue:122", error);
+              common_vendor.index.__f__("log", "at packageB/address/address.vue:123", error);
             }
           }
         }
@@ -120,7 +121,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       return total + cityIndex;
     };
     const confirm = (e) => {
-      common_vendor.index.__f__("log", "at packageB/address/address.vue:198", "所选的地址", e.value);
+      common_vendor.index.__f__("log", "at packageB/address/address.vue:199", "所选的地址", e.value);
       show.value = false;
       addressForm.region = e.value;
     };
@@ -193,10 +194,17 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           title: isEdit.value ? "编辑成功" : "新增成功"
         });
       } catch (error) {
-        common_vendor.index.__f__("log", "at packageB/address/address.vue:294", error);
+        common_vendor.index.__f__("log", "at packageB/address/address.vue:295", error);
       }
       closePopup();
       getAddressList();
+    };
+    const flag = common_vendor.ref("");
+    const selectedAddress = (item) => {
+      if (flag.value) {
+        common_vendor.index.$emit("addressSelected", item);
+        common_vendor.index.navigateBack();
+      }
     };
     return (_ctx, _cache) => {
       return common_vendor.e({
@@ -217,7 +225,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             j: "392a643a-1-" + i0,
             k: common_vendor.o(($event) => deleteAddress(item.id), item.id),
             l: item.id,
-            m: common_vendor.o(closePopup, item.id)
+            m: common_vendor.o(($event) => selectedAddress(item), item.id)
           });
         }),
         c: common_vendor.p({

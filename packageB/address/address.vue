@@ -2,7 +2,7 @@
 	<view class="address-page">
 		<!--地址列表-->
 		<view class="address-list" v-if="addressList.length">
-			<view class="address-item" v-for="item in addressList" :key="item.id" @click="closePopup">
+			<view class="address-item" v-for="item in addressList" :key="item.id" @click="selectedAddress(item)">
 				<view class="address-info">
 					<view class="contact-info">
 						<text class="name">{{item.name}}</text>
@@ -90,6 +90,7 @@ import {onLoad} from "@dcloudio/uni-app"
 
 onLoad((options)=>{
 	getAddressList()
+	flag.value = options.flag
 })
 
 //地址列表
@@ -295,6 +296,17 @@ const saveAddress=async ()=>{
 	}
 	closePopup()
 	getAddressList()	
+}
+
+const flag = ref("")
+//选择地址
+const selectedAddress = (item:any)=>{
+	//如果flag存在，则证明是从订单结算页面跳转过来的，需要选择地址后返回回去
+	//否则就不需要触发监听事件并返回订单结算页面
+	if(flag.value){
+		uni.$emit("addressSelected",item) //触发由uni.$on监听的全局事件
+		uni.navigateBack()
+	}
 }
 </script>
 

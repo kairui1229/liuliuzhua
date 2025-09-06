@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const utils_http_index = require("../../utils/http/index.js");
 if (!Array) {
   const _easycom_up_icon2 = common_vendor.resolveComponent("up-icon");
   _easycom_up_icon2();
@@ -11,27 +12,46 @@ if (!Math) {
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "order",
   setup(__props) {
+    common_vendor.onLoad((options) => {
+      getAddress();
+      common_vendor.index.$on("addressSelected", (selectedAddress) => {
+        common_vendor.index.__f__("log", "at packageB/order/order.vue:101", "选中的地址是", selectedAddress);
+        address.value = selectedAddress;
+      });
+    });
+    const address = common_vendor.ref({});
+    const getAddress = async () => {
+      try {
+        const result = await utils_http_index.get("/cart/address");
+        address.value = result.filter((item) => item.is_default)[0];
+        common_vendor.index.__f__("log", "at packageB/order/order.vue:112", address.value, 233);
+      } catch (error) {
+        common_vendor.index.__f__("log", "at packageB/order/order.vue:114", error);
+      }
+    };
+    const chooseAddress = () => {
+      common_vendor.index.navigateTo({
+        url: "/packageB/address/address?flag=1"
+      });
+    };
     return (_ctx, _cache) => {
       var _a, _b;
       return common_vendor.e({
-        a: (_a = _ctx.address) == null ? void 0 : _a.name
-      }, ((_b = _ctx.address) == null ? void 0 : _b.name) ? {
-        b: common_vendor.t(_ctx.address.name),
-        c: common_vendor.t(_ctx.address.phone),
-        d: common_vendor.t(_ctx.address.province),
-        e: common_vendor.t(_ctx.address.city),
-        f: common_vendor.t(_ctx.address.district),
-        g: common_vendor.t(_ctx.address.detail)
+        a: (_a = address.value) == null ? void 0 : _a.name
+      }, ((_b = address.value) == null ? void 0 : _b.name) ? {
+        b: common_vendor.t(address.value.name),
+        c: common_vendor.t(address.value.phone),
+        d: common_vendor.t(address.value.province),
+        e: common_vendor.t(address.value.city),
+        f: common_vendor.t(address.value.district),
+        g: common_vendor.t(address.value.detail)
       } : {}, {
         h: common_vendor.p({
           name: "arrow-right",
           size: "24",
           color: "#999"
         }),
-        i: common_vendor.o(
-          //@ts-ignore
-          (...args) => _ctx.chooseAddress && _ctx.chooseAddress(...args)
-        ),
+        i: common_vendor.o(chooseAddress),
         j: common_vendor.f(_ctx.selPro, (item, k0, i0) => {
           return {
             a: item.main_pic,
