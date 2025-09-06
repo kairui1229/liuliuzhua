@@ -14,8 +14,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   setup(__props) {
     common_vendor.onLoad((options) => {
       getAddress();
+      selPro.value = JSON.parse(options.selPro);
       common_vendor.index.$on("addressSelected", (selectedAddress) => {
-        common_vendor.index.__f__("log", "at packageB/order/order.vue:101", "选中的地址是", selectedAddress);
+        common_vendor.index.__f__("log", "at packageB/order/order.vue:102", "选中的地址是", selectedAddress);
         address.value = selectedAddress;
       });
     });
@@ -24,9 +25,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       try {
         const result = await utils_http_index.get("/cart/address");
         address.value = result.filter((item) => item.is_default)[0];
-        common_vendor.index.__f__("log", "at packageB/order/order.vue:112", address.value, 233);
+        common_vendor.index.__f__("log", "at packageB/order/order.vue:113", address.value, 233);
       } catch (error) {
-        common_vendor.index.__f__("log", "at packageB/order/order.vue:114", error);
+        common_vendor.index.__f__("log", "at packageB/order/order.vue:115", error);
       }
     };
     const chooseAddress = () => {
@@ -34,6 +35,14 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         url: "/packageB/address/address?flag=1"
       });
     };
+    const selPro = common_vendor.ref([]);
+    const totalPrice = common_vendor.computed(() => {
+      let total = 0;
+      selPro.value.forEach((item) => {
+        total += Number(item.price);
+      });
+      return total;
+    });
     return (_ctx, _cache) => {
       var _a, _b;
       return common_vendor.e({
@@ -52,7 +61,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           color: "#999"
         }),
         i: common_vendor.o(chooseAddress),
-        j: common_vendor.f(_ctx.selPro, (item, k0, i0) => {
+        j: common_vendor.f(selPro.value, (item, k0, i0) => {
           return {
             a: item.main_pic,
             b: common_vendor.t(item.name),
@@ -62,9 +71,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             f: item.product_id
           };
         }),
-        k: common_vendor.t(_ctx.totalPrice),
-        l: common_vendor.t(_ctx.totalPrice),
-        m: common_vendor.t(_ctx.totalPrice),
+        k: common_vendor.t(totalPrice.value),
+        l: common_vendor.t(totalPrice.value),
+        m: common_vendor.t(totalPrice.value),
         n: common_vendor.o(
           //@ts-ignore
           (...args) => _ctx.submitOrder && _ctx.submitOrder(...args)

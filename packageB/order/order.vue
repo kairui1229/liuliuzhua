@@ -97,6 +97,7 @@ interface AddressItem {
 	
 onLoad((options) => {
 	getAddress()
+	selPro.value = JSON.parse(options.selPro)
 	uni.$on("addressSelected", (selectedAddress) => {
 		console.log("选中的地址是", selectedAddress)
 		address.value = selectedAddress //更新页面中显示的地址信息
@@ -120,6 +121,18 @@ const chooseAddress = () => {
 		url: "/packageB/address/address?flag=1"
 	})
 }
+
+//商品信息
+const selPro = ref([])
+
+//计算总价
+const totalPrice = computed<number>(() => {
+	let total = 0;
+	selPro.value.forEach(item => {
+		total += Number(item.price)
+	})
+	return total
+})
 </script>
 
 <style lang="scss" scoped>

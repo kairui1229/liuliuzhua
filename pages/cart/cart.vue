@@ -127,10 +127,14 @@ const deleteItem=(cart_id:number)=>{
 	})
 }
 
+const selPro=computed(()=>{
+	return cartList.value.filter(item=>item.selected)
+})
+	
 const goOrder = () =>{
 	if(selectedCount.value){
 		uni.navigateTo({
-			url:"/packageB/order/order"
+			url:"/packageB/order/order?selPro="+JSON.stringify(selPro.value)
 		})
 	}
 }
