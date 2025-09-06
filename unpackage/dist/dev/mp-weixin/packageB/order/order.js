@@ -43,6 +43,40 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       });
       return total;
     });
+    const submitOrder = async () => {
+      try {
+        const res = await utils_http_index.post("/payment/createOrder", {
+          openId: "ow4MK7uyLhGxphyZJTFdyy5zD-ow",
+          productId: "1001",
+          productName: "测试商品",
+          productPrice: 0.01,
+          productNum: 1
+        });
+        common_vendor.index.__f__("log", "at packageB/order/order.vue:148", "订单结果", res);
+        common_vendor.index.requestPayment({
+          provider: "wxpay",
+          orderInfo: "测试订单",
+          nonceStr: res.data.nonceStr,
+          timeStamp: res.data.timeStamp,
+          package: res.data.package,
+          signType: res.data.signType,
+          paySign: res.data.paySign,
+          success(payRes) {
+            common_vendor.index.__f__("log", "at packageB/order/order.vue:158", "支付成功", payRes);
+          },
+          fail(payError) {
+            common_vendor.index.showToast({
+              title: "支付失败",
+              icon: "none"
+            });
+            common_vendor.index.__f__("log", "at packageB/order/order.vue:167", "支付失败", payError);
+          }
+        });
+      } catch (error) {
+        common_vendor.index.__f__("log", "at packageB/order/order.vue:171", error);
+      }
+      common_vendor.index.__f__("log", "at packageB/order/order.vue:174", "支付操作");
+    };
     return (_ctx, _cache) => {
       var _a, _b;
       return common_vendor.e({
@@ -74,10 +108,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         k: common_vendor.t(totalPrice.value),
         l: common_vendor.t(totalPrice.value),
         m: common_vendor.t(totalPrice.value),
-        n: common_vendor.o(
-          //@ts-ignore
-          (...args) => _ctx.submitOrder && _ctx.submitOrder(...args)
-        ),
+        n: common_vendor.o(submitOrder),
         o: common_vendor.gei(_ctx, "")
       });
     };

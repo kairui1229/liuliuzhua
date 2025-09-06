@@ -133,6 +133,46 @@ const totalPrice = computed<number>(() => {
 	})
 	return total
 })
+
+//h5端支付直接就跳转到后端给我们的地址 location.href
+const submitOrder= async ()=>{
+	//#ifdef MP-WEIXIN
+	try {
+		const res:any=await post("/payment/createOrder",{
+			openId:"ow4MK7uyLhGxphyZJTFdyy5zD-ow",
+			productId:"1001",
+			productName:"测试商品",
+			productPrice:0.01,
+			productNum:1
+		})
+		console.log("订单结果",res);
+		uni.requestPayment({
+			provider:"wxpay",
+			orderInfo:"测试订单",
+			nonceStr:res.data.nonceStr,
+			timeStamp:res.data.timeStamp,
+			package:res.data.package,
+			signType:res.data.signType,
+			paySign:res.data.paySign,
+			success(payRes) {
+				console.log("支付成功",payRes)
+				//调用接口，发送自己的地址备注信息等
+				
+			},
+			fail(payError) {
+				uni.showToast({
+					title:"支付失败",
+					icon:"none"
+				})
+				console.log("支付失败",payError)
+			}
+		})
+	} catch (error) {
+		console.log(error)
+	}
+	//#endif
+	console.log("支付操作")
+}
 </script>
 
 <style lang="scss" scoped>
