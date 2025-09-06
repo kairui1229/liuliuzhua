@@ -123,7 +123,9 @@ const selectedSpec = computed (() =>{
 const selCount=computed(()=>{
 	return specStore.count
 })
-
+const selTotal=computed(()=>{
+	return specStore.total
+})
 
 //加入购物车
 const addCart = async ()=>{
@@ -154,8 +156,22 @@ const addCart = async ()=>{
 }
 
 //立即购买
-const buyNow = ()=>{
-	
+const buyNow=()=>{
+	if(selectedSpec.value){
+		let selPro=[{
+			count:selCount.value,
+			main_pic:productInfo.value.main_pic,
+			name:productInfo.value.name,
+			price:selTotal.value,
+			product_id:productInfo.value.id,
+			spec:selectedSpec.value
+		}]
+		uni.navigateTo({
+			url:"/packageB/order/order?selPro="+JSON.stringify(selPro)
+		})
+	}else{
+		showSpecPopup()
+	}
 }
 
 //去首页

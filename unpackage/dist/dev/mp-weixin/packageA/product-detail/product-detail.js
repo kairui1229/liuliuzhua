@@ -45,6 +45,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const selCount = common_vendor.computed(() => {
       return specStore.count;
     });
+    const selTotal = common_vendor.computed(() => {
+      return specStore.total;
+    });
     const addCart = async () => {
       if (selectedSpec.value) {
         try {
@@ -64,13 +67,28 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           specStore.setCount(1);
           handleClose();
         } catch (error) {
-          common_vendor.index.__f__("error", "at packageA/product-detail/product-detail.vue:149", error);
+          common_vendor.index.__f__("error", "at packageA/product-detail/product-detail.vue:151", error);
         }
       } else {
         showSpecPopup();
       }
     };
     const buyNow = () => {
+      if (selectedSpec.value) {
+        let selPro = [{
+          count: selCount.value,
+          main_pic: productInfo.value.main_pic,
+          name: productInfo.value.name,
+          price: selTotal.value,
+          product_id: productInfo.value.id,
+          spec: selectedSpec.value
+        }];
+        common_vendor.index.navigateTo({
+          url: "/packageB/order/order?selPro=" + JSON.stringify(selPro)
+        });
+      } else {
+        showSpecPopup();
+      }
     };
     const goHome = () => {
       common_vendor.index.switchTab({
