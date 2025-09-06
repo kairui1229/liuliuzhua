@@ -40,6 +40,7 @@
 								prefixIcon="phone"
 								border="none"
 								prefixIconStyle="font-size: 22px;color: #909399"
+								v-model="phone"
 							>
 							</up-input>
 						</view>
@@ -51,11 +52,11 @@
 								border="none"
 								prefixIcon="lock"
 								prefixIconStyle="font-size: 22px;color: #909399"
-								
+								v-model="code"
 							>
 							</up-input>
-							<view class="code-btn" @click="">
-								获取验证码
+							<view class="code-btn" @click="getCode">
+								{{isCounting?countDown+"s后重新获取":"获取验证码"}}
 							</view>
 						</view>
 						<up-button
@@ -66,7 +67,7 @@
 							height:'88rpx',
 							fontSize:'32rpx'
 						    }"
-						    @click=""
+						    @click="handleLogin"
 						>
 						登录
 						</up-button>
@@ -147,6 +148,46 @@ const fn=()=>{
 // 		})
 // 	}
 // }
+
+//手机号验证码登录
+const phone=ref<string>("")
+const code=ref<string>("")
+//倒计时相关
+const countDown=ref<number>(60);
+const isCounting=ref<boolean>(false)
+
+const sendCode=async ()=>{
+	try {
+		const data:any=await post("/auth/sendSmsCode",{phone:phone.value});
+		console.log("验证码已发送",data)
+	} catch (error) {
+		console.log("验证码发送失败")
+	}
+}
+
+const getCode=()=>{
+	if(isCounting.value) return;
+	//判断手机号格式
+	const phoneReg=/^1[3-9]\d{9}$/;
+	if(!phoneReg.test(phone.value)){
+		uni.showToast({
+			title:"请输入正确的手机号",
+			icon:"none"
+		})
+		return
+	}
+	isCounting.value=true;
+	countDown.value=60;
+	const timer=setInterval(()=>{
+		countDown.value--
+		if(countDown.value<=0){
+			clearInterval(timer);
+			isCounting.value=false;		
+		}
+	},1000)
+	//发送验证码
+	sendCode()
+}
 </script>
 
 <style lang="scss" scoped>
