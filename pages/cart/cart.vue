@@ -41,7 +41,7 @@
 				<view class="total-desc">不含运费</view>
 			</view>
 
-			<view class="settle-btn" :class="{active:selectedCount>0}">结算({{selectedCount}})</view>
+			<view class="settle-btn" :class="{active:selectedCount>0}" @click="goOrder">结算({{selectedCount}})</view>
 		</view>
 	</view>
 </template>
@@ -125,6 +125,14 @@ const deleteItem=(cart_id:number)=>{
 			}
 		}
 	})
+}
+
+const goOrder = () =>{
+	if(selectedCount.value){
+		uni.navigateTo({
+			url:"/packageB/order/order"
+		})
+	}
 }
 </script>
 

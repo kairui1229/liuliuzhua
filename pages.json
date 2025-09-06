@@ -83,6 +83,13 @@
 					{
 						"navigationBarTitleText" : ""
 					}
+				},
+				{
+					"path" : "order/order",
+					"style" : 
+					{
+						"navigationBarTitleText" : ""
+					}
 				}
 			]
 		}

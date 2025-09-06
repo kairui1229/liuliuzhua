@@ -75,6 +75,13 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         }
       });
     };
+    const goOrder = () => {
+      if (selectedCount.value) {
+        common_vendor.index.navigateTo({
+          url: "/packageB/order/order"
+        });
+      }
+    };
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: cartList.value.length > 0
@@ -112,7 +119,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         g: common_vendor.t(totalPrice.value),
         h: common_vendor.t(selectedCount.value),
         i: selectedCount.value > 0 ? 1 : "",
-        j: common_vendor.gei(_ctx, "")
+        j: common_vendor.o(goOrder),
+        k: common_vendor.gei(_ctx, "")
       });
     };
   }
