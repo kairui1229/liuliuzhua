@@ -92,10 +92,10 @@ onShow(()=>{
 
 //获取个人信息
 const nickName=computed(()=>{
-	return userInfo.value&&userInfo.value.username?userInfo.value.username:"铲屎官一枚"+userInfo.value.user_id
+	return userInfo.value&&userInfo.value.data.username?userInfo.value.data.username:"铲屎官一枚"+userInfo.value.data.phone
 })
 const avatar=computed(()=>{
-	return userInfo.value&&userInfo.value.avatar?userInfo.value.avatar:"/static/modules/home/dog1.png"
+	return userInfo.value&&userInfo.value.data.avatar?userInfo.value.data.avatar:"/static/modules/home/dog1.png"
 })
 const handleLogin=()=>{
 	uni.navigateTo({

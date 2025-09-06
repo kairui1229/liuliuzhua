@@ -22,8 +22,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       platform.value = "mp-weixin";
     });
     const fn = () => {
-      common_vendor.index.setStorageSync("token", "xulaoshi666");
-      common_vendor.index.setStorageSync("user", { user_id: 1, phone: 18888888888 });
+      common_vendor.index.setStorageSync("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwicGhvbmUiOiIxODgzODkxMzQyOSIsImlhdCI6MTc1NzEyODQzNSwiZXhwIjoxNzU3MTM1NjM1fQ.4QkIaYV04ZM7pbekxZOLcRPBu6KSdYS0npF7ZVSCIaw");
+      common_vendor.index.setStorageSync("user", { "type": "object", "data": { "user_id": 10, "username": null, "avatar": null, "openid": "", "phone": "18838913429" } });
       common_vendor.index.showToast({
         title: "登录成功",
         icon: "success",

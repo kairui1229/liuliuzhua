@@ -22,10 +22,10 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       common_vendor.index.__f__("log", "at pages/me/me.vue:90", "用户数据", userInfo.value);
     });
     const nickName = common_vendor.computed(() => {
-      return userInfo.value && userInfo.value.username ? userInfo.value.username : "铲屎官一枚" + userInfo.value.user_id;
+      return userInfo.value && userInfo.value.data.username ? userInfo.value.data.username : "铲屎官一枚" + userInfo.value.data.phone;
     });
     const avatar = common_vendor.computed(() => {
-      return userInfo.value && userInfo.value.avatar ? userInfo.value.avatar : "/static/modules/home/dog1.png";
+      return userInfo.value && userInfo.value.data.avatar ? userInfo.value.data.avatar : "/static/modules/home/dog1.png";
     });
     const handleLogin = () => {
       common_vendor.index.navigateTo({
