@@ -188,6 +188,33 @@ const getCode=()=>{
 	//发送验证码
 	sendCode()
 }
+
+const handleLogin=async ()=>{
+	const phoneReg=/^1[3-9]\d{9}$/;
+	if(phoneReg.test(phone.value)&&code.value){
+		try {
+			const data:any=await post("/auth/verifySmsCode",{phone:phone.value,code:code.value});
+			console.log("登录结果",data)
+			uni.setStorageSync("token",data.token)
+			uni.setStorageSync("user",data.user)
+			uni.showToast({
+				title:"登录成功",
+				icon:"success",
+				duration:1500
+			})
+			setTimeout(()=>{
+				uni.navigateBack();
+			},500)
+		} catch (error) {
+			console.log("登录失败")
+		}
+	}else{
+		uni.showToast({
+			title:"请输入正确的信息",
+			icon:"none"
+		})		
+	}
+}
 </script>
 
 <style lang="scss" scoped>

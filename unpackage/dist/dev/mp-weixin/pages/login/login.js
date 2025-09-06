@@ -67,6 +67,32 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       }, 1e3);
       sendCode();
     };
+    const handleLogin = async () => {
+      const phoneReg = /^1[3-9]\d{9}$/;
+      if (phoneReg.test(phone.value) && code.value) {
+        try {
+          const data = await utils_http_index.post("/auth/verifySmsCode", { phone: phone.value, code: code.value });
+          common_vendor.index.__f__("log", "at pages/login/login.vue:197", "登录结果", data);
+          common_vendor.index.setStorageSync("token", data.token);
+          common_vendor.index.setStorageSync("user", data.user);
+          common_vendor.index.showToast({
+            title: "登录成功",
+            icon: "success",
+            duration: 1500
+          });
+          setTimeout(() => {
+            common_vendor.index.navigateBack();
+          }, 500);
+        } catch (error) {
+          common_vendor.index.__f__("log", "at pages/login/login.vue:209", "登录失败");
+        }
+      } else {
+        common_vendor.index.showToast({
+          title: "请输入正确的信息",
+          icon: "none"
+        });
+      }
+    };
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_assets._imports_0$4,
@@ -99,7 +125,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         }),
         i: common_vendor.t(isCounting.value ? countDown.value + "s后重新获取" : "获取验证码"),
         j: common_vendor.o(getCode),
-        k: common_vendor.o(_ctx.handleLogin),
+        k: common_vendor.o(handleLogin),
         l: common_vendor.p({
           type: "primary",
           ["custom-style"]: {
